@@ -6,5 +6,5 @@ CREATE TABLE results (
   user_id INTEGER REFERENCES users(id),
   match_id INTEGER REFERENCES matches(id),
   score INTEGER NOT NULL,
-  finished_position INTEGER NOT NULL;
+  finished_position INTEGER NOT NULL
 );
