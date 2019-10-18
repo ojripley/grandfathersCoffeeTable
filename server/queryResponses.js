@@ -1,5 +1,6 @@
 const db = require('./queries.js');
 
+
 db.doesUserExist('Owen')
   .then(res => {
     if (res.length > 0) {

@@ -2,6 +2,7 @@
 const db = require('./poolSetup');
 
 
+
 // retrieves a table row with username if exists. Row will be empty otherwise
 const doesUserExist = function(username) {
 
@@ -13,6 +14,21 @@ const doesUserExist = function(username) {
   WHERE username = $1;
   `, queryVars)
     .then(res => {
+
+
+    /*
+
+    for ALL queries, response logic will go here
+
+
+    */
+
+
+
+
+
+
+
       return res;
     })
     .catch(error => {
