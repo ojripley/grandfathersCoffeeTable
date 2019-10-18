@@ -51,7 +51,6 @@ const fetchProfile = function(id) {
   WHERE id = $1;
   `, queryVars)
     .then(res => {
-      console.log(res.rows);
       return res.rows;
     })
     .catch(error => {
@@ -75,13 +74,11 @@ const fetchUserHistory = function(id) {
   ORDER BY matches.time_stamp;
   `, queryVars)
     .then(res => {
-      console.log(res.rows);
       return res.rows;
     })
     .catch(error => {
       console.error(`Query error ${error.stack}`);
     });
-
 };
 
 
@@ -99,7 +96,6 @@ const fetchMatchDetails = function(id) {
   ORDER BY results.finished_position;
   `, queryVars)
     .then(res => {
-      console.log(res.rows);
       return res.rows;
     })
     .catch(error => {
@@ -124,7 +120,6 @@ const fetchLeaderBoard = function(gametype) {
   LIMIT 10;
   `, queryVars)
     .then(res => {
-      console.log(res.rows);
       return res.rows;
     })
     .catch(error => {
