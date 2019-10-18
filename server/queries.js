@@ -127,4 +127,4 @@ const fetchLeaderBoard = function(gametype) {
     });
 };
 
-module.exports = { doesUserExist };
+module.exports = { doesUserExist, addUser, fetchProfile, fetchUserHistory, fetchMatchDetails, fetchLeaderBoard };
