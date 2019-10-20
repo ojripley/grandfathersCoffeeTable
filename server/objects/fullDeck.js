@@ -55,4 +55,4 @@ const fullDeck = [
   new Card('KD', 13),
 ];
 
-module.exports = { fullDeck };
+module.exports = fullDeck;

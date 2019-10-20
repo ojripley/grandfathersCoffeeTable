@@ -21,10 +21,8 @@ class Card {
 }
 
 module.exports = {
-
   Stack,
   Card
-
 };
 
 // test drivers
