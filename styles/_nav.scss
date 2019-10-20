@@ -1,0 +1,15 @@
+nav{
+  background-color: $navColor;
+  display:flex;
+  flex-flow: column nowrap;
+  width: 10%;
+  height:100%;
+
+  #profile-img{
+    display:inline;
+  }
+  ul{
+    list-style-type:none;
+    padding-left: 20px;
+  }
+}
