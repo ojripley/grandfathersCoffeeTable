@@ -1,4 +1,11 @@
 $(() => {
+
+  //Nav bar logic:
+  $('#menu-bars').on('click', (event) => {
+
+    $('#navbar').toggleClass('hidden', 500);
+  });
+
   /*
     $.ajax({
       method: "GET",

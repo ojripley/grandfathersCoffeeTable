@@ -1,12 +1,43 @@
+#menu-bars {
+  height: auto;
+  position: absolute;
+  // display: none;
+  width: 20px;
+  align-self: unset;
+  margin: 10px 10px 10px 10px;
+  z-index: 2;
+}
+
 nav {
   background-color: $navColor;
   display: flex;
+  overflow-y: scroll;
   flex-flow: column nowrap;
   justify-content: space-around;
   align-items: stretch;
-
   width: 15%;
   height: 100%;
+  position: absolute;
+
+  &.hidden {
+    opacity: 0%;
+    left: -500px;
+  }
+
+  @media screen and (min-width: $break) {
+    background-color: cyan;
+    width: 30%;
+
+    #menu-bars {
+      display: inline-block;
+      z-index: 100;
+    }
+  }
+
+  h1 {
+    font-size: 1em;
+    display: flex;
+  }
 
   #profile {
     display: flex;

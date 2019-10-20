@@ -1,6 +1,6 @@
 //Constants:
-$break: 1200px;
-$navColor: cyan;
+$break: 1024px;
+$navColor: purple;
 
 @import "./nav.scss";
 @import "./gameboard.scss";
@@ -16,10 +16,4 @@ body {
 
 p {
   text-align: center;
-}
-
-#content {
-  background-color: green;
-  width: 40%;
-  height: 100%;
 }

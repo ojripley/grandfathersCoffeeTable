@@ -1,0 +1,120 @@
+#menu-bars {
+  height: auto;
+  position: absolute;
+  width: 20px;
+  -ms-flex-item-align: unset;
+      -ms-grid-row-align: unset;
+      align-self: unset;
+  margin: 10px 10px 10px 10px;
+  z-index: 2;
+}
+
+nav {
+  background-color: purple;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow-y: scroll;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  width: 15%;
+  height: 100%;
+  position: absolute;
+}
+
+nav.hidden {
+  opacity: 0%;
+  left: -500px;
+}
+
+@media screen and (min-width: 1024px) {
+  nav {
+    background-color: cyan;
+    width: 30%;
+  }
+  nav #menu-bars {
+    display: inline-block;
+    z-index: 100;
+  }
+}
+
+nav h1 {
+  font-size: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+nav #profile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  border-color: black;
+  border-style: solid;
+  border-width: 0px 0px 2px 0px;
+}
+
+nav #profile img {
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+nav ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+nav .menu-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: green;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -ms-flex-line-pack: stretch;
+      align-content: stretch;
+  text-align: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  border: 1em solid black;
+  border-width: 0px 0px 2px 0px;
+}
+
+#game-container {
+  background-color: yellow;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  height: 100%;
+}
+
+body {
+  background-color: white;
+  height: 100%;
+}
+
+body h1 {
+  color: #244751;
+}
+
+p {
+  text-align: center;
+}
+/*# sourceMappingURL=layout.css.map */
