@@ -11,6 +11,8 @@ class Player {
 
   playCard(card, table) {
     this.hand.moveCard(card, table);
+
+    return new Move(this, card);
   }
 }
 
