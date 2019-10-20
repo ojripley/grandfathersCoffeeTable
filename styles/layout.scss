@@ -3,6 +3,7 @@ $break: 1200px;
 $navColor: cyan;
 
 @import "./nav.scss";
+@import "./gameboard.scss";
 
 body {
   background-color: white;
@@ -15,4 +16,10 @@ body {
 
 p {
   text-align: center;
+}
+
+#content {
+  background-color: green;
+  width: 40%;
+  height: 100%;
 }
