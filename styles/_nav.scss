@@ -1,15 +1,38 @@
-nav{
+nav {
   background-color: $navColor;
-  display:flex;
+  display: flex;
   flex-flow: column nowrap;
-  width: 10%;
-  height:100%;
+  justify-content: space-around;
+  align-items: stretch;
 
-  #profile-img{
-    display:inline;
+  width: 15%;
+  height: 100%;
+
+  #profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-color: black;
+    border-style: solid;
+    border-width: 0px 0px 2px 0px;
+    img {
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
   }
-  ul{
-    list-style-type:none;
-    padding-left: 20px;
+  ul {
+    list-style-type: none;
+    padding-left: 0px;
+  }
+
+  .menu-list {
+    display: flex;
+    background-color: green;
+    flex-flow: column nowrap;
+    align-content: stretch;
+    text-align: center;
+    justify-content: space-around;
+    border: 1em solid black;
+    border-width: 0px 0px 2px 0px;
   }
 }

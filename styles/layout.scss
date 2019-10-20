@@ -1,9 +1,18 @@
-// See: https://sass-lang.com/
+//Constants:
+$break: 1200px;
+$navColor: cyan;
+
+@import "./nav.scss";
 
 body {
-  background-color: #EEE;
+  background-color: white;
+  height: 100%;
 
   h1 {
     color: #244751;
   }
+}
+
+p {
+  text-align: center;
 }

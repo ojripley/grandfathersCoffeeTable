@@ -34,19 +34,32 @@
 
 <body>
 
-  <nav>
-    <div id="profile">
-      <p> <img id="profile-img" src="/public/images/user.png">Username </p>
-    </div>
-    <p> High Scores</p>
-    <hr>
+  <nav id="collapsibleNavbar">
 
-    <div id=" game-list">
+    <div id="profile">
+      <img id="profile-img" src="/public/images/user.png">
+      <p> Username </p>
+    </div>
+
+    <p> High Scores</p>
+
+    <div id="game-list" class="menu-list">
+      <strong> Active games </strong>
       <ul>
         <li>Game 1 - Goofspiel</li>
         <li>Game 2 - Goofspiel</li>
         <li>Game 3 - War</li>
       </ul>
+    </div>
+
+    <div id="create-game" class="menu-list">
+      <button type="button" class="btn btn-primary">Join game</button>
+      <ul>
+        <li>Join goofspiel</li>
+        <li>Join war</li>
+        <li>Join war</li>
+      </ul>
+
     </div>
   </nav>
 
