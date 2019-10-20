@@ -1,18 +1,52 @@
 const { Player, Stack, Move } = require('./entities');
 const fullDeck = require('./fullDeck');
 
+// constant objects (single instance entities only)
+const activePlayers = {
+  // add keys to this object as players login
+
+  addPlayer(player) {
+    this[player.id] = player;
+  },
+  removePlayer(player) {
+    delete this[player.id];
+  }
+};
+
+const activeGames = {
+
+  idCount: 0,
+
+  createNewGame(gametype) {
+    switch (gametype) {
+    case 'goofspiel':
+      this.idCount++;
+      return new Goofspiel(this.idCount, fullDeck);
+    }
+  },
+
+  addGame(gametype) {
+    let newGame = this.createNewGame(gametype);
+    this[newGame.id] = newGame;
+  },
+
+  removeGame(game) {
+    delete this[game.id];
+  }
+};
 
 // abstract parent class for games
 class Game {
 
-  constructor(players, fullDeck) {
+  constructor(id, fullDeck) {
     if (new.target === Game) {
       throw new TypeError('Cannot construct an instance of an Abstract Class!');
     }
     // ----------------------------------------------------------------------------
     // attributes
+    this.id = id;
     this.activePlayer = null;
-    this.players = players;
+    this.players = [];
     this.table = new Stack([]);
     this.deck = new Stack(fullDeck);
     this.burntDeck = new Stack([]);
@@ -35,8 +69,8 @@ class Game {
 
 class Goofspiel extends Game {
 
-  constructor(players, fullDeck) {
-    super(players, fullDeck);
+  constructor(id, fullDeck) {
+    super(id, fullDeck);
   }
 
   deal() {
@@ -73,18 +107,34 @@ class Goofspiel extends Game {
 const p1 = new Player(1, 'name1');
 const p2 = new Player(2, 'name2');
 
-const game = new Goofspiel([p1, p2], fullDeck);
-game.deal();
+
+activeGames.addGame('goofspiel');
+
+console.log(activeGames);
+activeGames.removeGame('1');
+console.log(activeGames);
 
 
-game.pendingMoves.push(p1.playCard(p1.hand.cards[0], game.table.cards));
 
-console.log(`pending moves: ${game.pendingMoves[0].player.username}`);
 
-game.pushPendingToHistory();
+// activePlayers.addPlayer(p1);
+// console.log(activePlayers);
+// activePlayers.removePlayer(p1);
+// console.log(activePlayers);
 
-console.log(`pending moves: ${game.pendingMoves}`);
-console.log(`past moves: ${game.moveHistory[0].player.username}`);
+
+// const game = new Goofspiel(fullDeck);
+// game.deal();
+
+
+// game.pendingMoves.push(p1.playCard(p1.hand.cards[0], game.table.cards));
+
+// console.log(`pending moves: ${game.pendingMoves[0].player.username}`);
+
+// game.pushPendingToHistory();
+
+// console.log(`pending moves: ${game.pendingMoves}`);
+// console.log(`past moves: ${game.moveHistory[0].player.username}`);
 
 
 
