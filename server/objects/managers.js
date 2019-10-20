@@ -66,7 +66,6 @@ class Game {
   }
 }
 
-
 class Goofspiel extends Game {
 
   constructor(id, fullDeck) {
@@ -102,17 +101,21 @@ class Goofspiel extends Game {
 }
 
 
+
+
+
+
 // testing code
 
-const p1 = new Player(1, 'name1');
-const p2 = new Player(2, 'name2');
+// const p1 = new Player(1, 'name1');
+// const p2 = new Player(2, 'name2');
 
 
-activeGames.addGame('goofspiel');
+// activeGames.addGame('goofspiel');
 
-console.log(activeGames);
-activeGames.removeGame('1');
-console.log(activeGames);
+// console.log(activeGames);
+// activeGames.removeGame('1');
+// console.log(activeGames);
 
 
 
