@@ -1,7 +1,23 @@
+
+
+class Player {
+  constructor(id, username) {
+    this.id = id;
+    this.username = username;
+    this.currentPosition = null;
+    this.score = 0;
+    this.hand = new Stack([]);
+  }
+
+  playCard(card, table) {
+    this.hand.moveCard(card, table);
+  }
+}
+
 class Stack {
 
-  constructor(cards) {
-    this.cards =  cards;
+  constructor(cardsArray) {
+    this.cards =  cardsArray;
     this.faceUp = false;
   }
 
@@ -20,12 +36,21 @@ class Card {
   }
 }
 
+class Move {
+  constructor(player, card) {
+    this.player = player;
+    this.card = card;
+  }
+}
+
 module.exports = {
+  Player,
   Stack,
-  Card
+  Card,
+  Move
 };
 
-// test drivers
+// test code
 // const card = new Card('2C', 2);
 // console.log(card);
 
