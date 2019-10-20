@@ -4,16 +4,51 @@
   top: 0;
   z-index: -1;
   height: 100%;
-
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 4fr 1fr;
-  grid-template-rows: 1fr 4fr 1fr;
+
+  //Mobile view will only show player cards and the board
+  grid-template-columns: 1fr 28fr 1fr;
+  grid-template-rows: 1fr 24fr 5fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
 
+  #p1Area {
+    grid-row-start: 3;
+    grid-column-start: 2;
+    background-color: yellow;
+  }
+  #p2Area {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    background-color: yellow;
+  }
+  #p3Area {
+    grid-row-start: 2;
+    grid-column-start: 3;
+    background-color: yellow;
+  }
+  #p4Area {
+    grid-row-start: 2;
+    grid-column-start: 1;
+    background-color: yellow;
+  }
+  #tableArea {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    background-color: blue;
+    color: white;
+  }
+
   @media screen and (min-width: $break) {
     position: absolute;
-    left: 30%;
+    left: 25%;
     z-index: -1;
+    width: 75%;
+
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: 1fr 4fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
   }
 }

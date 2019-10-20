@@ -66,7 +66,9 @@ nav.hidden {
   nav {
     font-size: 1.5em;
     background-color: navCol;
-    width: 30%;
+    width: 25%;
+    padding-top: 2%;
+    padding-left: 2%;
   }
   nav.hidden {
     opacity: 100%;
@@ -126,21 +128,70 @@ nav .menu-list {
   top: 0;
   z-index: -1;
   height: 100%;
+  width: 100%;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 4fr 1fr;
-      grid-template-columns: 1fr 4fr 1fr;
-  -ms-grid-rows: 1fr 4fr 1fr;
-      grid-template-rows: 1fr 4fr 1fr;
+  -ms-grid-columns: 1fr 28fr 1fr;
+      grid-template-columns: 1fr 28fr 1fr;
+  -ms-grid-rows: 1fr 24fr 5fr;
+      grid-template-rows: 1fr 24fr 5fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+}
+
+#game-container #p1Area {
+  -ms-grid-row: 3;
+      grid-row-start: 3;
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  background-color: yellow;
+}
+
+#game-container #p2Area {
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  background-color: yellow;
+}
+
+#game-container #p3Area {
+  -ms-grid-row: 2;
+      grid-row-start: 2;
+  -ms-grid-column: 3;
+      grid-column-start: 3;
+  background-color: yellow;
+}
+
+#game-container #p4Area {
+  -ms-grid-row: 2;
+      grid-row-start: 2;
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  background-color: yellow;
+}
+
+#game-container #tableArea {
+  -ms-grid-row: 2;
+      grid-row-start: 2;
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  background-color: blue;
+  color: white;
 }
 
 @media screen and (min-width: 1024px) {
   #game-container {
     position: absolute;
-    left: 30%;
+    left: 25%;
     z-index: -1;
+    width: 75%;
+    -ms-grid-columns: 1fr 4fr 1fr;
+        grid-template-columns: 1fr 4fr 1fr;
+    -ms-grid-rows: 1fr 4fr 1fr;
+        grid-template-rows: 1fr 4fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
   }
 }
 
@@ -155,7 +206,21 @@ body h1 {
 
 @media screen and (min-width: 1024px) {
   body {
-    width: 1024px;
+    width: 1028px;
+    height: 100%;
+  }
+}
+
+html,
+#container {
+  height: 100%;
+  width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  html,
+  #container {
+    width: 1028px;
     height: 100%;
   }
 }

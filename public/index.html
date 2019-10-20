@@ -35,43 +35,61 @@
 </head>
 
 <body>
-  <input id="menu-bars" type="image" src="/public/images/menu-bars.png" />
+  <div id="container">
 
-  <nav id='navbar'>
-    <!-- <h1> Grandfather's Coffee Table</h1> -->
-    <div id="profile">
-      <p> Username </p>
-      <img id="profile-img" src="/public/images/user.png">
-    </div>
-    <hr>
-    <p class="text-center"> High Scores</p>
+    <input id="menu-bars" type="image" src="/public/images/menu-bars.png" />
 
-    <div id="game-list" class="menu-list">
+    <nav id='navbar'>
+      <!-- <h1> Grandfather's Coffee Table</h1> -->
+      <div id="profile">
+        <p> Username </p>
+        <img id="profile-img" src="/public/images/user.png">
+      </div>
       <hr>
-      <h2> Active games </h2>
-      <!-- This list is dynamically generated -->
-      <ul>
-        <li>Game 1 - Goofspiel</li>
-        <li>Game 2 - Goofspiel</li>
-        <li>Game 3 - War</li>
-      </ul>
-      <hr>
+      <p class="text-center"> High Scores</p>
+
+      <div id="game-list" class="menu-list">
+        <hr>
+        <h2> Active games </h2>
+        <!-- This list is dynamically generated -->
+        <ul>
+          <li>Game 1 - Goofspiel</li>
+          <li>Game 2 - Goofspiel</li>
+          <li>Game 3 - War</li>
+        </ul>
+        <hr>
+      </div>
+
+      <div id="create-game" class="menu-list">
+        <button type="button" class="btn btn-primary">Join game</button>
+        <ul>
+          <li> Goofspiel</li>
+          <li>Join war</li>
+          <li>Join sevens</li>
+          <li>Join slapjack</li>
+        </ul>
+
+      </div>
+
+    </nav>
+
+    <div id="game-container">
+      <div id="tableArea">
+        The table
+      </div>
+      <div id="p1Area">
+        Player 1
+      </div>
+      <div id="p2Area">
+        Player 2
+      </div>
+      <div id="p3Area">
+        Player 3
+      </div>
+      <div id="p4Area">
+        Player 4
+      </div>
     </div>
-
-    <div id="create-game" class="menu-list">
-      <button type="button" class="btn btn-primary">Join game</button>
-      <ul>
-        <li> Goofspiel</li>
-        <li>Join war</li>
-        <li>Join sevens</li>
-        <li>Join slapjack</li>
-      </ul>
-
-    </div>
-
-  </nav>
-
-  <div id="game-container">
   </div>
 
 </body>
