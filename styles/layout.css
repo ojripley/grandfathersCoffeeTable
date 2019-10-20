@@ -1,6 +1,7 @@
 #menu-bars {
   height: auto;
   position: absolute;
+  display: inline-block;
   width: 20px;
   -ms-flex-item-align: unset;
       -ms-grid-row-align: unset;
@@ -9,24 +10,51 @@
   z-index: 2;
 }
 
+@media screen and (min-width: 1024px) {
+  #menu-bars {
+    display: none;
+  }
+}
+
 nav {
-  background-color: purple;
+  background-color: #c7c2b5;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   overflow-y: scroll;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-  width: 15%;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  width: 30%;
+  padding-top: 5%;
+  padding-left: 5%;
   height: 100%;
+  top: 0;
   position: absolute;
+}
+
+nav li:hover {
+  background-color: yellow;
+}
+
+nav hr {
+  border-top: 1px solid black;
+  height: 1px;
+  width: 100%;
+  z-index: 10;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 nav.hidden {
@@ -36,12 +64,13 @@ nav.hidden {
 
 @media screen and (min-width: 1024px) {
   nav {
-    background-color: cyan;
+    font-size: 1.5em;
+    background-color: navCol;
     width: 30%;
   }
-  nav #menu-bars {
-    display: inline-block;
-    z-index: 100;
+  nav.hidden {
+    opacity: 100%;
+    left: 0px;
   }
 }
 
@@ -61,9 +90,6 @@ nav #profile {
           align-items: center;
   -ms-flex-pack: distribute;
       justify-content: space-around;
-  border-color: black;
-  border-style: solid;
-  border-width: 0px 0px 2px 0px;
 }
 
 nav #profile img {
@@ -83,7 +109,6 @@ nav .menu-list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background-color: green;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
@@ -93,16 +118,30 @@ nav .menu-list {
   text-align: center;
   -ms-flex-pack: distribute;
       justify-content: space-around;
-  border: 1em solid black;
-  border-width: 0px 0px 2px 0px;
 }
 
 #game-container {
-  background-color: yellow;
-  position: absolute;
+  background-color: #648864;
+  position: relative;
   top: 0;
   z-index: -1;
   height: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 4fr 1fr;
+      grid-template-columns: 1fr 4fr 1fr;
+  -ms-grid-rows: 1fr 4fr 1fr;
+      grid-template-rows: 1fr 4fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+@media screen and (min-width: 1024px) {
+  #game-container {
+    position: absolute;
+    left: 30%;
+    z-index: -1;
+  }
 }
 
 body {
@@ -112,6 +151,13 @@ body {
 
 body h1 {
   color: #244751;
+}
+
+@media screen and (min-width: 1024px) {
+  body {
+    width: 1024px;
+    height: 100%;
+  }
 }
 
 p {

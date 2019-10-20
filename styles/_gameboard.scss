@@ -1,7 +1,19 @@
 #game-container {
-  background-color: yellow;
-  position: absolute;
+  background-color: $bgCol;
+  position: relative;
   top: 0;
   z-index: -1;
   height: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-rows: 1fr 4fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+
+  @media screen and (min-width: $break) {
+    position: absolute;
+    left: 30%;
+    z-index: -1;
+  }
 }

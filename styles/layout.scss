@@ -1,6 +1,15 @@
 //Constants:
 $break: 1024px;
-$navColor: purple;
+//$navColor: purple;
+
+//Color scheme
+$col1: #d55b4a;
+$col2: #d0b16b;
+$bgCol: #648864;
+$col4: #46609f;
+$col5: #b47570;
+$col6: #423f40;
+$navCol: #c7c2b5;
 
 @import "./nav.scss";
 @import "./gameboard.scss";
@@ -11,6 +20,10 @@ body {
 
   h1 {
     color: #244751;
+  }
+  @media screen and (min-width: $break) {
+    width: 1024px;
+    height: 100%;
   }
 }
 
