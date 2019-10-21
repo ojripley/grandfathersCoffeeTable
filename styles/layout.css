@@ -1,0 +1,264 @@
+#menu-bars {
+  height: auto;
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  -ms-flex-item-align: unset;
+      -ms-grid-row-align: unset;
+      align-self: unset;
+  margin: 10px 10px 10px 10px;
+  z-index: 3;
+}
+
+@media screen and (min-width: 1024px) {
+  #menu-bars {
+    display: none;
+  }
+}
+
+nav {
+  background-color: #c7c2b5;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow-y: scroll;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  width: 30%;
+  padding-top: 5%;
+  padding-left: 5%;
+  height: 100%;
+  top: 0;
+  z-index: 2;
+  position: absolute;
+}
+
+nav li:hover {
+  background-color: yellow;
+}
+
+nav hr {
+  border-top: 1px solid black;
+  height: 1px;
+  width: 100%;
+  z-index: 10;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+nav.hidden {
+  opacity: 0%;
+  left: -500px;
+}
+
+@media screen and (min-width: 1024px) {
+  nav {
+    font-size: 1.5em;
+    background-color: navCol;
+    width: 25%;
+    padding-top: 2%;
+    padding-left: 2%;
+  }
+  nav.hidden {
+    opacity: 100%;
+    left: 0px;
+  }
+}
+
+nav h1 {
+  font-size: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+nav #profile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+nav #profile img {
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+nav ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+nav .menu-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -ms-flex-line-pack: stretch;
+      align-content: stretch;
+  text-align: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+#game-container {
+  background-color: #648864;
+  position: relative;
+  top: 0;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 28fr 1fr;
+      grid-template-columns: 1fr 28fr 1fr;
+  -ms-grid-rows: 1fr 19fr 10fr;
+      grid-template-rows: 1fr 19fr 10fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  overflow: hidden;
+}
+
+#game-container #p1Area {
+  -ms-grid-row: 3;
+      grid-row-start: 3;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
+  background-color: yellow;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#game-container #p2Area {
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  background-color: yellow;
+}
+
+#game-container #p3Area {
+  -ms-grid-row: 2;
+      grid-row-start: 2;
+  -ms-grid-column: 3;
+      grid-column-start: 3;
+  background-color: yellow;
+}
+
+#game-container #p4Area {
+  -ms-grid-row: 2;
+      grid-row-start: 2;
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  background-color: yellow;
+}
+
+#game-container #tableArea {
+  -ms-grid-row: 2;
+      grid-row-start: 2;
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  background-color: #46609f;
+  color: white;
+}
+
+@media screen and (min-width: 1024px) {
+  #game-container {
+    position: absolute;
+    left: 25%;
+    width: 75%;
+    -ms-grid-columns: 1fr 4fr 1fr;
+        grid-template-columns: 1fr 4fr 1fr;
+    -ms-grid-rows: 1fr 4fr 1fr;
+        grid-template-rows: 1fr 4fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+  }
+}
+
+.playerHand {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 80%;
+  background-color: black;
+}
+
+.card {
+  max-height: 100px;
+  width: auto;
+  margin: 2px;
+  z-index: 1;
+}
+
+.card:hover {
+  max-height: 110px;
+  border: solid #d0b16b 2px;
+  width: auto;
+  margin: 2px;
+}
+
+body {
+  background-color: white;
+  height: 100%;
+}
+
+body h1 {
+  color: #244751;
+}
+
+html,
+#container {
+  height: 100%;
+  width: 100%;
+}
+
+p {
+  text-align: center;
+}
+/*# sourceMappingURL=layout.css.map */

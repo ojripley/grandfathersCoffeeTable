@@ -1,9 +1,34 @@
-// See: https://sass-lang.com/
+//Constants:
+$break: 1024px;
+//$navColor: purple;
+
+//Color scheme
+$col1: #d55b4a;
+$col2: #d0b16b;
+$bgCol: #648864;
+$col4: #46609f;
+$col5: #b47570;
+$col6: #423f40;
+$navCol: #c7c2b5;
+
+@import "./nav.scss";
+@import "./gameboard.scss";
+@import "./components.scss";
 
 body {
-  background-color: #EEE;
+  background-color: white;
+  height: 100%;
 
   h1 {
     color: #244751;
   }
+}
+html,
+#container {
+  height: 100%;
+  width: 100%;
+}
+
+p {
+  text-align: center;
 }

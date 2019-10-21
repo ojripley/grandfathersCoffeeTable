@@ -1,0 +1,95 @@
+#menu-bars {
+  height: auto;
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  align-self: unset;
+  margin: 10px 10px 10px 10px;
+  z-index: 3;
+
+  @media screen and (min-width: $break) {
+    display: none;
+  }
+}
+
+nav {
+  background-color: $navCol;
+  display: flex;
+  overflow-y: scroll;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 30%;
+  padding-top: 5%;
+  padding-left: 5%;
+  height: 100%;
+  top: 0;
+  z-index: 2;
+  position: absolute;
+
+  li:hover {
+    background-color: yellow;
+  }
+
+  hr {
+    border-top: 1px solid black;
+    height: 1px;
+    width: 100%;
+    z-index: 10;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  &.hidden {
+    opacity: 0%;
+    left: -500px;
+  }
+
+  @media screen and (min-width: $break) {
+    font-size: 1.5em;
+
+    background-color: navCol;
+    width: 25%;
+    padding-top: 2%;
+    padding-left: 2%;
+    //Hidden property should not affect desktop view
+    &.hidden {
+      opacity: 100%;
+      left: 0px;
+    }
+  }
+
+  h1 {
+    font-size: 1em;
+    display: flex;
+  }
+
+  #profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    img {
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+  }
+  ul {
+    list-style-type: none;
+    padding-left: 0px;
+  }
+
+  .menu-list {
+    display: flex;
+    flex-flow: column nowrap;
+    align-content: stretch;
+    text-align: center;
+    justify-content: space-around;
+    // border: 1em solid black;
+    // border-width: 0px 0px 2px 0px;
+  }
+}
