@@ -41,6 +41,11 @@
       <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
     </div>
 
+
+    <% if (!loginAttempt) { %>
+      <p>Incorrect login credentials!</p>
+    <% } %>
+
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 

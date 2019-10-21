@@ -20,7 +20,7 @@ module.exports = (db) => {
 
   // client request for login page
   router.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', { loginAttempt: true });
   });
 
   // client post to login
@@ -30,8 +30,13 @@ module.exports = (db) => {
 
     db.fetchProfile(username)
       .then(user => {
-        res.send(user);
         console.log(user);
+
+        if (user[0].password === req.body.password) {
+          res.render('index');
+        } else {
+          res.render('login', {loginAttempt: false});
+        }
 
         // if password = password => render /
       })
