@@ -148,6 +148,10 @@ io.on('connection', (client) => {
     client.emit('matchDetails', db.fetchMatchDetails(data));
   });
 
+  client.on('requestLeaderBoard', (data) => {
+    client.emit('leaderBoard', db.fetchLeaderBoard(data));
+  });
+
   // CHANGE ROOM TO DYNMAIC ROOM NAME BASED ON gameId
   io.to('room').emit('playerJoin', 'game.players.length');
 
