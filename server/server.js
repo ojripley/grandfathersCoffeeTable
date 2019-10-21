@@ -12,6 +12,7 @@ const morgan     = require('morgan');
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const cookieParser = require('cookie-session');
+const { activePlayers, activeGames, Goofspiel } = require('./objects/managers.js');
 
 // PG database client/connection setup
 // const { Pool } = require('pg');
@@ -30,12 +31,12 @@ app.use(cookieParser({ signed: false }));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/styles", sass({
-  src: __dirname + "../styles",
-  dest: __dirname + "../public/styles",
-  debug: true,
-  outputStyle: 'expanded'
-}));
+// app.use("/styles", sass({
+//   src: __dirname + "../styles",
+//   dest: __dirname + "../public/styles",
+//   debug: true,
+//   outputStyle: 'expanded'
+// }));
 app.use(express.static("public"));
 
 // Separated Routes for each Resource
@@ -69,5 +70,85 @@ app.get("/", (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`Server listening on port ${PORT}`);
+});
+
+///////////////////////////////////////
+// server side socket communications //
+///////////////////////////////////////
+io.on('connection', (client) => {
+  console.log(`client connected: ${client}`);
+
+  // emits are server -> client
+  // ons are client -> server
+
+  client.emit('msg', 'Hello from server');
+  client.on('msg', (data) => {
+    console.log(data);
+  });
+
+  client.on('requestGame', (data) => {
+
+    io.to('room').emit('msg', 'Greetings, clients!');
+    console.log('data from clients:', data);
+
+    // activeGames[game].id.substring(0, 3) === 'goof'
+
+    // need to make a check for if game already exists
+    for (let game in activeGames) {
+      console.log('GAME ', game);
+
+      // if a game exists and is not full
+      if (game.substring(0, 4) === 'goof') {
+        console.log(activeGames[game].id);
+
+        if (activeGames[game].players.length < 2) {
+          client.join(activeGames[game].id);
+          io.to(activeGames[game].id).emit('newGame', { gameId: game, players: activeGames[game].players });
+          // replace the emit data with gameId and players
+          break;
+        } else {
+          client.join(activeGames.addGame(data.gametype));
+          io.to(game.id).emit('newGame', { gameId: game, players: activeGames[game].players });
+          // replace the emit data with gameId and players
+          break;
+        }
+      }
+    }
+  });
+
+  client.on('move', (data) => {
+    console.log(data);
+
+    // uncomment for move handling
+
+    // activeGames[data.gameId].pendingMoves.push(data.move);
+    // if (activeGames[data.gameId].pendingMoves.length === activeGames[data.gameId].players.length) {
+    //   activeGames[data.gameId].pushPendingToHistory();
+    //   // broadcast the game to all players
+    //   io.to('room').emit('gameView', {
+    //     players: activeGames[data.gameId].players,
+    //     table: activeGames[data.gameId].table,
+    //     deck: activeGames[data.gameId].deck,
+    //     gameId: data.gameId,
+    //     currentPlayerId: activeGames[data.gameId].currentPlayer
+    //   });
+    // }
+  });
+
+  // client requests history of a user (data = a username)
+  client.on('requestHistory', (data) => {
+    console.log(data);
+    client.emit('history', db.fetchUserHistory(data));
+  });
+
+  client.on('requestMatchDetails', (data) => {
+    console.log(data);
+    client.emit('matchDetails', db.fetchMatchDetails(data));
+  });
+
+  // CHANGE ROOM TO DYNMAIC ROOM NAME BASED ON gameId
+  io.to('room').emit('playerJoin', 'game.players.length');
+
+  io.to('room').emit('endGame', 'the game is over');
 });
