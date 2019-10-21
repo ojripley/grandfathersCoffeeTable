@@ -7,7 +7,12 @@ module.exports = (db) => {
 
   // client request for login page
   router.get('/login', (req, res) => {
-    res.render('login', { loginAttempt: true });
+
+    if (req.session.username) {
+      res.redirect('/');
+    } else {
+      res.render('login', { loginAttempt: true });
+    }
   });
 
   // client post to login
@@ -20,7 +25,11 @@ module.exports = (db) => {
         console.log(user);
 
         if (user[0].password === req.body.password) {
-          res.render('index');
+
+          // create session cookie
+          req.session.username = req.body.username;
+
+          res.redirect('/');
         } else {
           res.render('login', {loginAttempt: false});
         }

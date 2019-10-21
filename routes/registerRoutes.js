@@ -20,7 +20,13 @@ module.exports = (db) => {
         if (rows.length === 0) {
           db.addUser(user)
             .then(() => {
-              res.render('index');
+
+              // sets username cookie
+              req.session.username = req.body.username;
+
+              console.log('expecting session.username', req.session.username);
+
+              res.redirect('/');
             })
             .catch(error => {
               console.error(error.stack);
