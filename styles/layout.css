@@ -39,6 +39,7 @@ nav {
   padding-left: 5%;
   height: 100%;
   top: 0;
+  z-index: 1;
   position: absolute;
 }
 
@@ -126,25 +127,39 @@ nav .menu-list {
   background-color: #648864;
   position: relative;
   top: 0;
-  z-index: -1;
   height: 100%;
   width: 100%;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 28fr 1fr;
       grid-template-columns: 1fr 28fr 1fr;
-  -ms-grid-rows: 1fr 24fr 5fr;
-      grid-template-rows: 1fr 24fr 5fr;
+  -ms-grid-rows: 1fr 19fr 10fr;
+      grid-template-rows: 1fr 19fr 10fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  overflow: hidden;
 }
 
 #game-container #p1Area {
   -ms-grid-row: 3;
       grid-row-start: 3;
-  -ms-grid-column: 2;
-      grid-column-start: 2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
   background-color: yellow;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 #game-container #p2Area {
@@ -176,7 +191,7 @@ nav .menu-list {
       grid-row-start: 2;
   -ms-grid-column: 2;
       grid-column-start: 2;
-  background-color: blue;
+  background-color: #46609f;
   color: white;
 }
 
@@ -193,6 +208,31 @@ nav .menu-list {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
   }
+}
+
+.playerHand {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 80%;
+  background-color: black;
+}
+
+.card {
+  max-height: 100px;
+  width: auto;
+  margin: 2px;
 }
 
 body {

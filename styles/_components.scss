@@ -1,0 +1,14 @@
+.playerHand {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80%;
+  background-color: black;
+}
+.card {
+  max-height: 100px;
+  width: auto;
+  margin: 2px;
+}
