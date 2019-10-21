@@ -94,6 +94,7 @@ io.on('connection', (client) => {
 
     // activeGames[game].id.substring(0, 3) === 'goof'
 
+    activeGames.addGame(data.gametype);
     // need to make a check for if game already exists
     for (let game in activeGames) {
       console.log('GAME ', game);
@@ -104,12 +105,12 @@ io.on('connection', (client) => {
 
         if (activeGames[game].players.length < 2) {
           client.join(activeGames[game].id);
-          io.to(activeGames[game].id).emit('newGame', { gameId: game, players: activeGames[game].players });
+          client.emit('newGame', { gameId: game, players: activeGames[game].players });
           // replace the emit data with gameId and players
           break;
         } else {
           client.join(activeGames.addGame(data.gametype));
-          io.to(game.id).emit('newGame', { gameId: game, players: activeGames[game].players });
+          client.emit('newGame', { gameId: game, players: activeGames[game].players });
           // replace the emit data with gameId and players
           break;
         }
