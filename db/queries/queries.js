@@ -14,22 +14,7 @@ const doesUserExist = function(username) {
   WHERE username = $1;
   `, queryVars)
     .then(res => {
-
-
-      /*
-
-      for ALL queries, response logic will go here
-
-
-      */
-
-
-
-
-
-
-
-      return res;
+      return res.rows;
     })
     .catch(error => {
       console.error(`Query error ${error.stack}`);
