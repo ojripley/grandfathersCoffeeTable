@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <!-- Vendor JS (JQuery, popper, bootstrap) -->
+  <!-- Vendor JS (JQuery, popper, bootstrap,socket.io) -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
@@ -25,6 +25,9 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="./styles/layout.css" type="text/css" />
@@ -49,7 +52,7 @@
       </form>
     </div>
     <hr>
-    <p class="text-center"> High Scores</p>
+    <p class="text-center" id='high-scores'> High Scores</p>
 
     <div id="game-list" class="menu-list">
       <hr>
@@ -66,9 +69,9 @@
     <div id="create-game" class="menu-list">
       <button type="button" class="btn btn-primary">Join game</button>
       <ul>
-        <li> Goofspiel</li>
-        <li>Join war</li>
-        <li>Join sevens</li>
+        <li id="goo12"> Goofspiel</li>
+        <li id="war12">Join war</li>
+        <li id='sev12'>Join sevens</li>
         <li>Join slapjack</li>
       </ul>
     </div>
@@ -93,7 +96,7 @@
         <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
         <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
         <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="./images/cards/PNG/AD.png" class='card img-fluid' id="AD">
       </div>
     </div>
     <div id="p2Area">
