@@ -57,14 +57,14 @@ const addUser = function(user) {
 
 
 // fetches entire profile row
-const fetchProfile = function(id) {
+const fetchProfile = function(username) {
 
-  const queryVars = [id];
+  const queryVars = [username];
 
   return db.query(`
   SELECT *
   FROM users
-  WHERE id = $1;
+  WHERE username = $1;
   `, queryVars)
     .then(res => {
       return res.rows;
