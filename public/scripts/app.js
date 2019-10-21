@@ -125,10 +125,6 @@ $(() => {
     console.log(data);
   })
 
-  socket.on('newGame', (data) => {
-    console.log(data);
-  });
-
 
 
 
