@@ -8,8 +8,8 @@
   <title>Home Page</title>
 
   <!-- Vendor CSS -->
-  <link rel="stylesheet" href="./vendor/normalize-4.1.1.css" type="text/css" />
-  <link rel="stylesheet" href="./vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="../public/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="../public/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -27,23 +27,26 @@
     crossorigin="anonymous"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="./styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="../public/styles/layout.css" type="text/css" />
 
   <!-- Custom JS -->
-  <script type="text/javascript" src="./scripts/app.js"></script>
+  <script type="text/javascript" src="../public/scripts/app.js"></script>
 
 </head>
 
 <body>
 
 
-  <input id="menu-bars" type="image" src="./images/menu-bars.png" />
+  <input id="menu-bars" type="image" src="../public/images/menu-bars.png" />
 
   <nav id='navbar'>
     <!-- <h1> Grandfather's Coffee Table</h1> -->
     <div id="profile">
       <p> Username </p>
-      <img id="profile-img" src="./images/user.png">
+      <img id="profile-img" src="../public/images/user.png">
+      <form action="/logout" method="post">
+        <input type="submit" name="logout" value="Logout" class="btn btn-outline-light" />
+      </form>
     </div>
     <hr>
     <p class="text-center"> High Scores</p>
@@ -78,19 +81,19 @@
     </div>
     <div id="p1Area">
       <div class="playerHand">
-        <img src="./images/cards/PNG/2C.png" class='card img-fluid ui-widget-content' id="2C">
-        <img src="./images/cards/PNG/2H.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/2C.png" class='card img-fluid ui-widget-content' id="2C">
+        <img src="../public/images/cards/PNG/2H.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/AD.png" class='card img-fluid'>
+        <img src="../public/images/cards/PNG/AD.png" class='card img-fluid'>
       </div>
     </div>
     <div id="p2Area">
