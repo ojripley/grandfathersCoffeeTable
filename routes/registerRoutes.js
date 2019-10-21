@@ -7,7 +7,12 @@ module.exports = (db) => {
 
   // client request for login page
   router.get('/register', (req, res) => {
-    res.render('register', { registerAttempt: true });
+
+    if (req.session.username) {
+      res.redirect('/');
+    } else {
+      res.render('register', { registerAttempt: true });
+    }
   });
 
   // client post to login

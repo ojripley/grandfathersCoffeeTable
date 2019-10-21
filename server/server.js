@@ -58,7 +58,12 @@ app.use('/', registerRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  res.render("index");
+
+  if (req.session.username) {
+    res.render("index");
+  } else {
+    res.render('login', {loginAttempt: true});
+  }
 });
 
 server.listen(PORT, () => {
