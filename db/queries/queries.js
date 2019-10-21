@@ -79,9 +79,9 @@ const fetchProfile = function(id) {
 const fetchUserHistory = function(id) {
 
   const queryVars = [id];
-
+// change to where username
   return db.query(`
-  SELECT matches.gametype, results.finished_position, results.score, matches.time_stamp
+  SELECT matches.gametype, results.finished_position, results.score, matches.time_stamp, matches.id
   FROM users
   JOIN results ON user_id = users.id
   JOIN matches ON match_id = matches.id
@@ -119,6 +119,42 @@ const fetchMatchDetails = function(id) {
     });
 };
 
+
+// insert match
+const addMatch = function(gametype) {
+
+  const queryVars = [gametype];
+
+  return db.query(`
+    INSERT INTO matches(gametype)
+    VALUES($1)
+    RETURNING id;
+  `, queryVars)
+    .then(res => {
+      return res.rows;
+    })
+    .catch(error => {
+      console.error(`Query error ${error.stack}`);
+    });
+};
+
+
+// insert results for one user in a match
+const addResult = function (matchId, user) {
+
+  const queryVars = [matchId, user.id, user.score, user.posiiton];
+
+  return db.query(`
+  INSERT INTO results($1, $2, $3, $4)
+  VALUES(8, 1, 200, 1);
+  `, queryVars)
+    .then(res => {
+      return res.rows;
+    })
+    .catch(error => {
+      console.error(`Query error ${error.stack}`);
+    });
+};
 
 // fetches leaderboard for a game type
 const fetchLeaderBoard = function(gametype) {
