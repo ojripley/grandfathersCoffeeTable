@@ -1,4 +1,5 @@
-.sign-up-form {
+.sign-up-form,
+.registration-form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -18,8 +19,15 @@
   font-size: 2em;
 }
 
-.sign-up-form input {
+.sign-up-form input,
+.registration-form input {
   width: 100%;
+}
+
+.sign-up-form p,
+.registration-form p {
+  font-size: small;
+  color: red;
 }
 
 #menu-bars {
