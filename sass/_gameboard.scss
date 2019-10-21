@@ -18,7 +18,7 @@
   #p1Area {
     grid-row-start: 3;
     grid-column: 1/4;
-    background-color: yellow;
+    background-color: coral;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -27,23 +27,23 @@
   #p2Area {
     grid-row-start: 1;
     grid-column-start: 2;
-    background-color: yellow;
+    background-color: coral;
   }
   #p3Area {
     grid-row-start: 2;
     grid-column-start: 3;
-    background-color: yellow;
+    background-color: coral;
   }
   #p4Area {
     grid-row-start: 2;
     grid-column-start: 1;
-    background-color: yellow;
+    background-color: coral;
   }
   #tableArea {
     grid-row-start: 2;
     grid-column-start: 2;
     background-color: $col4;
-    color: white;
+    color: lightblue;
   }
 
   @media screen and (min-width: $break) {
