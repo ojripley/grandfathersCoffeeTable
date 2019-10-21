@@ -1,3 +1,27 @@
+.sign-up-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  font-size: 2em;
+}
+
+.sign-up-form input {
+  width: 100%;
+}
+
 #menu-bars {
   height: auto;
   position: absolute;
@@ -147,7 +171,7 @@ nav .menu-list {
   -ms-grid-column: 1;
   -ms-grid-column-span: 3;
   grid-column: 1/4;
-  background-color: yellow;
+  background-color: coral;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -168,7 +192,7 @@ nav .menu-list {
       grid-row-start: 1;
   -ms-grid-column: 2;
       grid-column-start: 2;
-  background-color: yellow;
+  background-color: coral;
 }
 
 #game-container #p3Area {
@@ -176,7 +200,7 @@ nav .menu-list {
       grid-row-start: 2;
   -ms-grid-column: 3;
       grid-column-start: 3;
-  background-color: yellow;
+  background-color: coral;
 }
 
 #game-container #p4Area {
@@ -184,7 +208,7 @@ nav .menu-list {
       grid-row-start: 2;
   -ms-grid-column: 1;
       grid-column-start: 1;
-  background-color: yellow;
+  background-color: coral;
 }
 
 #game-container #tableArea {
@@ -193,7 +217,7 @@ nav .menu-list {
   -ms-grid-column: 2;
       grid-column-start: 2;
   background-color: #46609f;
-  color: white;
+  color: lightblue;
 }
 
 @media screen and (min-width: 1024px) {
@@ -261,5 +285,4 @@ html,
 p {
   text-align: center;
 }
-
 /*# sourceMappingURL=layout.css.map */
