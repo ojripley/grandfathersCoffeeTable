@@ -3,19 +3,6 @@ const express = require('express');
 const router = express.Router();
 // const bcrypt = require('bcrypt');
 
-
-
-// get /
-// get /login
-// get /register
-// post /login
-// post /register
-
-
-
-
-
-
 module.exports = (db) => {
 
   // client request for login page
@@ -37,8 +24,6 @@ module.exports = (db) => {
         } else {
           res.render('login', {loginAttempt: false});
         }
-
-        // if password = password => render /
       })
       .catch(error => {
         console.error(error.stack);
