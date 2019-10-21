@@ -16,12 +16,12 @@ const doesUserExist = function(username) {
     .then(res => {
 
 
-    /*
+      /*
 
-    for ALL queries, response logic will go here
+      for ALL queries, response logic will go here
 
 
-    */
+      */
 
 
 
@@ -79,7 +79,7 @@ const fetchProfile = function(id) {
 const fetchUserHistory = function(id) {
 
   const queryVars = [id];
-// change to where username
+  // change to where username
   return db.query(`
   SELECT matches.gametype, results.finished_position, results.score, matches.time_stamp, matches.id
   FROM users
@@ -140,7 +140,7 @@ const addMatch = function(gametype) {
 
 
 // insert results for one user in a match
-const addResult = function (matchId, user) {
+const addResult = function(matchId, user) {
 
   const queryVars = [matchId, user.id, user.score, user.posiiton];
 
@@ -179,4 +179,4 @@ const fetchLeaderBoard = function(gametype) {
     });
 };
 
-module.exports = { doesUserExist, addUser, fetchProfile, fetchUserHistory, fetchMatchDetails, fetchLeaderBoard };
+module.exports = { doesUserExist, addUser, fetchProfile, fetchUserHistory, fetchMatchDetails, addMatch, addResult, fetchLeaderBoard };
