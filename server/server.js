@@ -9,6 +9,8 @@ const bodyParser = require("body-parser");
 const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -50,6 +52,10 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.listen(PORT, () => {
+// app.listen(PORT, () => {
+//   console.log(`Example app listening on port ${PORT}`);
+// });
+
+server.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
