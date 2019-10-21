@@ -34,7 +34,7 @@ $(() => {
 
   $('#high-scores').on('click', (event) => {
     console.log("requesting the high scores");
-    socket.emit('requestLeaderBoard', { gametype: 'goofspiel' });
+    socket.emit('requestLeaderBoard', 'goofspiel');
   });
 
   $("#goo12").on('click', (event) => {
@@ -116,7 +116,18 @@ $(() => {
   //onMove send game id
 
 
+  socket.emit('requestHistory', myUsername);
+  socket.on('history', (data) => {
+    console.log('Here is the history');
+    console.log(data);
+  });
 
+  socket.emit('requestMatchDetails', 1);
+
+  socket.on('matchDetails', (data) => {
+    console.log('Here is the history');
+    console.log(data);
+  })
 
   socket.on('msg', (data) => {
     console.log(data);
