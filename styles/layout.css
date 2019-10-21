@@ -7,7 +7,7 @@
       -ms-grid-row-align: unset;
       align-self: unset;
   margin: 10px 10px 10px 10px;
-  z-index: 2;
+  z-index: 3;
 }
 
 @media screen and (min-width: 1024px) {
@@ -39,7 +39,7 @@ nav {
   padding-left: 5%;
   height: 100%;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   position: absolute;
 }
 
@@ -127,6 +127,7 @@ nav .menu-list {
   background-color: #648864;
   position: relative;
   top: 0;
+  z-index: 1;
   height: 100%;
   width: 100%;
   display: -ms-grid;
@@ -199,7 +200,6 @@ nav .menu-list {
   #game-container {
     position: absolute;
     left: 25%;
-    z-index: -1;
     width: 75%;
     -ms-grid-columns: 1fr 4fr 1fr;
         grid-template-columns: 1fr 4fr 1fr;
@@ -233,6 +233,14 @@ nav .menu-list {
   max-height: 100px;
   width: auto;
   margin: 2px;
+  z-index: 1;
+}
+
+.card:hover {
+  max-height: 110px;
+  border: solid #d0b16b 2px;
+  width: auto;
+  margin: 2px;
 }
 
 body {
@@ -244,25 +252,10 @@ body h1 {
   color: #244751;
 }
 
-@media screen and (min-width: 1024px) {
-  body {
-    width: 1028px;
-    height: 100%;
-  }
-}
-
 html,
 #container {
   height: 100%;
   width: 100%;
-}
-
-@media screen and (min-width: 1024px) {
-  html,
-  #container {
-    width: 1028px;
-    height: 100%;
-  }
 }
 
 p {

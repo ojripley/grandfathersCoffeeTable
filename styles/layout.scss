@@ -22,20 +22,11 @@ body {
   h1 {
     color: #244751;
   }
-  @media screen and (min-width: $break) {
-    width: 1028px;
-    height: 100%;
-  }
 }
 html,
 #container {
   height: 100%;
   width: 100%;
-
-  @media screen and (min-width: $break) {
-    width: 1028px;
-    height: 100%;
-  }
 }
 
 p {
