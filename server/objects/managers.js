@@ -21,12 +21,13 @@ const activeGames = {
     switch (gametype) {
     case 'goofspiel':
       this.idCount++;
-      return new Goofspiel(this.idCount, fullDeck);
+      return new Goofspiel('goof' + this.idCount, fullDeck);
     }
   },
 
   addGame(gametype) {
     let newGame = this.createNewGame(gametype);
+    console.log(`adding a new game with the id: ${newGame.id}`);
     this[newGame.id] = newGame;
   },
 
@@ -45,7 +46,7 @@ class Game {
     // ----------------------------------------------------------------------------
     // attributes
     this.id = id;
-    this.activePlayer = null;
+    this.currentPlayer = null;
     this.players = [];
     this.table = new Stack([]);
     this.deck = new Stack(fullDeck);
@@ -56,6 +57,11 @@ class Game {
 
   // ----------------------------------------------------------------------------
   // methods
+
+  // adds players to existing game
+  addPlayer(player) {
+    return null;
+  }
 
   // pushes each move object in pending to the history array
   // empties the pending move array
@@ -100,6 +106,8 @@ class Goofspiel extends Game {
   }
 }
 
+module.exports = { activePlayers, activeGames, Goofspiel };
+
 
 
 
@@ -110,42 +118,42 @@ class Goofspiel extends Game {
 
 
 // players join server
-const p1 = new Player(1, 'name1');
-const p2 = new Player(2, 'name2');
-activePlayers.addPlayer(p1);
-activePlayers.addPlayer(p2);
+// const p1 = new Player(1, 'name1');
+// const p2 = new Player(2, 'name2');
+// activePlayers.addPlayer(p1);
+// activePlayers.addPlayer(p2);
 
 // new game created
-activeGames.addGame('goofspiel');
+// activeGames.addGame('goofspiel');
 
-// players join game (will need to write a function for this)
-activeGames['1'].players.push(p1);
-activeGames['1'].players.push(p2);
+// // players join game (will need to write a function for this)
+// activeGames['1'].players.push(p1);
+// activeGames['1'].players.push(p2);
 
-// game deals deck out to players
-activeGames['1'].deal();
+// // game deals deck out to players
+// activeGames['1'].deal();
 
-// player 1 plays a card
-// the card is moved from their hand to the table, and the move is logged into the pendingMoves array
-// player 2 does the same thing
-activeGames['1'].pendingMoves.push(activeGames['1'].players[0].playCard(activeGames['1'].players[0].hand.cards[0], activeGames['1'].table.cards));
-activeGames['1'].pendingMoves.push(activeGames['1'].players[1].playCard(activeGames['1'].players[0].hand.cards[0], activeGames['1'].table.cards));
+// // player 1 plays a card
+// // the card is moved from their hand to the table, and the move is logged into the pendingMoves array
+// // player 2 does the same thing
+// activeGames['1'].pendingMoves.push(activeGames['1'].players[0].playCard(activeGames['1'].players[0].hand.cards[0], activeGames['1'].table.cards));
+// activeGames['1'].pendingMoves.push(activeGames['1'].players[1].playCard(activeGames['1'].players[0].hand.cards[0], activeGames['1'].table.cards));
 
-// the pending moves are then evaluated (need to write logic for nextState method)
-// activeGames['1'].nextState(pendingMoves);
+// // the pending moves are then evaluated (need to write logic for nextState method)
+// // activeGames['1'].nextState(pendingMoves);
 
-// moves are then pushed from pending to history
-activeGames['1'].pushPendingToHistory();
+// // moves are then pushed from pending to history
+// activeGames['1'].pushPendingToHistory();
 
-// REPEAT UNTIL GAME IS OVER
-// isGameDone();
+// // REPEAT UNTIL GAME IS OVER
+// // isGameDone();
 
-// when game is finished, remove from activeGames
-activeGames.removeGame(activeGames['1']);
+// // when game is finished, remove from activeGames
+// activeGames.removeGame(activeGames['1']);
 
-// when players decide they are finished, they log out
-activePlayers.removePlayer(p1);
-activePlayers.removePlayer(p2);
+// // when players decide they are finished, they log out
+// activePlayers.removePlayer(p1);
+// activePlayers.removePlayer(p2);
 
-console.log(activePlayers);
-console.log(activeGames);
+// console.log(activePlayers);
+// console.log(activeGames);

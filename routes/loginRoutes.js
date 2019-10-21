@@ -29,6 +29,9 @@ module.exports = (db) => {
           // create session cookie
           req.session.username = req.body.username;
 
+          // if we have time, make this an encrypted token later (STRETCH)
+          res.cookie(req.body.username);
+
           res.redirect('/');
         } else {
           res.render('login', {loginAttempt: false});
