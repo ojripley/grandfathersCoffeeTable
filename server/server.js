@@ -13,10 +13,12 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 // PG database client/connection setup
-const { Pool } = require('pg');
-const dbParams = require('../lib/db.js');
-const db = new Pool(dbParams);
-db.connect();
+// const { Pool } = require('pg');
+// const dbParams = require('../lib/db.js');
+// const db = new Pool(dbParams);
+// db.connect();
+
+const db = require('../db/queries/queries');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -38,13 +40,14 @@ app.use(express.static("public"));
 const usersRoutes = require("../routes/users");
 const widgetsRoutes = require("../routes/widgets");
 const loginRoutes = require('../routes/loginRoutes');
+const registerRoutes = require('../routes/registerRoutes');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
-app.use('/login', loginRoutes(db));
-app.use('/register', registerRoutes(db));
+app.use('/', loginRoutes(db));
+app.use('/', registerRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 
