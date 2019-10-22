@@ -66,9 +66,13 @@ $(() => {
 
     let pendingCards = ``;
     for (let move of data.pendingMoves) {
-      //Visibility state must be set based on goofspiel logic
+      //Pending moves are face down
       let card = move.card;
-      pendingCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content" id="${card.name}"></img>`;
+      if (data.pendingMoves.length < data.players.length) {
+        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content"></img>`;
+      } else {
+        tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content"></img>`;
+      }
     }
 
 
