@@ -126,11 +126,13 @@ const addMatch = function(gametype) {
 // insert results for one user in a match
 const addResult = function(matchId, user) {
 
+  console.log(user);
+
   const queryVars = [matchId, user.id, user.score, user.currentPosition];
 
   return db.query(`
-  INSERT INTO results(match_id, user_id, score, position)
-  VALUES(8, 1, 200, 1);
+  INSERT INTO results(match_id, user_id, score, finished_position)
+  VALUES($1, $2, $3, $4);
   `, queryVars)
     .then(res => {
       return res.rows;

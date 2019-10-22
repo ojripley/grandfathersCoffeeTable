@@ -129,7 +129,7 @@ io.on('connection', (client) => {
 
                 // send game details to client, and player join status to room
                 client.emit('newGame', { gameId: game, players: activeGames[game].players });
-                io.to(game).emit('join', { gameId: game, numberOfPlayers: game.players.length });
+                io.to(game).emit('join', { gameId: game, numberOfPlayers: activeGames[game].players.length });
 
                 isInGame = true;
 
@@ -152,6 +152,7 @@ io.on('connection', (client) => {
                   // deal cards and show game again
                   setTimeout(() => {
                     activeGames[game].deal();
+                    console.log('\n\nsending dealt game to players....\n\n');
                     io.to(game).emit('gameView', {
                       players: activeGames[game].players,
                       table: activeGames[game].table,
@@ -159,7 +160,7 @@ io.on('connection', (client) => {
                       deck: activeGames[game].deck,
                       gameId: game,
                     });
-                  });
+                  }, 2000);
                 }
 
 
@@ -223,59 +224,90 @@ io.on('connection', (client) => {
 
 
   client.on('move', (data) => {
+    console.log('recieving move:');
     console.log(data);
 
     const game = data.gameId;
-    const move = data.move;
+    let move = data.move;
 
     if (activeGames[game].isValidMove(move)) {
       // add the submitted move to pending
+
+      const player = activeGames[game].players.filter(player => player.username === move.player.username);
+      // const card = player[0].hand.cards.filter(cardToRemove => cardToRemove.name === move.card.name);
+
+      // move = player[0].playCard(card, activeGames[game].table);
+
+      for (let card of player[0].hand.cards) {
+        if (move.card.name === card.name) {
+          player[0].hand.cards.splice(player[0].hand.cards.indexOf(card), 1);
+        }
+      }
+
+
       activeGames[game].pendingMoves.push(move);
 
       // if the required moves for the round have all been submitted
       if (activeGames[game].areAllMovesSubmitted()) {
 
+        console.log('\nmoves have been submitted\n');
+
         // evaluate the move scores and push moves to history
         activeGames[game].score();
         activeGames[game].pushPendingToHistory();
 
+        console.log('\n\nplayer one hand:\n');
+        console.log(activeGames[game].players[0].hand.cards);
+
         // evaluate if game and case has been reached
-        if (activeGames.isGameDone()) {
+        if (activeGames[game].isGameDone()) {
 
-          // show results view to players
-          io.to(game).emit('resultsView', { gameId: game, players: activeGames[game].players });
+          // broadcast the game to all players
+          io.to(game).emit('gameView', {
+            players: activeGames[game].players,
+            table: activeGames[game].table,
+            pendingMoves: activeGames[game].pendingMoves,
+            deck: activeGames[game].deck,
+            gameId: game,
+          });
 
-          // write results to database
-          db.addMatch(activeGames[game].gametype)
-            .then(res => {
-              let matchId = res.rows[0].id;
-              for (let player of activeGames[game].players) {
-                db.addResult(matchId, player)
-                  .then(() => {
-                    console.log('added match and result rows of game ', game);
-                  })
-                  .catch(error => {
-                    console.error(error);
-                  });
-              }
-            })
-            .catch(error => {
-              console.error(error);
-            });
 
-          // remove game from server memory
-          delete activeGames[game];
+          setTimeout(() => {
+            // show results view to players
+            io.to(game).emit('resultsView', { gameId: game, players: activeGames[game].players });
+
+            // write results to database
+            db.addMatch(activeGames[game].gameType)
+              .then(res => {
+                console.log(res);
+                let matchId = res[0].id;
+                for (let player of activeGames[game].players) {
+                  db.addResult(matchId, player)
+                    .then(() => {
+                      console.log('added match and result rows of game ', game);
+                      // remove game from server memory
+                      delete activeGames[game];
+                    })
+                    .catch(error => {
+                      console.error(error);
+                    });
+                }
+              })
+              .catch(error => {
+                console.error(error);
+              });
+          }, 2000);
+        } else {
+          // broadcast the game to all players
+          io.to(game).emit('gameView', {
+            players: activeGames[game].players,
+            table: activeGames[game].table,
+            pendingMoves: activeGames[game].pendingMoves,
+            deck: activeGames[game].deck,
+            gameId: game,
+          });
         }
       }
-
-      // broadcast the game to all players
-      io.to(game).emit('gameView', {
-        players: activeGames[game].players,
-        table: activeGames[game].table,
-        pendingMoves: activeGames[game].pendingMoves,
-        deck: activeGames[game].deck,
-        gameId: game,
-      });
     }
   });
 
