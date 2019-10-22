@@ -13,7 +13,7 @@ $(() => {
       console.log(window.activeGames[game])
       window.activeGames[game].view.detach();
     }
-    // $goofspiel.detach();
+
     console.log(`requesting the ${item} screen `)
     switch (item.substring(0, 4)) {
       case 'lead':

@@ -1,17 +1,12 @@
 
 
 $(() => {
-  const myUsername = extractUserName(document.cookie);
+  window.myUsername = extractUserName(document.cookie);
 
   //Nav bar logic:
-  $('#menu-bars').on('click', (event) => {
+  $('#menu-bars').on('click', () => {
     $('#navbar').toggleClass('hidden', 500);
   });
-
-
-  // $(function() {
-  //   $("#2C").draggable();
-  // });
 
   // let socket = io.connect('172.46.3.253:8080');
 
@@ -41,6 +36,14 @@ $(() => {
   let player;
   socket.on('gameView', (data) => {
     console.log("RENDER THIS:");
+
+    if (window.curGame === data.gameId) {
+      //Currently on the game screen
+      views_manager.show(data.gameId, data);
+    } else {
+      //Not on the gamescreen --> just update the view but don't show it.
+      goofspiel.updateView(window.activeGames[data.gameId].view, data);
+    }
 
     console.log(data); //Store the view based on the data provided
     console.log('Player:')
@@ -93,9 +96,10 @@ $(() => {
 
   });
 
-  socket.on('playerJoin', (data) => {
+  socket.on('join', (data) => {
     console.log("PLAYER HAS JOINED");
     console.log(data);
+    //Update the progress bar
   });
 
   socket.on('leaderBoard', (data) => {
