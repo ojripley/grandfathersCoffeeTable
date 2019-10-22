@@ -283,6 +283,64 @@ nav .menu-list {
   }
 }
 
+#matchHistoryContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#matchHistoryContainer form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+#matchHistoryContainer form .form-control {
+  width: 200px;
+}
+
+#matchHistoryContainer h1 {
+  margin-top: 20px;
+}
+
+#matchHistoryContainer table {
+  margin: 2em;
+  display: block;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  height: 500px;
+  overflow-y: scroll;
+  width: 70%;
+}
+
+@media screen and (min-width: 1024px) {
+  #matchHistoryContainer {
+    position: absolute;
+    left: 25%;
+    width: 75%;
+  }
+}
+
 .playerHand {
   display: -webkit-box;
   display: -ms-flexbox;

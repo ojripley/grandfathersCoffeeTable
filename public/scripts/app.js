@@ -32,7 +32,7 @@ $(() => {
 
 
 
-  //let socket = io.connect('172.46.3.253:8080');
+  // let socket = io.connect('172.46.3.253:8080');
 
   //Temporary
   let socket = io.connect('192.168.43.107:8080');

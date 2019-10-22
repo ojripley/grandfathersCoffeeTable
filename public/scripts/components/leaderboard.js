@@ -1,6 +1,83 @@
 $(() => {
   //Need to generate this for each game. May need to make a game container first
-  window.$leaderboard = $(`<p>HELLO</p>`);
+  window.$leaderboard = $(`
+<div id="leaderboardContainer">
+  <h1>Leaderboard </h1>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="leaderboardDropdown" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+      Goofspiel
+    </button>
+    <div class="dropdown-menu" aria-labelledby="leaderboardDropdown">
+      <a class="dropdown-item" id="goofLead">Goofspiel</a>
+      <a class="dropdown-item" id="warLead">War</a>
+    </div>
+  </div>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Username</th>
+        <th scope="col">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Owen Ripley</td>
+        <td>999</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>TH</td>
+        <td>998</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>John Snow</td>
+        <td>997</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Arya Stark</td>
+        <td>997</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Arya Stark</td>
+        <td>997</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Arya Stark</td>
+        <td>997</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Arya Stark</td>
+        <td>997</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Arya Stark</td>
+        <td>997</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Arya Stark</td>
+        <td>997</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Arya Stark</td>
+        <td>997</td>
+      </tr>
+
+      </tr>
+    </tbody>
+  </table>
+</div>`);
 
 
   $('#goofLead').on('click', () => {
