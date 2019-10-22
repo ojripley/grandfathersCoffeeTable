@@ -161,7 +161,11 @@ class Goofspiel extends Game {
   }
 
   isGameDone() {
+    if (this.deck.cards.length === 0) {
+      return true;
+    }
 
+    return false;
   }
 }
 

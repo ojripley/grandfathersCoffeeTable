@@ -135,7 +135,9 @@ io.on('connection', (client) => {
                 // deal cards and start game
                 activeGames[game].deal();
 
-                for (let i = 0; i < 13; i++) {
+                let playBall = true;
+
+                while (playBall) {
                   console.log(activeGames[game].table.cards.length);
                   activeGames[game].pendingMoves.push(activeGames[game].players[0].playCard(activeGames[game].players[0].hand.selectRandom(), activeGames[game].table.cards));
                   activeGames[game].pendingMoves.push(activeGames[game].players[1].playCard(activeGames[game].players[1].hand.selectRandom(), activeGames[game].table.cards));
@@ -147,7 +149,11 @@ io.on('connection', (client) => {
 
                   activeGames[game].pushPendingToHistory();
 
-                  activeGames[game].deck.moveCard(activeGames[game].deck.selectRandom(), activeGames[game].table.cards);
+                  if (activeGames[game].isGameDone()) {
+                    break;
+                  } else {
+                    activeGames[game].deck.moveCard(activeGames[game].deck.selectRandom(), activeGames[game].table.cards);
+                  }
                 }
 
                 console.log(`\n the winner is... ${activeGames[game].players[0].username} \n\n`);
