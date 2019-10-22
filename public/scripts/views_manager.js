@@ -11,6 +11,7 @@ $(() => {
     console.log(`requesting the ${item} screen `)
     switch (item.substring(0, 4)) {
       case 'lead':
+        window.curGame = item;
         leaderboard.updateTable(data);
         $leaderboard.appendTo($main);
         break;
