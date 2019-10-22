@@ -4,6 +4,16 @@ const extractUserName = function(str) {
 
 };
 
+//Given an array of players, find the one that matches a given username
+const findPlayer = function(players, username) {
+  for (let player in players) {
+    if (player.username = username) {
+      return player;
+    }
+  }
+  return undefined; //Username could not be found
+}
+
 $(() => {
   const myUsername = extractUserName(document.cookie);
 
@@ -20,22 +30,18 @@ $(() => {
   });
 
 
-  // $('.card').on('click', (event) => {
-  //   // let $chosenCard = $(event.target);
-  //   let cardName = event.target.id;
-  //   console.log(cardName);
-  //   // console.log($chosenCard.attr("id"));
-  //   console.log('click');
-  //   //Makes a move if it is the player's turn
-
-  // });
 
 
-  let socket = io.connect('172.46.3.253:8080');
+  //let socket = io.connect('172.46.3.253:8080');
+
+  //Temporary
+  let socket = io.connect('192.168.43.107:8080');
 
   $('#high-scores').on('click', (event) => {
+    //Load highscores
     console.log("requesting the high scores");
     socket.emit('requestLeaderBoard', 'goofspiel');
+    views_manager.show('leaderboard');
   });
 
   $("#goo12").on('click', (event) => {
@@ -63,7 +69,7 @@ $(() => {
     console.log(data); //Store the view based on the data provided
     console.log('Player:')
     console.log(data.player); //Array of players
-    player = data.player[0];
+    player = findPlayer(data.player);
     console.log('Table');
     console.log(data.table);
     console.log('opponents');
@@ -92,17 +98,14 @@ $(() => {
     console.log(data);
   });
 
-  //When a card is clicked call this:
-  $("#AD").on('click', (event) => {
-    console.log('uh');
-    socket.emit('move', 'hello'); //Send the client's player object
-    /*
-{
-      Player: player,
-      Card: player.hand.cards[0]
-    }
 
-    */
+  $('.card').on('click', (event) => {
+    // let $chosenCard = $(event.target);
+    let cardName = event.target.id;
+    console.log(cardName);
+    console.log('click');
+    socket.emit('move', 'hello'); //Send the client's player object & card
+
   });
 
   socket.emit('msg', "hi there");
@@ -110,12 +113,6 @@ $(() => {
     console.log('This is the end of game data (leaderboard)');
     console.log(data);
   });
-
-  // socket.on('requestHistory'){
-
-  // }
-  //onMove send game id
-
 
   socket.emit('requestHistory', myUsername);
   socket.on('history', (data) => {
@@ -136,9 +133,6 @@ $(() => {
   socket.on('connection', (data) => {
     console.log(data);
   })
-
-
-
 
 });
 

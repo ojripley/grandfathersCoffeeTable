@@ -14,6 +14,7 @@ $navCol: #c7c2b5;
 @import "./registration.scss";
 @import "./nav.scss";
 @import "./gameboard.scss";
+@import "./leaderboard.scss";
 @import "./components.scss";
 
 body {
@@ -25,7 +26,7 @@ body {
   }
 }
 html,
-#container {
+#main-content {
   height: 100%;
   width: 100%;
 }
