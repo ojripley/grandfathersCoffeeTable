@@ -110,6 +110,45 @@ class Goofspiel extends Game {
   }
 
   score() {
+    const prize = this.table.cards[0];
+
+    console.log(`the prize is ${prize}\n\n`);
+
+    let highestBidValue = 0;
+    let highestBiddingMoves = [];
+
+    for (let move of this.pendingMoves) {
+
+      console.log(`the current evaluated move is ${move.card.value}\n\n`);
+
+      if (move.card.value > highestBidValue) {
+        highestBiddingMoves = [];
+        highestBiddingMoves.push(move);
+        highestBidValue = highestBiddingMoves[0].card.value;
+      } else if (move.card.value === highestBidValue) {
+        highestBiddingMoves.push(move);
+      }
+    }
+
+    console.log(`the highest bid is ${highestBidValue}\n\n`);
+
+    if (highestBiddingMoves.length === 1) {
+      highestBiddingMoves[0].player.score += (highestBidValue + prize.value);
+      console.log(`the winners score: ${highestBiddingMoves[0].player.username} ${highestBiddingMoves[0].player.score}`);
+    }
+
+    for (let i = 0; i < this.players.length; i++) {
+      for (let j = 1; j < this.players.length; j++) {
+        if (this.players[j].score > this.players[i].score) {
+          let temp = this.players[j];
+          this.players[j] = this.players[i];
+          this.players[i] = temp;
+        }
+      }
+      this.players[i].currentPosition = this.players.indexOf[this.players[i]];
+    }
+
+    this.table.cards.pop();
 
   }
 

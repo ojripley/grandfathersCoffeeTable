@@ -129,8 +129,28 @@ io.on('connection', (client) => {
                 client.emit('newGame', { gameId: game, players: activeGames[game].players });
                 isInGame = true;
 
+                console.log(activeGames);
+                console.log(activeGames[game].deck.cards.length);
+
                 // deal cards and start game
                 activeGames[game].deal();
+
+                for (let i = 0; i < 13; i++) {
+                  console.log(activeGames[game].table.cards.length);
+                  activeGames[game].pendingMoves.push(activeGames[game].players[0].playCard(activeGames[game].players[0].hand.selectRandom(), activeGames[game].table.cards));
+                  activeGames[game].pendingMoves.push(activeGames[game].players[1].playCard(activeGames[game].players[1].hand.selectRandom(), activeGames[game].table.cards));
+                  activeGames[game].score();
+                  console.log(activeGames[game].players[0].username + ' ' + activeGames[game].players[0].score);
+                  console.log(activeGames[game].players[1].username + ' ' + activeGames[game].players[1].score + '\n');
+
+                  console.log('deck size ' + activeGames[game].deck.cards.length + '\n\n');
+
+                  activeGames[game].pushPendingToHistory();
+
+                  activeGames[game].deck.moveCard(activeGames[game].deck.selectRandom(), activeGames[game].table.cards);
+                }
+
+                console.log(`\n the winner is... ${activeGames[game].players[0].username} \n\n`);
 
                 break;
               }
@@ -155,20 +175,28 @@ io.on('connection', (client) => {
   client.on('move', (data) => {
     console.log(data);
 
-    // uncomment for move handling
-
+    // add the submitted move to pending
     activeGames[data.gameId].pendingMoves.push(data.move);
-    if (activeGames[data.gameId].pendingMoves.length === activeGames[data.gameId].players.length) {
+
+    // if the required moves for the round have all been submitted
+    if (activeGames[data.gameId].allMovesSubmitted()) {
+
+      // evaluate the move scores and push moves to history
+      activeGames[data.gameId].score();
       activeGames[data.gameId].pushPendingToHistory();
-      // broadcast the game to all players
-      io.to('room').emit('gameView', {
-        players: activeGames[data.gameId].players,
-        table: activeGames[data.gameId].table,
-        deck: activeGames[data.gameId].deck,
-        gameId: data.gameId,
-        currentPlayerId: activeGames[data.gameId].currentPlayer
-      });
+
+      // evaluate if game and case has been reached
+      activeGames.isGameDone();
     }
+
+    // broadcast the game to all players
+    io.to(data.gameId).emit('gameView', {
+      players: activeGames[data.gameId].players,
+      table: activeGames[data.gameId].table,
+      deck: activeGames[data.gameId].deck,
+      gameId: data.gameId,
+      currentPlayerId: activeGames[data.gameId].currentPlayer
+    });
   });
 
   // client requests history of a user (data = a username)
