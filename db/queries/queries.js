@@ -2,7 +2,6 @@
 const db = require('./poolSetup');
 
 
-
 // retrieves a table row with username if exists. Row will be empty otherwise
 const doesUserExist = function(username) {
 
@@ -127,10 +126,10 @@ const addMatch = function(gametype) {
 // insert results for one user in a match
 const addResult = function(matchId, user) {
 
-  const queryVars = [matchId, user.id, user.score, user.posiiton];
+  const queryVars = [matchId, user.id, user.score, user.currentPosition];
 
   return db.query(`
-  INSERT INTO results($1, $2, $3, $4)
+  INSERT INTO results(match_id, user_id, score, position)
   VALUES(8, 1, 200, 1);
   `, queryVars)
     .then(res => {

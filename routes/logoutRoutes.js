@@ -5,7 +5,7 @@ const router = express.Router();
 module.exports = () => {
   router.post('/logout', (req, res) => {
     // delete session cookie by setting it to null
-    req.session.username = null;
+    delete req.session.username;
     res.render('login', {loginAttempt: true});
   });
 
