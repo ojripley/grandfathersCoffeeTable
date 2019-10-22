@@ -92,9 +92,9 @@ io.on('connection', (client) => {
   // emits are server -> client
   // ons are client -> server
   client.emit('msg', 'Hello from server');
-  client.on('msg', (data) => {
-    console.log(data);
-  });
+  // client.on('msg', (data) => {
+  //   console.log(data);
+  // });
 
   // when a client requests to play a game
   client.on('requestGame', (data) => {
