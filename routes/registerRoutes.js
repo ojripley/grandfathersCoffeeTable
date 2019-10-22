@@ -46,6 +46,5 @@ module.exports = (db) => {
         console.error(error.stack);
       });
   });
-
   return router;
 };
