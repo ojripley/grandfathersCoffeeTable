@@ -126,7 +126,7 @@ $(() => {
   socket.emit('requestMatchDetails', 1);
 
   socket.on('matchDetails', (data) => {
-    console.log('Here is the history');
+    console.log('Here are the match details');
     console.log(data);
   })
 
