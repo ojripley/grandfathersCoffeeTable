@@ -12,7 +12,7 @@ const morgan     = require('morgan');
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const cookieParser = require('cookie-session');
-const { activePlayers, activeGames, Goofspiel } = require('./objects/managers.js');
+const { activePlayers, activeGames } = require('./objects/managers.js');
 
 // PG database client/connection setup
 // const { Pool } = require('pg');
@@ -73,83 +73,158 @@ server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
-///////////////////////////////////////
-// server side socket communications //
-///////////////////////////////////////
+
+
+
+
+
+
+
+/////////////////////////////////////////
+// !server side socket communications! //
+/////////////////////////////////////////
+
+
+
 io.on('connection', (client) => {
   console.log(`client connected: ${client}`);
 
   // emits are server -> client
   // ons are client -> server
-
   client.emit('msg', 'Hello from server');
-  client.on('msg', (data) => {
-    console.log(data);
-  });
+  // client.on('msg', (data) => {
+  //   console.log(data);
+  // });
 
+  // when a client requests to play a game
   client.on('requestGame', (data) => {
 
-    io.to('room').emit('msg', 'Greetings, clients!');
-    console.log('data from clients:', data);
+    console.log('requestGame data:', data);
 
-    // activeGames[game].id.substring(0, 3) === 'goof'
+    db.fetchProfile(data.username)
+      .then(res => {
+        // flag will be true when the player has beem added to a game
+        let isInGame = false;
+        // need to make a check for if game already exists
+        // loop over all existing games
+        for (let game in activeGames) {
+          // if the current game matches the game type that the player wants
+          if (game.substring(0, 4) === data.gametype.substring(0, 4)) {
 
-    activeGames.addGame(data.gametype);
-    // need to make a check for if game already exists
-    for (let game in activeGames) {
-      console.log('GAME ', game);
+            // if the game isn't full yet
+            if (activeGames[game].players.length < 2 && !isInGame) {
+              let isAlreadyParticipent = false;
+              for (let player of activeGames[game].players) {
+                console.log(`is ${data.username} ${player.username}`);
+                if (player.username === data.username) {
+                  isAlreadyParticipent = true;
+                }
+              }
+              // if the player is not already part of that game
+              if (!isAlreadyParticipent) {
+                // add the player
+                client.join(activeGames[game].id);
+                console.log(`JOINING a game with the id: ${activeGames[game].id}`);
+                activeGames[game].addPlayer(res[0].id, res[0].username);
+                client.emit('newGame', { gameId: game, players: activeGames[game].players });
+                isInGame = true;
 
-      // if a game exists and is not full
-      if (game.substring(0, 4) === 'goof') {
-        console.log(activeGames[game].id);
+                console.log(activeGames);
+                console.log(activeGames[game].deck.cards.length);
 
-        if (activeGames[game].players.length < 2) {
-          client.join(activeGames[game].id);
-          client.emit('newGame', { gameId: game, players: activeGames[game].players });
-          // replace the emit data with gameId and players
-          break;
-        } else {
-          client.join(activeGames.addGame(data.gametype));
-          client.emit('newGame', { gameId: game, players: activeGames[game].players });
-          // replace the emit data with gameId and players
-          break;
+                // deal cards and start game
+                activeGames[game].deal();
+
+                for (let i = 0; i < 13; i++) {
+                  console.log(activeGames[game].table.cards.length);
+                  activeGames[game].pendingMoves.push(activeGames[game].players[0].playCard(activeGames[game].players[0].hand.selectRandom(), activeGames[game].table.cards));
+                  activeGames[game].pendingMoves.push(activeGames[game].players[1].playCard(activeGames[game].players[1].hand.selectRandom(), activeGames[game].table.cards));
+                  activeGames[game].score();
+                  console.log(activeGames[game].players[0].username + ' ' + activeGames[game].players[0].score);
+                  console.log(activeGames[game].players[1].username + ' ' + activeGames[game].players[1].score + '\n');
+
+                  console.log('deck size ' + activeGames[game].deck.cards.length + '\n\n');
+
+                  activeGames[game].pushPendingToHistory();
+
+                  activeGames[game].deck.moveCard(activeGames[game].deck.selectRandom(), activeGames[game].table.cards);
+                }
+
+                console.log(`\n the winner is... ${activeGames[game].players[0].username} \n\n`);
+
+                break;
+              }
+            }
+          }
         }
-      }
-    }
+
+        if (!isInGame) {
+          // player wasn't added to an existing game and needs to be put into a new one
+          const newGame = activeGames.addGame(data.gametype);
+          console.log(`ADDING a new game with the id: ${newGame.id}`);
+          client.join(newGame.id);
+          newGame.addPlayer(res[0].id, res[0].username);
+          client.emit('newGame', { gameId: newGame.id, players: newGame.players });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   });
 
   client.on('move', (data) => {
     console.log(data);
 
-    // uncomment for move handling
+    // add the submitted move to pending
+    activeGames[data.gameId].pendingMoves.push(data.move);
 
-    // activeGames[data.gameId].pendingMoves.push(data.move);
-    // if (activeGames[data.gameId].pendingMoves.length === activeGames[data.gameId].players.length) {
-    //   activeGames[data.gameId].pushPendingToHistory();
-    //   // broadcast the game to all players
-    //   io.to('room').emit('gameView', {
-    //     players: activeGames[data.gameId].players,
-    //     table: activeGames[data.gameId].table,
-    //     deck: activeGames[data.gameId].deck,
-    //     gameId: data.gameId,
-    //     currentPlayerId: activeGames[data.gameId].currentPlayer
-    //   });
-    // }
+    // if the required moves for the round have all been submitted
+    if (activeGames[data.gameId].allMovesSubmitted()) {
+
+      // evaluate the move scores and push moves to history
+      activeGames[data.gameId].score();
+      activeGames[data.gameId].pushPendingToHistory();
+
+      // evaluate if game and case has been reached
+      activeGames.isGameDone();
+    }
+
+    // broadcast the game to all players
+    io.to(data.gameId).emit('gameView', {
+      players: activeGames[data.gameId].players,
+      table: activeGames[data.gameId].table,
+      deck: activeGames[data.gameId].deck,
+      gameId: data.gameId,
+      currentPlayerId: activeGames[data.gameId].currentPlayer
+    });
   });
 
   // client requests history of a user (data = a username)
   client.on('requestHistory', (data) => {
-    console.log(data);
-    client.emit('history', db.fetchUserHistory(data));
+    console.log('requestHistory data:', data);
+
+    db.fetchUserHistory(data)
+      .then(res => {
+        client.emit('history', res);
+      });
   });
 
   client.on('requestMatchDetails', (data) => {
-    console.log(data);
-    client.emit('matchDetails', db.fetchMatchDetails(data));
+    console.log('requestMatchDetails data:', data);
+
+    db.fetchMatchDetails(data)
+      .then(res => {
+        client.emit('matchDetails', res);
+      });
   });
 
   client.on('requestLeaderBoard', (data) => {
-    client.emit('leaderBoard', db.fetchLeaderBoard(data));
+    console.log('requestLeaderBoard data:', data);
+
+    db.fetchLeaderBoard(data)
+      .then(res => {
+        client.emit('leaderBoard', res);
+      });
   });
 
   // CHANGE ROOM TO DYNMAIC ROOM NAME BASED ON gameId
