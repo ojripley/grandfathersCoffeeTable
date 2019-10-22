@@ -132,31 +132,60 @@ io.on('connection', (client) => {
                 console.log(activeGames);
                 console.log(activeGames[game].deck.cards.length);
 
-                // deal cards and start game
-                activeGames[game].deal();
+                // we can make a socket event for this if a client wants to start a game manually
+                activeGames[game].start();
 
-                let playBall = true;
+                // show the game to clients
+                if (activeGames[game].gameState === 'playing') {
+                  io.to(game).emit('gameView', {
+                    players: activeGames[game].players,
+                    table: activeGames[game].table,
+                    pendingMoves: activeGames[game].pendingMoves,
+                    deck: activeGames[game].deck,
+                    gameId: game,
+                  });
 
-                while (playBall) {
-                  console.log(activeGames[game].table.cards.length);
-                  activeGames[game].pendingMoves.push(activeGames[game].players[0].playCard(activeGames[game].players[0].hand.selectRandom(), activeGames[game].table.cards));
-                  activeGames[game].pendingMoves.push(activeGames[game].players[1].playCard(activeGames[game].players[1].hand.selectRandom(), activeGames[game].table.cards));
-                  activeGames[game].score();
-                  console.log(activeGames[game].players[0].username + ' ' + activeGames[game].players[0].score);
-                  console.log(activeGames[game].players[1].username + ' ' + activeGames[game].players[1].score + '\n');
-
-                  console.log('deck size ' + activeGames[game].deck.cards.length + '\n\n');
-
-                  activeGames[game].pushPendingToHistory();
-
-                  if (activeGames[game].isGameDone()) {
-                    break;
-                  } else {
-                    activeGames[game].deck.moveCard(activeGames[game].deck.selectRandom(), activeGames[game].table.cards);
-                  }
+                  // deal cards and show game again
+                  setTimeout(() => {
+                    activeGames[game].deal();
+                    io.to(game).emit('gameView', {
+                      players: activeGames[game].players,
+                      table: activeGames[game].table,
+                      pendingMoves: activeGames[game].pendingMoves,
+                      deck: activeGames[game].deck,
+                      gameId: game,
+                    });
+                  });
                 }
 
-                console.log(`\n the winner is... ${activeGames[game].players[0].username} \n\n`);
+
+
+
+
+
+
+                // let playBall = true;
+
+                // while (playBall) {
+                //   console.log(activeGames[game].table.cards.length);
+                //   activeGames[game].pendingMoves.push(activeGames[game].players[0].playCard(activeGames[game].players[0].hand.selectRandom(), activeGames[game].table.cards));
+                //   activeGames[game].pendingMoves.push(activeGames[game].players[1].playCard(activeGames[game].players[1].hand.selectRandom(), activeGames[game].table.cards));
+                //   activeGames[game].score();
+                //   console.log(activeGames[game].players[0].username + ' ' + activeGames[game].players[0].score);
+                //   console.log(activeGames[game].players[1].username + ' ' + activeGames[game].players[1].score + '\n');
+
+                //   console.log('deck size ' + activeGames[game].deck.cards.length + '\n\n');
+
+                //   activeGames[game].pushPendingToHistory();
+
+                //   if (activeGames[game].isGameDone()) {
+                //     break;
+                //   } else {
+                //     activeGames[game].deck.moveCard(activeGames[game].deck.selectRandom(), activeGames[game].table.cards);
+                //   }
+                // }
+
+                // console.log(`\n the winner is... ${activeGames[game].players[0].username} \n\n`);
 
                 break;
               }
@@ -178,32 +207,111 @@ io.on('connection', (client) => {
       });
   });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   client.on('move', (data) => {
     console.log(data);
 
-    // add the submitted move to pending
-    activeGames[data.gameId].pendingMoves.push(data.move);
+    const game = data.gameId;
+    const move = data.move;
 
-    // if the required moves for the round have all been submitted
-    if (activeGames[data.gameId].allMovesSubmitted()) {
+    if (activeGames[game].isValidMove(move)) {
+      // add the submitted move to pending
+      activeGames[game].pendingMoves.push(move);
 
-      // evaluate the move scores and push moves to history
-      activeGames[data.gameId].score();
-      activeGames[data.gameId].pushPendingToHistory();
+      // if the required moves for the round have all been submitted
+      if (activeGames[game].areAllMovesSubmitted()) {
 
-      // evaluate if game and case has been reached
-      activeGames.isGameDone();
+        // evaluate the move scores and push moves to history
+        activeGames[game].score();
+        activeGames[game].pushPendingToHistory();
+
+        // evaluate if game and case has been reached
+        if (activeGames.isGameDone()) {
+
+          // show results view to players
+          io.to(game).emit('resultsView', {gameId: game, players: activeGames[game].players});
+
+          // write results to database
+          db.addMatch(activeGames[game].gametype)
+            .then(res => {
+              let matchId = res.rows[0].id;
+              for (let player of activeGames[game].players) {
+                db.addResult(matchId, player)
+                  .then(() => {
+                    console.log('added match and result rows of game ', game);
+                  })
+                  .catch(error => {
+                    console.error(error);
+                  });
+              }
+            })
+            .catch(error => {
+              console.error(error);
+            });
+
+          // remove game from server memory
+          delete activeGames[game];
+        }
+      }
+
+      // broadcast the game to all players
+      io.to(game).emit('gameView', {
+        players: activeGames[game].players,
+        table: activeGames[game].table,
+        pendingMoves: activeGames[game].pendingMoves,
+        deck: activeGames[game].deck,
+        gameId: game,
+      });
     }
-
-    // broadcast the game to all players
-    io.to(data.gameId).emit('gameView', {
-      players: activeGames[data.gameId].players,
-      table: activeGames[data.gameId].table,
-      deck: activeGames[data.gameId].deck,
-      gameId: data.gameId,
-      currentPlayerId: activeGames[data.gameId].currentPlayer
-    });
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // client requests history of a user (data = a username)
   client.on('requestHistory', (data) => {

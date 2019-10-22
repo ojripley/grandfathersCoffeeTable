@@ -58,8 +58,10 @@ class Game {
     // ----------------------------------------------------------------------------
     // attributes
     this.id = id;
+    this.gameType = null;
     this.currentPlayer = null;
     this.players = [];
+    this.gameState = 'pending';
     this.table = new Stack([]);
     this.deck = new Stack(fullDeck);
     this.burntDeck = new Stack([]);
@@ -69,6 +71,11 @@ class Game {
 
   // ----------------------------------------------------------------------------
   // methods
+
+  // sets the game state to playable
+  start() {
+    this.gameState = 'playing';
+  }
 
   // adds new instance of a player to existing game
   addPlayer(id, username) {
@@ -88,6 +95,7 @@ class Goofspiel extends Game {
 
   constructor(id, fullDeck) {
     super(id, fullDeck);
+    this.gameType = 'goofspiel';
     this.table.faceUp = true;
   }
 
@@ -152,8 +160,19 @@ class Goofspiel extends Game {
 
   }
 
-  isMoveValid() {
+  isValidMove() {
+    if (this.gameState === 'playing') {
+      return true;
+    }
+    return false;
+  }
 
+  areAllMovesSubmitted() {
+    if (this.pendingMoves.length === this.players.length) {
+      return true;
+    }
+
+    return false;
   }
 
   nextState(pendingMoves) {
@@ -162,6 +181,7 @@ class Goofspiel extends Game {
 
   isGameDone() {
     if (this.deck.cards.length === 0) {
+      this.gameState === 'finished';
       return true;
     }
 
