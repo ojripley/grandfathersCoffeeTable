@@ -1,35 +1,17 @@
-const extractUserName = function(str) {
 
-  return str.split("=")[0];
-
-};
-
-//Given an array of players, find the one that matches a given username
-const findPlayer = function(players, username) {
-  for (let player in players) {
-    if (player.username = username) {
-      return player;
-    }
-  }
-  return undefined; //Username could not be found
-}
 
 $(() => {
   const myUsername = extractUserName(document.cookie);
 
-  console.log(document.cookie);
   //Nav bar logic:
   $('#menu-bars').on('click', (event) => {
     $('#navbar').toggleClass('hidden', 500);
   });
 
 
-  $(function() {
-    $("#2C").draggable();
-  });
-
-
-
+  // $(function() {
+  //   $("#2C").draggable();
+  // });
 
   // let socket = io.connect('172.46.3.253:8080');
 
@@ -53,13 +35,7 @@ $(() => {
   $(".request-game").on('click', (event) => {
     let gametype = event.target.id;
     console.log(`requesting a new game of ${gametype}`);
-
     socket.emit('requestGame', { gametype, username: myUsername });
-
-    console.log($("#game-list ul"));
-    //REMOVE THIS:
-    $("#game-list ul").append(`<li class="select-game" id="HI">$HI</li>
-    `);
   });
 
   let player;
@@ -84,10 +60,36 @@ $(() => {
 
   socket.on('newGame', (data) => {
     console.log("ADD THIS NEW GAME");
-
-    $("#game-list ul").add(`<li class="select-game" id="${data.gameid}">${data.gameid}</li>
-    `);
     console.log(data);
+
+
+    //Create a new game in the background (jquery object).
+    window.goofspiel.newGame(data.gameId);
+
+    let gameName;
+    switch (data.gameId.substring(0, 4)) {
+      case 'goof':
+        gameName = 'Goofspiel';
+        break;
+      case 'warr':
+        gameName = 'War';
+        break;
+      case 'seve':
+        gameName = 'Sevens';
+        break;
+      default:
+        gameName = '';
+        break;
+
+    }
+    //Append the game to the nav bar
+    $("#game-list ul").append(`<li class="select-game" id="${data.gameId}">Game ${Object.keys(window.activeGames).length} - ${gameName}</li>
+    `);
+
+    //Add a listener so that this button will show the generated view
+    $(`#${data.gameId}`).on('click', (event) => {
+      views_manager.show(data.gameId);
+    });
 
   });
 
@@ -102,14 +104,7 @@ $(() => {
   });
 
 
-  $('.card').on('click', (event) => {
-    // let $chosenCard = $(event.target);
-    let cardName = event.target.id;
-    console.log(cardName);
-    console.log('click');
-    socket.emit('move', 'hello'); //Send the client's player object & card
 
-  });
 
   socket.emit('msg', "hi there");
   socket.on('endGame', (data) => {
