@@ -67,9 +67,9 @@ class Game {
   // ----------------------------------------------------------------------------
   // methods
 
-  // adds players to existing game
-  addPlayer(player) {
-    return null;
+  // adds new instance of a player to existing game
+  addPlayer(id, username) {
+    this.players.push(new Player(id, username));
   }
 
   // pushes each move object in pending to the history array

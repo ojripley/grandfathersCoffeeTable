@@ -31,7 +31,7 @@ $(() => {
   // });
 
 
-  let socket = io.connect('172.46.3.253:8080');
+  let socket = io.connect('localhost:8080');
 
   $('#high-scores').on('click', (event) => {
     console.log("requesting the high scores");

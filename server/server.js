@@ -73,49 +73,87 @@ server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
-///////////////////////////////////////
-// server side socket communications //
-///////////////////////////////////////
+
+
+
+
+
+
+
+/////////////////////////////////////////
+// !server side socket communications! //
+/////////////////////////////////////////
+
+
+
 io.on('connection', (client) => {
   console.log(`client connected: ${client}`);
 
   // emits are server -> client
   // ons are client -> server
-
   client.emit('msg', 'Hello from server');
   client.on('msg', (data) => {
     console.log(data);
   });
 
+  // when a client requests to play a game
   client.on('requestGame', (data) => {
 
-    io.to('room').emit('msg', 'Greetings, clients!');
-    console.log('data from clients:', data);
+    console.log('requestGame data:', data);
 
-    // activeGames[game].id.substring(0, 3) === 'goof'
+    db.fetchProfile(data.username)
+      .then(res => {
 
-    activeGames.addGame(data.gametype);
-    // need to make a check for if game already exists
-    for (let game in activeGames) {
-      console.log('GAME ', game);
+        // flag will be true when the player has beem added to a game
+        let isInGame = false;
+        // need to make a check for if game already exists
+        // loop over all existing games
+        for (let game in activeGames) {
+          console.log('GAME ', game);
 
-      // if a game exists and is not full
-      if (game.substring(0, 4) === 'goof') {
-        console.log(activeGames[game].id);
+          // if the current game matches the game type that the player wants
+          if (game.substring(0, 4) === data.gametype.substring(0, 4)) {
+            console.log(activeGames[game].id);
 
-        if (activeGames[game].players.length < 2) {
-          client.join(activeGames[game].id);
-          client.emit('newGame', { gameId: game, players: activeGames[game].players });
-          // replace the emit data with gameId and players
-          break;
-        } else {
-          client.join(activeGames.addGame(data.gametype));
-          client.emit('newGame', { gameId: game, players: activeGames[game].players });
-          // replace the emit data with gameId and players
-          break;
+
+
+            // if the game isn't full yet
+            if (activeGames[game].players.length < 2 && !isInGame) {
+              let isAlreadyParticipent = false;
+              for (let player of activeGames[game].players) {
+                console.log(`is ${data.username} ${player.username}`);
+                if (player.username === data.username) {
+                  isAlreadyParticipent = true;
+                }
+              }
+              // if the player is not already part of that game
+              if (!isAlreadyParticipent) {
+                // add the player
+                client.join(activeGames[game].id);
+                activeGames[game].addPlayer(res[0].id, res[0].username);
+                client.emit('newGame', { gameId: game, players: activeGames[game].players });
+                isInGame = true;
+                break;
+              }
+            }
+          }
         }
-      }
-    }
+
+        console.log(isInGame);
+
+        if (!isInGame) {
+          // player wasn't added to an existing game and needs to be put into a new one
+          console.log('uhhh creaTE new game');
+          const newGame = activeGames.addGame(data.gametype);
+          console.log(newGame);
+          client.join(newGame.id);
+          newGame.addPlayer(res[0].id, res[0].username);
+          client.emit('newGame', { gameId: newGame.id, players: newGame.players });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   });
 
   client.on('move', (data) => {
@@ -139,7 +177,7 @@ io.on('connection', (client) => {
 
   // client requests history of a user (data = a username)
   client.on('requestHistory', (data) => {
-    console.log(data);
+    console.log('requestHistory data:', data);
 
     db.fetchUserHistory(data)
       .then(res => {
@@ -148,7 +186,7 @@ io.on('connection', (client) => {
   });
 
   client.on('requestMatchDetails', (data) => {
-    console.log(data);
+    console.log('requestMatchDetails data:', data);
 
     db.fetchMatchDetails(data)
       .then(res => {
@@ -157,6 +195,7 @@ io.on('connection', (client) => {
   });
 
   client.on('requestLeaderBoard', (data) => {
+    console.log('requestLeaderBoard data:', data);
 
     db.fetchLeaderBoard(data)
       .then(res => {
