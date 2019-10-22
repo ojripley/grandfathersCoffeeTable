@@ -56,6 +56,11 @@ $(() => {
     console.log(`requesting a new game of ${gametype}`);
 
     socket.emit('requestGame', { gametype, username: myUsername });
+
+    console.log($("#game-list ul"));
+    //REMOVE THIS:
+    $("#game-list ul").append(`<li class="select-game" id="HI">$HI</li>
+    `);
   });
 
   let player;
@@ -80,6 +85,9 @@ $(() => {
 
   socket.on('newGame', (data) => {
     console.log("ADD THIS NEW GAME");
+
+    $("#game-list ul").add(`<li class="select-game" id="${data.gameid}">${data.gameid}</li>
+    `);
     console.log(data);
 
   });

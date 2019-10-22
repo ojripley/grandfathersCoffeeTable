@@ -34,5 +34,46 @@ $(() => {
 </div>
 `);
 
+  window.goofspiel = {};
+
+  window.goofspiel.updateView = function(data) {
+    window.$goofspiel.empty(); //Clear what we had before;
+    let player = findPlayer(data.players);
+    let table = data.table;
+
+    let playerCards = ``;
+    for (let card in player.cards) {
+      //Add playable state here
+      playerCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content" id="${card.name}"></img>`;
+    }
+
+    let tableCards = ``;
+    for (let card in table.cards) {
+      //Visibility state must be set based on goofspiel logic
+      tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content" id="${card.name}"></img>`;
+    }
+
+    window.$goofspiel = $(`
+    <div id="game-container">
+    <div id="tableArea">
+      ${tableCards}
+    </div>
+    <div id="p1Area">
+      <div class="playerHand">
+      ${playerCards}
+      </div>
+    </div>
+    <div id="p2Area">
+      Player 2
+    </div>
+    <div id="p3Area">
+      Player 3
+    </div>
+    <div id="p4Area">
+      Player 4
+    </div>
+  </div>
+`);
+  };
 
 });

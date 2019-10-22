@@ -9,26 +9,32 @@ $(() => {
     $goofspiel.detach();
     $profile.detach();
     console.log(`requesting the ${item} screen `)
-    switch (item) {
-      case 'leaderboard':
+    switch (item.substring(0, 4)) {
+      case 'lead':
         leaderboard.updateTable(data);
         $leaderboard.appendTo($main);
         break;
       case 'goof':
+        goofspiel.updateView(data);
         $goofspiel.appendTo($main);
         break;
-      case 'profile':
+      case 'warr':
+        //Make a version of the view for war
+        goofspiel.updateView(data);
+        $goofspiel.appendTo($main);
+        break;
+      case 'prof':
         $profile.appendTo($main);
         break;
-      case 'error': {
-        const $error = $(`<p>${arguments[1]}</p>`);
-        $error.appendTo('body');
-        setTimeout(() => {
-          $error.remove();
-          views_manager.show('goofspiel');
-        }, 2000);
-        break;
-      }
+      /*  case 'erro': {
+          const $error = $(`<p>${arguments[1]}</p>`);
+          $error.appendTo('body');
+          setTimeout(() => {
+            $error.remove();
+            views_manager.show('goofspiel');
+          }, 2000);
+          break;
+        }*/
     }
 
   }
