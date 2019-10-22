@@ -103,13 +103,19 @@ class Game {
 class Goofspiel extends Game {
 
   constructor(id, fullDeck) {
-    super(id, fullDeck);
+
+    let tempFullDeck = fullDeck.slice(0);
+
+    super(id, tempFullDeck);
     this.gameType = 'goofspiel';
     this.table.faceUp = true;
   }
 
   deal() {
-    console.log('dealing.....');
+    console.log('\n\ndealing.....');
+
+    console.log(this.deck);
+    console.log();
 
     for (let i = 0; i < 13; i++) {
       this.deck.moveCard(this.deck.cards[0], this.players[0].hand.cards);
@@ -184,9 +190,13 @@ class Goofspiel extends Game {
 
   }
 
-  isValidMove() {
+  isValidMove(move) {
     if (this.gameState === 'playing') {
-      console.log('moves are valid\n\n');
+      for (let pendingMove of this.pendingMoves) {
+        if (move.player.username === pendingMove.player.username) {
+          return false;
+        }
+      }
       return true;
     }
     return false;

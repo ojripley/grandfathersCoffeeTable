@@ -234,9 +234,6 @@ io.on('connection', (client) => {
       // add the submitted move to pending
 
       const player = activeGames[game].players.filter(player => player.username === move.player.username);
-      // const card = player[0].hand.cards.filter(cardToRemove => cardToRemove.name === move.card.name);
-
-      // move = player[0].playCard(card, activeGames[game].table);
 
       for (let card of player[0].hand.cards) {
         if (move.card.name === card.name) {
@@ -244,23 +241,26 @@ io.on('connection', (client) => {
         }
       }
 
-
       activeGames[game].pendingMoves.push(move);
+
+      // broadcast the game to all players
+      io.to(game).emit('gameView', {
+        players: activeGames[game].players,
+        table: activeGames[game].table,
+        pendingMoves: activeGames[game].pendingMoves,
+        deck: activeGames[game].deck,
+        gameId: game,
+      });
 
       // if the required moves for the round have all been submitted
       if (activeGames[game].areAllMovesSubmitted()) {
 
         console.log('\nmoves have been submitted\n');
 
-        // evaluate the move scores and push moves to history
-        activeGames[game].score();
-        activeGames[game].pushPendingToHistory();
-
-        console.log('\n\nplayer one hand:\n');
-        console.log(activeGames[game].players[0].hand.cards);
-
-        // evaluate if game and case has been reached
-        if (activeGames[game].isGameDone()) {
+        setTimeout(() => {
+          // evaluate the move scores and push moves to history
+          activeGames[game].score();
+          activeGames[game].pushPendingToHistory();
 
           // broadcast the game to all players
           io.to(game).emit('gameView', {
@@ -271,42 +271,57 @@ io.on('connection', (client) => {
             gameId: game,
           });
 
+          console.log('\n\nplayer one hand:\n');
+          console.log(activeGames[game].players[0].hand.cards);
 
-          setTimeout(() => {
-            // show results view to players
-            io.to(game).emit('resultsView', { gameId: game, players: activeGames[game].players });
+          // evaluate if game and case has been reached
+          if (activeGames[game].isGameDone()) {
 
-            // write results to database
-            db.addMatch(activeGames[game].gameType)
-              .then(res => {
-                console.log(res);
-                let matchId = res[0].id;
-                for (let player of activeGames[game].players) {
-                  db.addResult(matchId, player)
-                    .then(() => {
-                      console.log('added match and result rows of game ', game);
-                      // remove game from server memory
-                      delete activeGames[game];
-                    })
-                    .catch(error => {
-                      console.error(error);
-                    });
-                }
-              })
-              .catch(error => {
-                console.error(error);
-              });
-          }, 2000);
-        } else {
-          // broadcast the game to all players
-          io.to(game).emit('gameView', {
-            players: activeGames[game].players,
-            table: activeGames[game].table,
-            pendingMoves: activeGames[game].pendingMoves,
-            deck: activeGames[game].deck,
-            gameId: game,
-          });
-        }
+            // broadcast the game to all players
+            io.to(game).emit('gameView', {
+              players: activeGames[game].players,
+              table: activeGames[game].table,
+              pendingMoves: activeGames[game].pendingMoves,
+              deck: activeGames[game].deck,
+              gameId: game,
+            });
+
+            setTimeout(() => {
+              // show results view to players
+              io.to(game).emit('resultsView', { gameId: game, players: activeGames[game].players });
+
+              // write results to database
+              db.addMatch(activeGames[game].gameType)
+                .then(res => {
+                  console.log(res);
+                  let matchId = res[0].id;
+                  for (let player of activeGames[game].players) {
+                    db.addResult(matchId, player)
+                      .then(() => {
+                        console.log('added match and result rows of game ', game);
+                        // remove game from server memory
+                        delete activeGames[game];
+                      })
+                      .catch(error => {
+                        console.error(error);
+                      });
+                  }
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+            }, 2000);
+          } else {
+            // broadcast the game to all players
+            io.to(game).emit('gameView', {
+              players: activeGames[game].players,
+              table: activeGames[game].table,
+              pendingMoves: activeGames[game].pendingMoves,
+              deck: activeGames[game].deck,
+              gameId: game,
+            });
+          }
+        }, 2000);
       }
     }
   });
