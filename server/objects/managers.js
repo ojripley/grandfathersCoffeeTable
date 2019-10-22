@@ -1,4 +1,4 @@
-const { Player, Stack, Move } = require('./entities');
+const { Player, Stack, Move, Goofspiel } = require('./entities');
 const fullDeck = require('./fullDeck');
 
 // constant objects (single instance entities only)
@@ -36,79 +36,7 @@ const activeGames = {
   }
 };
 
-// abstract parent class for games
-class Game {
-
-  constructor(id, fullDeck) {
-    if (new.target === Game) {
-      throw new TypeError('Cannot construct an instance of an Abstract Class!');
-    }
-    // ----------------------------------------------------------------------------
-    // attributes
-    this.id = id;
-    this.currentPlayer = null;
-    this.players = [];
-    this.table = new Stack([]);
-    this.deck = new Stack(fullDeck);
-    this.burntDeck = new Stack([]);
-    this.moveHistory = [];
-    this.pendingMoves = [];
-  }
-
-  // ----------------------------------------------------------------------------
-  // methods
-
-  // adds players to existing game
-  addPlayer(player) {
-    return null;
-  }
-
-  // pushes each move object in pending to the history array
-  // empties the pending move array
-  pushPendingToHistory() {
-    while (this.pendingMoves.length > 0) {
-      this.moveHistory.push(this.pendingMoves.pop());
-    }
-  }
-}
-
-class Goofspiel extends Game {
-
-  constructor(id, fullDeck) {
-    super(id, fullDeck);
-  }
-
-  deal() {
-    if (this.players.length === 2) {
-      console.log('dealing.....');
-
-      for (let i = 0; i < 13; i++) {
-        this.deck.moveCard(this.deck.cards[0], this.players[0].hand.cards);
-        this.deck.moveCard(this.deck.cards[12 - i], this.players[1].hand.cards);
-      }
-    }
-  }
-
-  score() {
-
-  }
-
-  isMoveValid() {
-
-  }
-
-  nextState(pendingMoves) {
-
-  }
-
-  isGameDone() {
-
-  }
-}
-
 module.exports = { activePlayers, activeGames };
-
-
 
 
 
