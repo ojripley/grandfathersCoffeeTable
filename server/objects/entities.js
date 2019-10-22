@@ -182,10 +182,15 @@ class Goofspiel extends Game {
   isGameDone() {
     if (this.deck.cards.length === 0) {
       this.gameState === 'finished';
+      console.log(`\n the winner is... ${this.players[0].username} \n\n`);
       return true;
-    }
+    } else {
 
-    return false;
+      // proceed with the game
+      this.deck.moveCard(this.deck.selectRandom(), this.table.cards);
+
+      return false;
+    }
   }
 }
 
