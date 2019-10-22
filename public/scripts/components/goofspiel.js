@@ -1,6 +1,6 @@
 $(() => {
   //Need to generate this for each game. May need to make a game container first
-  window.$goofspiel = `
+  window.$goofspiel = $(`
   <div id="game-container">
   <div id="tableArea">
     The table
@@ -32,7 +32,7 @@ $(() => {
     Player 4
   </div>
 </div>
-`;
+`);
 
 
 });

@@ -20,7 +20,6 @@ $(() => {
   console.log(document.cookie);
   //Nav bar logic:
   $('#menu-bars').on('click', (event) => {
-
     $('#navbar').toggleClass('hidden', 500);
   });
 
@@ -38,29 +37,26 @@ $(() => {
   let socket = io.connect('192.168.43.107:8080');
 
   $('#high-scores').on('click', (event) => {
-    //Load highscores
-    console.log("requesting the high scores");
     socket.emit('requestLeaderBoard', 'goofspiel');
+
+    //show highscores (move this to the response of leaderboard)
     views_manager.show('leaderboard');
   });
 
-  $("#goo12").on('click', (event) => {
-    console.log('click');
-    socket.emit('requestGame', { gametype: 'goofspiel', username: myUsername });
+  //Change this to class:
+  $(".select-game").on('click', (event) => {
+    views_manager.show('goof');
+  });
+  $("#profile").on('click', (event) => {
+    views_manager.show('profile');
   });
 
+  $(".request-game").on('click', (event) => {
+    let gametype = event.target.id;
+    console.log(`requesting a new game of ${gametype}`);
 
-  $("#war12").on('click', (event) => {
-    console.log('click');
-    socket.emit('requestGame', { gametype: 'war', username: myUsername });
+    socket.emit('requestGame', { gametype, username: myUsername });
   });
-
-  $("#sev12").on('click', (event) => {
-    console.log('click');
-
-    socket.emit('requestGame', { gametype: 'sevens', username: myUsername });
-  });
-
 
   let player;
   socket.on('gameView', (data) => {

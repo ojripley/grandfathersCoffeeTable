@@ -78,6 +78,40 @@ $(() => {
     </tbody>
   </table>
 </div>`);
+  window.leaderboard = {};
+  window.leaderboard.updateTable = function(data) {
+    window.$leaderboard.empty(); //Clear what we had before;
+    console.log(`Trying to display ${data}`);
+    let str = `<div id="leaderboardContainer">
+    <h1>Leaderboard </h1>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="leaderboardDropdown" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Goofspiel
+      </button>
+      <div class="dropdown-menu" aria-labelledby="leaderboardDropdown">
+        <a class="dropdown-item" id="goofLead">Goofspiel</a>
+        <a class="dropdown-item" id="warLead">War</a>
+      </div>
+    </div>
+
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Username</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <th scope="row">3</th>
+        <td>${data}</td>
+        <td>${data}</td>
+      </tr>`;
+    //Set the leaderboard object based on the data provided
+    window.$leaderboard = $(str);
+  };
 
 
   $('#goofLead').on('click', () => {
