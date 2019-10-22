@@ -126,7 +126,11 @@ io.on('connection', (client) => {
                 client.join(activeGames[game].id);
                 console.log(`JOINING a game with the id: ${activeGames[game].id}`);
                 activeGames[game].addPlayer(res[0].id, res[0].username);
+
+                // send game details to client, and player join status to room
                 client.emit('newGame', { gameId: game, players: activeGames[game].players });
+                io.to(game).emit('join', { gameId: game, numberOfPlayers: game.players.length });
+
                 isInGame = true;
 
                 console.log(activeGames);
@@ -199,20 +203,16 @@ io.on('connection', (client) => {
           console.log(`ADDING a new game with the id: ${newGame.id}`);
           client.join(newGame.id);
           newGame.addPlayer(res[0].id, res[0].username);
+
+          // send game details to client, and player join status to room
           client.emit('newGame', { gameId: newGame.id, players: newGame.players });
+          io.to(newGame.id).emit('join', {gameId: newGame, numberOfPlayers: newGame.players.length});
         }
       })
       .catch(error => {
         console.error(error);
       });
   });
-
-
-
-
-
-
-
 
 
 
@@ -243,7 +243,7 @@ io.on('connection', (client) => {
         if (activeGames.isGameDone()) {
 
           // show results view to players
-          io.to(game).emit('resultsView', {gameId: game, players: activeGames[game].players});
+          io.to(game).emit('resultsView', { gameId: game, players: activeGames[game].players });
 
           // write results to database
           db.addMatch(activeGames[game].gametype)
@@ -278,19 +278,6 @@ io.on('connection', (client) => {
       });
     }
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
