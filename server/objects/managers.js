@@ -106,7 +106,7 @@ class Goofspiel extends Game {
   }
 }
 
-module.exports = { activePlayers, activeGames, Goofspiel };
+module.exports = { activePlayers, activeGames };
 
 
 

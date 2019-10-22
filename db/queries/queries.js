@@ -61,16 +61,16 @@ const fetchProfile = function(username) {
 
 
 // fetches user history
-const fetchUserHistory = function(id) {
+const fetchUserHistory = function(username) {
 
-  const queryVars = [id];
-  // change to where username
+  const queryVars = [username];
+
   return db.query(`
   SELECT matches.gametype, results.finished_position, results.score, matches.time_stamp, matches.id
   FROM users
   JOIN results ON user_id = users.id
   JOIN matches ON match_id = matches.id
-  WHERE users.id = $1
+  WHERE users.username = $1
   GROUP BY users.id, results.id, matches.id
   ORDER BY matches.time_stamp;
   `, queryVars)

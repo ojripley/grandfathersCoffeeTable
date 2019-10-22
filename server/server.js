@@ -12,7 +12,7 @@ const morgan     = require('morgan');
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const cookieParser = require('cookie-session');
-const { activePlayers, activeGames, Goofspiel } = require('./objects/managers.js');
+const { activePlayers, activeGames } = require('./objects/managers.js');
 
 // PG database client/connection setup
 // const { Pool } = require('pg');
@@ -140,16 +140,28 @@ io.on('connection', (client) => {
   // client requests history of a user (data = a username)
   client.on('requestHistory', (data) => {
     console.log(data);
-    client.emit('history', db.fetchUserHistory(data));
+
+    db.fetchUserHistory(data)
+      .then(res => {
+        client.emit('history', res);
+      });
   });
 
   client.on('requestMatchDetails', (data) => {
     console.log(data);
-    client.emit('matchDetails', db.fetchMatchDetails(data));
+
+    db.fetchMatchDetails(data)
+      .then(res => {
+        client.emit('matchDetails', res);
+      });
   });
 
   client.on('requestLeaderBoard', (data) => {
-    client.emit('leaderBoard', db.fetchLeaderBoard(data));
+
+    db.fetchLeaderBoard(data)
+      .then(res => {
+        client.emit('leaderBoard', res);
+      });
   });
 
   // CHANGE ROOM TO DYNMAIC ROOM NAME BASED ON gameId
