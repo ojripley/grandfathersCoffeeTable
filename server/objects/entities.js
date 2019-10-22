@@ -175,10 +175,6 @@ class Goofspiel extends Game {
     return false;
   }
 
-  nextState(pendingMoves) {
-
-  }
-
   isGameDone() {
     if (this.deck.cards.length === 0) {
       this.gameState === 'finished';

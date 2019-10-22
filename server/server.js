@@ -3,16 +3,16 @@ require('dotenv').config();
 
 // Web server config
 const PORT       = process.env.PORT || 8080;
-const ENV        = process.env.ENV || "development";
+// const ENV        = process.env.ENV || "development";
 const express    = require("express");
 const bodyParser = require("body-parser");
-const sass       = require("node-sass-middleware");
+// const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const cookieParser = require('cookie-session');
-const { activePlayers, activeGames } = require('./objects/managers.js');
+const { activeGames } = require('./objects/managers.js');
 
 // PG database client/connection setup
 // const { Pool } = require('pg');
