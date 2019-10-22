@@ -128,6 +128,10 @@ io.on('connection', (client) => {
                 activeGames[game].addPlayer(res[0].id, res[0].username);
                 client.emit('newGame', { gameId: game, players: activeGames[game].players });
                 isInGame = true;
+
+                // deal cards and start game
+                activeGames[game].deal();
+
                 break;
               }
             }
@@ -153,18 +157,18 @@ io.on('connection', (client) => {
 
     // uncomment for move handling
 
-    // activeGames[data.gameId].pendingMoves.push(data.move);
-    // if (activeGames[data.gameId].pendingMoves.length === activeGames[data.gameId].players.length) {
-    //   activeGames[data.gameId].pushPendingToHistory();
-    //   // broadcast the game to all players
-    //   io.to('room').emit('gameView', {
-    //     players: activeGames[data.gameId].players,
-    //     table: activeGames[data.gameId].table,
-    //     deck: activeGames[data.gameId].deck,
-    //     gameId: data.gameId,
-    //     currentPlayerId: activeGames[data.gameId].currentPlayer
-    //   });
-    // }
+    activeGames[data.gameId].pendingMoves.push(data.move);
+    if (activeGames[data.gameId].pendingMoves.length === activeGames[data.gameId].players.length) {
+      activeGames[data.gameId].pushPendingToHistory();
+      // broadcast the game to all players
+      io.to('room').emit('gameView', {
+        players: activeGames[data.gameId].players,
+        table: activeGames[data.gameId].table,
+        deck: activeGames[data.gameId].deck,
+        gameId: data.gameId,
+        currentPlayerId: activeGames[data.gameId].currentPlayer
+      });
+    }
   });
 
   // client requests history of a user (data = a username)

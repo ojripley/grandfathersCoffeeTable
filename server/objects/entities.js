@@ -1,5 +1,3 @@
-
-
 class Player {
   constructor(id, username) {
     this.id = id;
@@ -25,6 +23,11 @@ class Stack {
 
   moveCard(card, destination) {
     destination.push(this.cards.splice(this.cards.indexOf(card), 1)[0]);
+  }
+
+  selectRandom() {
+    console.log(this);
+    return this.cards[Math.floor(Math.random() * Math.floor(this.cards.length))];
   }
 }
 
@@ -85,17 +88,25 @@ class Goofspiel extends Game {
 
   constructor(id, fullDeck) {
     super(id, fullDeck);
+    this.table.faceUp = true;
   }
 
   deal() {
-    if (this.players.length === 2) {
-      console.log('dealing.....');
+    console.log('dealing.....');
 
-      for (let i = 0; i < 13; i++) {
-        this.deck.moveCard(this.deck.cards[0], this.players[0].hand.cards);
-        this.deck.moveCard(this.deck.cards[12 - i], this.players[1].hand.cards);
+    for (let i = 0; i < 13; i++) {
+      this.deck.moveCard(this.deck.cards[0], this.players[0].hand.cards);
+      this.deck.moveCard(this.deck.cards[12 - i], this.players[1].hand.cards);
+      if (this.players.length === 3) {
+        this.deck.moveCard(this.deck.cards[24 - i], this.players[2].hand.cards);
+      } else {
+        this.deck.moveCard(this.deck.cards[24 - i], this.burntDeck.cards);
       }
     }
+
+    // first card is placed on the table
+    // this kicks off the the game
+    this.deck.moveCard(this.deck.selectRandom(), this.table.cards);
   }
 
   score() {
@@ -115,7 +126,6 @@ class Goofspiel extends Game {
   }
 }
 
-
 module.exports = {
   Player,
   Stack,
@@ -123,17 +133,3 @@ module.exports = {
   Move,
   Goofspiel
 };
-
-// test code
-// const card = new Card('2C', 2);
-// console.log(card);
-
-// const deck = new Stack([2, 3, 4]);
-// const hand = new Stack([]);
-
-// console.log(deck.cards);
-
-// deck.moveCard(3, hand.cards);
-
-// console.log(deck.cards);
-// console.log(hand.cards);
