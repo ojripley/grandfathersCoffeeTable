@@ -2,7 +2,6 @@
 const db = require('./poolSetup');
 
 
-
 // retrieves a table row with username if exists. Row will be empty otherwise
 const doesUserExist = function(username) {
 
