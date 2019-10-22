@@ -33,7 +33,12 @@
   <link rel="stylesheet" href="./styles/layout.css" type="text/css" />
 
   <!-- Custom JS -->
+  <script type="text/javascript" src="./scripts/helpers.js"></script>
   <script type="text/javascript" src="./scripts/app.js"></script>
+  <script type="text/javascript" src="./scripts/components/leaderboard.js"></script>
+  <script type="text/javascript" src="./scripts/components/goofspiel.js"></script>
+  <script type="text/javascript" src="./scripts/components/profile.js"></script>
+  <script type="text/javascript" src="./scripts/views_manager.js"></script>
 
 </head>
 
@@ -59,9 +64,6 @@
       <h2> Active games </h2>
       <!-- This list is dynamically generated -->
       <ul>
-        <li>Game 1 - Goofspiel</li>
-        <li>Game 2 - Goofspiel</li>
-        <li>Game 3 - War</li>
       </ul>
       <hr>
     </div>
@@ -69,47 +71,16 @@
     <div id="create-game" class="menu-list">
       <button type="button" class="btn btn-primary">Join game</button>
       <ul>
-        <li id="goo12"> Goofspiel</li>
-        <li id="war12">Join war</li>
-        <li id='sev12'>Join sevens</li>
-        <li>Join slapjack</li>
+        <li class="request-game" id="goofspiel"> Goofspiel</li>
+        <li class="request-game" id="war">Join war</li>
+        <li class="request-game" id='sevens'>Join sevens</li>
       </ul>
     </div>
-
   </nav>
 
-  <div id="game-container">
-    <div id="tableArea">
-      The table
-    </div>
-    <div id="p1Area">
-      <div class="playerHand">
-        <img src="./images/cards/PNG/2C.png" class='card img-fluid ui-widget-content' id="2C">
-        <img src="./images/cards/PNG/2H.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid'>
-        <img src="./images/cards/PNG/AD.png" class='card img-fluid' id="AD">
-      </div>
-    </div>
-    <div id="p2Area">
-      Player 2
-    </div>
-    <div id="p3Area">
-      Player 3
-    </div>
-    <div id="p4Area">
-      Player 4
-    </div>
-  </div>
+  <div id='main-content'>
 
+  </div>
 
 </body>
 

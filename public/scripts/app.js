@@ -1,90 +1,93 @@
-const extractUserName = function(str) {
 
-  return str.split("=")[0];
-
-};
 
 $(() => {
-  const myUsername = extractUserName(document.cookie);
+  window.myUsername = extractUserName(document.cookie);
 
-  console.log(document.cookie);
   //Nav bar logic:
-  $('#menu-bars').on('click', (event) => {
-
+  $('#menu-bars').on('click', () => {
     $('#navbar').toggleClass('hidden', 500);
   });
 
+  window.socket = io.connect('172.46.3.253:8080');
 
-  $(function() {
-    $("#2C").draggable();
-  });
-
-
-  // $('.card').on('click', (event) => {
-  //   // let $chosenCard = $(event.target);
-  //   let cardName = event.target.id;
-  //   console.log(cardName);
-  //   // console.log($chosenCard.attr("id"));
-  //   console.log('click');
-  //   //Makes a move if it is the player's turn
-
-  // });
-
-
-  let socket = io.connect('localhost:8080');
+  //window.socket = io.connect('localhost:8080');
 
   $('#high-scores').on('click', (event) => {
-    console.log("requesting the high scores");
     socket.emit('requestLeaderBoard', 'goofspiel');
+
+    //show highscores (move this to the response of leaderboard)
+    views_manager.show('leaderboard');
   });
 
-  $("#goo12").on('click', (event) => {
-    console.log('click');
-    socket.emit('requestGame', { gametype: 'goofspiel', username: myUsername });
+  //Change this to class:
+  $(".select-game").on('click', (event) => {
+    views_manager.show('goof');
+  });
+  $("#profile").on('click', (event) => {
+    views_manager.show('profile');
   });
 
-
-  $("#war12").on('click', (event) => {
-    console.log('click');
-    socket.emit('requestGame', { gametype: 'war', username: myUsername });
+  $(".request-game").on('click', (event) => {
+    let gametype = event.target.id;
+    console.log(`requesting a new game of ${gametype}`);
+    socket.emit('requestGame', { gametype, username: myUsername });
   });
-
-  $("#sev12").on('click', (event) => {
-    console.log('click');
-
-    socket.emit('requestGame', { gametype: 'sevens', username: myUsername });
-  });
-
 
   let player;
   socket.on('gameView', (data) => {
     console.log("RENDER THIS:");
+    console.log(data);
+    if (window.curGame === data.gameId) {
+      //Currently on the game screen
+      console.log('User is currently watching the game');
+      views_manager.show(data.gameId, data);
+    } else {
+      console.log('I am working in the background');
+      //Not on the gamescreen --> just update the view but don't show it.
+      goofspiel.updateView(window.activeGames[data.gameId].view, data);
+    }
 
-    console.log(data); //Store the view based on the data provided
-    console.log('Player:')
-    console.log(data.player); //Array of players
-    player = data.player[0];
-    console.log('Table');
-    console.log(data.table);
-    console.log('opponents');
-    console.log(data.opponents);
-    console.log('Table');
-    console.log(data.table);
-    console.log('Gameid');
-    console.log(data.gameid);
-    console.log('Current Player id');
-    console.log(data.curPlayerId);
   });
 
   socket.on('newGame', (data) => {
     console.log("ADD THIS NEW GAME");
     console.log(data);
 
+
+    //Create a new game in the background (jquery object).
+    window.goofspiel.newGame(data.gameId);
+
+    let gameName;
+    switch (data.gameId.substring(0, 4)) {
+      case 'goof':
+        gameName = 'Goofspiel';
+        break;
+      case 'warr':
+        gameName = 'War';
+        break;
+      case 'seve':
+        gameName = 'Sevens';
+        break;
+      default:
+        gameName = '';
+        break;
+
+    }
+    //Append the game to the nav bar
+    $("#game-list ul").append(`<li class="select-game" id="${data.gameId}">Game ${Object.keys(window.activeGames).length} - ${gameName}</li>
+    `);
+
+    //Add a listener so that this button will show the generated view
+    $(`#${data.gameId}`).on('click', (event) => {
+      views_manager.show(data.gameId);
+    });
+
   });
 
-  socket.on('playerJoin', (data) => {
+  socket.on('join', (data) => {
     console.log("PLAYER HAS JOINED");
     console.log(data);
+    //Update the progress bar
   });
 
   socket.on('leaderBoard', (data) => {
@@ -92,30 +95,14 @@ $(() => {
     console.log(data);
   });
 
-  //When a card is clicked call this:
-  $("#AD").on('click', (event) => {
-    console.log('uh');
-    socket.emit('move', 'hello'); //Send the client's player object
-    /*
-{
-      Player: player,
-      Card: player.hand.cards[0]
-    }
 
-    */
-  });
+
 
   socket.emit('msg', "hi there");
   socket.on('endGame', (data) => {
     console.log('This is the end of game data (leaderboard)');
     console.log(data);
   });
-
-  // socket.on('requestHistory'){
-
-  // }
-  //onMove send game id
-
 
   socket.emit('requestHistory', myUsername);
   socket.on('history', (data) => {
@@ -136,9 +123,6 @@ $(() => {
   socket.on('connection', (data) => {
     console.log(data);
   })
-
-
-
 
 });
 
