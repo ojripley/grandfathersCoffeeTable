@@ -103,19 +103,13 @@ io.on('connection', (client) => {
 
     db.fetchProfile(data.username)
       .then(res => {
-
         // flag will be true when the player has beem added to a game
         let isInGame = false;
         // need to make a check for if game already exists
         // loop over all existing games
         for (let game in activeGames) {
-          console.log('GAME ', game);
-
           // if the current game matches the game type that the player wants
           if (game.substring(0, 4) === data.gametype.substring(0, 4)) {
-            console.log(activeGames[game].id);
-
-
 
             // if the game isn't full yet
             if (activeGames[game].players.length < 2 && !isInGame) {
@@ -130,6 +124,7 @@ io.on('connection', (client) => {
               if (!isAlreadyParticipent) {
                 // add the player
                 client.join(activeGames[game].id);
+                console.log(`JOINING a game with the id: ${activeGames[game].id}`);
                 activeGames[game].addPlayer(res[0].id, res[0].username);
                 client.emit('newGame', { gameId: game, players: activeGames[game].players });
                 isInGame = true;
@@ -139,13 +134,10 @@ io.on('connection', (client) => {
           }
         }
 
-        console.log(isInGame);
-
         if (!isInGame) {
           // player wasn't added to an existing game and needs to be put into a new one
-          console.log('uhhh creaTE new game');
           const newGame = activeGames.addGame(data.gametype);
-          console.log(newGame);
+          console.log(`ADDING a new game with the id: ${newGame.id}`);
           client.join(newGame.id);
           newGame.addPlayer(res[0].id, res[0].username);
           client.emit('newGame', { gameId: newGame.id, players: newGame.players });

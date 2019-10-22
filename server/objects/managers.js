@@ -27,7 +27,6 @@ const activeGames = {
 
   addGame(gametype) {
     let newGame = this.createNewGame(gametype);
-    console.log(`adding a new game with the id: ${newGame.id}`);
     this[newGame.id] = newGame;
 
     return newGame;
