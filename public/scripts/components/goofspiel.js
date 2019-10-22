@@ -77,8 +77,11 @@ $(() => {
 
   window.goofspiel.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
-
     let player = findPlayer(data.player, window.myUsername);
+
+    window.activeGames[data.gameId].player = player;
+    window.activeGames[data.gameId].myCards = player.hand.cards;
+
     let table = data.table;
 
     let playerCards = ``;

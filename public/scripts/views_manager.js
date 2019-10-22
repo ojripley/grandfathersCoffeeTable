@@ -19,9 +19,11 @@ $(() => {
       case 'lead':
         leaderboard.updateTable(data);
         $leaderboard.appendTo($main);
+        window.curGame = 'lead';
         break;
       case 'prof':
         $profile.appendTo($main);
+
         break;
       case 'goof':
         if (data.players) { //Temporary
@@ -33,11 +35,23 @@ $(() => {
         //Add game-specific listeners
         $('.card').on('click', (event) => {
           // let $chosenCard = $(event.target);
-          let cardName = event.target.id;
-          findCardByName(cardName);
-          console.log(cardName);
           console.log('click');
-          socket.emit('move', 'hello'); //Send the client's player object & card
+          let cardName = event.target.id;
+          let card = findCardByName(cardName, window.activeGames[item].myCards);
+          console.log("The card being sent is:")
+          console.log(cardName);
+          console.log("The card object:")
+          console.log(card);
+          console.log("My player object:")
+          console.log(window.activeGames[item].player);
+
+          socket.emit('move', {
+            gameid: window.curGame,
+            move: {
+              player: window.activeGames[item].player,
+              card
+            }
+          }); //Send the client's player object & card
         });
 
         window.curGame = item;
