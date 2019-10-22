@@ -5,7 +5,8 @@ const extractUserName = function(str) {
 };
 
 $(() => {
-  const myUsername = document.cookie;
+  const myUsername = extractUserName(document.cookie);
+
   console.log(document.cookie);
   //Nav bar logic:
   $('#menu-bars').on('click', (event) => {
