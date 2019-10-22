@@ -5,8 +5,13 @@ const extractUserName = function(str) {
 
 //Given an array of players, find the one that matches a given username
 const findPlayer = function(players, username) {
-  for (let player in players) {
-    if (player.username = username) {
+  console.log("these are the players");
+  console.log(players);
+  console.log("looking for");
+  console.log(username);
+  for (let player of players) {
+    console.log(player);
+    if (player.username === username) {
       return player;
     }
   }
@@ -15,7 +20,7 @@ const findPlayer = function(players, username) {
 
 //Finds a card object given the name of the card and an array of cards
 const findCardByName = function(reqCard, cards) {
-  for (let card in cards) {
+  for (let card of cards) {
     if (card.name === reqCard) {
       return card;
     }

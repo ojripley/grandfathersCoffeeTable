@@ -46,7 +46,7 @@ $(() => {
           console.log(window.activeGames[item].player);
 
           socket.emit('move', {
-            gameid: window.curGame,
+            gameId: window.curGame,
             move: {
               player: window.activeGames[item].player,
               card

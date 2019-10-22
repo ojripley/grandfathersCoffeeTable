@@ -8,9 +8,9 @@ $(() => {
     $('#navbar').toggleClass('hidden', 500);
   });
 
-  // let socket = io.connect('172.46.3.253:8080');
+  window.socket = io.connect('172.46.3.253:8080');
 
-  window.socket = io.connect('localhost:8080');
+  //window.socket = io.connect('localhost:8080');
 
   $('#high-scores').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
@@ -36,29 +36,17 @@ $(() => {
   let player;
   socket.on('gameView', (data) => {
     console.log("RENDER THIS:");
-
+    console.log(data);
     if (window.curGame === data.gameId) {
       //Currently on the game screen
+      console.log('User is currently watching the game');
       views_manager.show(data.gameId, data);
     } else {
+      console.log('I am working in the background');
       //Not on the gamescreen --> just update the view but don't show it.
       goofspiel.updateView(window.activeGames[data.gameId].view, data);
     }
 
-    console.log(data); //Store the view based on the data provided
-    console.log('Player:')
-    console.log(data.player); //Array of players
-    player = findPlayer(data.player);
-    console.log('Table');
-    console.log(data.table);
-    console.log('opponents');
-    console.log(data.opponents);
-    console.log('Table');
-    console.log(data.table);
-    console.log('Gameid');
-    console.log(data.gameid);
-    console.log('Current Player id');
-    console.log(data.curPlayerId);
   });
 
   socket.on('newGame', (data) => {
