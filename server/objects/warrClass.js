@@ -62,11 +62,14 @@ class Warr extends Game {
     if (this.pendingMoves.length === 2) {
 
       let roundWinner = null;
+      let roundLoser = null;
 
       if (this.pendingMoves[0].card.value > this.pendingMoves[1].card.value) {
         roundWinner = this.pendingMoves[0].player;
+        roundLoser = this.pendingMoves[1].player;
       } else if (this.pendingMoves[0].card.value > this.pendingMoves[1].card.value) {
         roundWinner = this.pendingMoves[1].player;
+        roundLoser = this.pendingMoves[0].player;
       } else {
         // if the round is a tie, the cards are added to the table as part of the next round's prize
         this.pushPendingToTable();
@@ -74,10 +77,19 @@ class Warr extends Game {
 
       if (roundWinner) {
 
-        //
+        // push cards into the winners hand and then log move to history
         while (this.pendingMoves.length > 0) {
-          roundWinner.hand.cards.push(this.pendingMoves.pop());
+          roundWinner.hand.cards.push(this.pendingMoves[0].card);
+          this.moveHistory.push(this.pendingMoves.pop());
         }
+
+        // player also takes all prize cards from previous rounds
+        for (let card of this.table.cards) {
+          this.table.moveCard(card, roundWinner.hand.cards);
+        }
+
+        roundWinner.score = roundWinner.hand.cards.length;
+        roundLoser.score = roundLoser.hand.cards.length;
       }
 
 
@@ -86,6 +98,7 @@ class Warr extends Game {
       console.log(this.players[1].username + ': ' + this.players[1].score);
       console.log();
 
+      // sort players, highest score first
       for (let i = 0; i < this.players.length; i++) {
         for (let j = 1; j < this.players.length; j++) {
           if (this.players[j].score > this.players[i].score) {
@@ -96,6 +109,7 @@ class Warr extends Game {
         }
       }
 
+      // assign positions
       for (let i = 0; i < this.players.length; i++) {
         this.players[i].currentPosition = (i + 1);
       }

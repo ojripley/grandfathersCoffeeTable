@@ -29,8 +29,6 @@ class Stack {
   }
 
   selectRandom() {
-    // console.log('\nthe deck:\n');
-    // console.log(this);
     return this.cards[Math.floor(Math.random() * Math.floor(this.cards.length))];
   }
 }
