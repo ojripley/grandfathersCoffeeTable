@@ -47,6 +47,16 @@ $(() => {
 
   });
 
+
+  socket.on('join', (data) => {
+    console.log("PLAYER HAS JOINED");
+    //goofspiel.updateView(window.activeGames[data.gameId].view, data);
+
+    console.log(data);
+    //Update the progress bar
+  });
+
+
   socket.on('newGame', (data) => {
     console.log("ADD THIS NEW GAME");
     console.log(data);
@@ -80,12 +90,6 @@ $(() => {
       views_manager.show(data.gameId);
     });
 
-  });
-
-  socket.on('join', (data) => {
-    console.log("PLAYER HAS JOINED");
-    console.log(data);
-    //Update the progress bar
   });
 
   socket.on('leaderBoard', (data) => {
