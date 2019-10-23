@@ -121,6 +121,8 @@ class Goofspiel extends Game {
       // proceed with the game
       this.deck.moveCard(this.deck.selectRandom(), this.table.cards);
 
+      this.currentPlayers = this.players;
+
       return false;
     }
   }

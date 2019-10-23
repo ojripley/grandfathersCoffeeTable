@@ -11,7 +11,7 @@ module.exports = class Game {
     // attributes
     this.id = id;
     this.gameType = null;
-    this.currentPlayer = null;
+    this.currentPlayers = [];
     this.players = [];
     this.gameState = 'pending';
     this.table = new Stack([]);

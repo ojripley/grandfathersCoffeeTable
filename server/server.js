@@ -143,6 +143,7 @@ io.on('connection', (client) => {
                 if (activeGames[game].gameState === 'playing') {
                   io.to(game).emit('gameView', {
                     gameState: activeGames[game].gameState,
+                    currentPlayers: activeGames[game].currentPlayers,
                     players: activeGames[game].players,
                     table: activeGames[game].table,
                     pendingMoves: activeGames[game].pendingMoves,
@@ -156,6 +157,7 @@ io.on('connection', (client) => {
                     console.log('\n\nsending dealt game to players....\n\n');
                     io.to(game).emit('gameView', {
                       gameState: activeGames[game].gameState,
+                      currentPlayers: activeGames[game].currentPlayers,
                       players: activeGames[game].players,
                       table: activeGames[game].table,
                       pendingMoves: activeGames[game].pendingMoves,
@@ -182,13 +184,14 @@ io.on('connection', (client) => {
           // client.emit('newGame', { gameId: newGame.id, players: newGame.players });
 
 
-          io.to(newGame).emit('gameView', {
-            gameState: activeGames[newGame].gameState,
-            players: activeGames[newGame].players,
-            table: activeGames[newGame].table,
-            pendingMoves: activeGames[newGame].pendingMoves,
-            deck: activeGames[newGame].deck,
-            gameId: newGame,
+          io.to(newGame.id).emit('gameView', {
+            gameState: activeGames[newGame.id].gameState,
+            currentPlayers: activeGames[newGame.id].currentPlayers,
+            players: activeGames[newGame.id].players,
+            table: activeGames[newGame.id].table,
+            pendingMoves: activeGames[newGame.id].pendingMoves,
+            deck: activeGames[newGame.id].deck,
+            gameId: newGame.id,
           });
 
 
@@ -221,9 +224,13 @@ io.on('connection', (client) => {
 
       activeGames[game].pendingMoves.push(move);
 
+      // remove player from currentPlayers for turn
+      activeGames[game].currentPlayers = activeGames[game].currentPlayers.splice(activeGames[game].currentPlayers.indexOf(player), 1);
+
       // broadcast the game to all players
       io.to(game).emit('gameView', {
         gameState: activeGames[game].gameState,
+        currentPlayers: activeGames[game].currentPlayers,
         players: activeGames[game].players,
         table: activeGames[game].table,
         pendingMoves: activeGames[game].pendingMoves,
@@ -244,6 +251,7 @@ io.on('connection', (client) => {
           // broadcast the game to all players
           io.to(game).emit('gameView', {
             gameState: activeGames[game].gameState,
+            currentPlayers: activeGames[game].currentPlayers,
             players: activeGames[game].players,
             table: activeGames[game].table,
             pendingMoves: activeGames[game].pendingMoves,
@@ -260,6 +268,7 @@ io.on('connection', (client) => {
             // broadcast the game to all players
             io.to(game).emit('gameView', {
               gameState: activeGames[game].gameState,
+              currentPlayers: activeGames[game].currentPlayers,
               players: activeGames[game].players,
               table: activeGames[game].table,
               pendingMoves: activeGames[game].pendingMoves,
@@ -296,6 +305,7 @@ io.on('connection', (client) => {
             // broadcast the game to all players
             io.to(game).emit('gameView', {
               gameState: activeGames[game].gameState,
+              currentPlayers: activeGames[game].currentPlayers,
               players: activeGames[game].players,
               table: activeGames[game].table,
               pendingMoves: activeGames[game].pendingMoves,
