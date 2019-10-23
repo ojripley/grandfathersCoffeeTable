@@ -125,7 +125,7 @@ io.on('connection', (client) => {
                 // add the player
                 client.join(activeGames[game].id);
                 console.log(`JOINING a game with the id: ${activeGames[game].id}`);
-                activeGames[game].addPlayer(res[0].id, res[0].username);
+                activeGames[game].addPlayer(res[0].id, res[0].username, (activeGames[game].players.length + 1));
 
                 // send game details to client, and player join status to room
                 client.emit('newGame', { gameId: game, players: activeGames[game].players });
@@ -173,7 +173,7 @@ io.on('connection', (client) => {
           const newGame = activeGames.addGame(data.gametype);
           console.log(`ADDING a new game with the id: ${newGame.id}`);
           client.join(newGame.id);
-          newGame.addPlayer(res[0].id, res[0].username);
+          newGame.addPlayer(res[0].id, res[0].username, (newGame.players.length + 1));
 
           // send game details to client, and player join status to room
           client.emit('newGame', { gameId: newGame.id, players: newGame.players });

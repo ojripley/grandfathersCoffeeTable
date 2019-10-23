@@ -1,7 +1,8 @@
 // 'use strict';
 
 class Player {
-  constructor(id, username) {
+  constructor(id, username, joinToken) {
+    this.joinToken = joinToken;
     this.id = id;
     this.username = username;
     this.currentPosition = null;

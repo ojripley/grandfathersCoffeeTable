@@ -16,79 +16,118 @@ class Warr extends Game {
   deal() {
     console.log('\n\ndealing.....');
 
-    console.log(this.deck);
-    console.log();
-
-    for (let i = 0; i < 13; i++) {
-      this.deck.moveCard(this.deck.cards[0], this.players[0].hand.cards);
-      this.deck.moveCard(this.deck.cards[12 - i], this.players[1].hand.cards);
-      if (this.players.length === 3) {
-        this.deck.moveCard(this.deck.cards[24 - (i * 2)], this.players[2].hand.cards);
-      } else {
-        this.deck.moveCard(this.deck.cards[24 - (i * 2)], this.burntDeck.cards);
-      }
+    if (this.players.length === 2) {
+      this.players[0].hand.cards = this.deck.cards.splice(0, 26);
+      this.players[1].hand.cards = this.deck.cards.splice(0, 26);
     }
-
-    // first card is placed on the table
-    // this kicks off the the game
-    this.deck.moveCard(this.deck.selectRandom(), this.table.cards);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   score() {
-    const prize = this.table.cards[0];
 
-    console.log(`the prize is ${prize.value}\n\n`);
+    if (this.pendingMoves.length === 2) {
 
-    let highestBidValue = 0;
-    let highestBiddingMoves = [];
+      let roundWinner = null;
 
-    for (let move of this.pendingMoves) {
-
-      console.log(`the current evaluated move is ${move.card.value}\n\n`);
-
-      if (move.card.value > highestBidValue) {
-        highestBiddingMoves = [];
-        highestBiddingMoves.push(move);
-        highestBidValue = highestBiddingMoves[0].card.value;
-      } else if (move.card.value === highestBidValue) {
-        highestBiddingMoves.push(move);
+      if (this.pendingMoves[0].card.value > this.pendingMoves[1].card.value) {
+        roundWinner = this.pendingMoves[0].player;
+      } else if (this.pendingMoves[0].card.value > this.pendingMoves[1].card.value) {
+        roundWinner = this.pendingMoves[1].player;
+      } else {
+        // if the round is a tie, the cards are added to the table as part of the next round's prize
+        this.pushPendingToTable();
       }
-    }
 
-    console.log(`the highest bid is ${highestBidValue}\n\n`);
+      if (roundWinner) {
 
-    if (highestBiddingMoves.length === 1) {
-
-      const playerToRecievePoints = this.players.filter(player => highestBiddingMoves[0].player.username === player.username);
-
-      playerToRecievePoints[0].score += (highestBidValue + prize.value);
-    }
-
-
-    console.log('\nPLAYER SCORES:');
-    console.log(this.players[0].username + ': ' + this.players[0].score);
-    console.log(this.players[1].username + ': ' + this.players[1].score);
-    console.log();
-
-    for (let i = 0; i < this.players.length; i++) {
-      for (let j = 1; j < this.players.length; j++) {
-        if (this.players[j].score > this.players[i].score) {
-          let temp = this.players[j];
-          this.players[j] = this.players[i];
-          this.players[i] = temp;
+        //
+        while (this.pendingMoves.length > 0) {
+          roundWinner.hand.cards.push(this.pendingMoves.pop());
         }
       }
+
+
+      console.log('\nPLAYER SCORES:');
+      console.log(this.players[0].username + ': ' + this.players[0].score);
+      console.log(this.players[1].username + ': ' + this.players[1].score);
+      console.log();
+
+      for (let i = 0; i < this.players.length; i++) {
+        for (let j = 1; j < this.players.length; j++) {
+          if (this.players[j].score > this.players[i].score) {
+            let temp = this.players[j];
+            this.players[j] = this.players[i];
+            this.players[i] = temp;
+          }
+        }
+      }
+
+      for (let i = 0; i < this.players.length; i++) {
+        this.players[i].currentPosition = (i + 1);
+      }
     }
-
-    for (let i = 0; i < this.players.length; i++) {
-      this.players[i].currentPosition = (i + 1);
-    }
-
-    // this.players.indexOf[this.players[i]]
-
-    this.table.cards.pop();
-
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   isValidMove(move) {
     if (this.gameState === 'playing') {
@@ -106,7 +145,6 @@ class Warr extends Game {
     if (this.pendingMoves.length === this.players.length) {
       return true;
     }
-
     return false;
   }
 
@@ -114,16 +152,24 @@ class Warr extends Game {
 
     console.log('\n\n\n\n' + this.gameState + '\n\n\n\n');
 
-    if (this.deck.cards.length === 0) {
-      this.gameState === 'finished';
-      console.log(`\n the winner is... ${this.players[0].username} \n\n`);
-      return true;
-    } else {
+    if (this.players.length === 2) {
 
-      // proceed with the game
-      this.deck.moveCard(this.deck.selectRandom(), this.table.cards);
+      const p1 = this.players[0];
+      const p2 = this.players[1];
 
-      return false;
+      if (p1.hand.cards.length === 0) {
+        this.players[0] = p2;
+        this.players[1] = p1;
+        this.gameState = 'finished';
+        return true;
+      } else if (p2.hand.cards.length === 0) {
+        this.players[0] = p1;
+        this.players[1] = p2;
+        this.gameState = 'finished';
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }

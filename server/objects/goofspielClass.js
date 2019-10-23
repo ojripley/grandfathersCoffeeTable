@@ -61,7 +61,7 @@ class Goofspiel extends Game {
 
       const playerToRecievePoints = this.players.filter(player => highestBiddingMoves[0].player.username === player.username);
 
-      playerToRecievePoints[0].score += (highestBidValue + prize.value);
+      playerToRecievePoints[0].score + prize.value;
     }
 
 
@@ -83,8 +83,6 @@ class Goofspiel extends Game {
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].currentPosition = (i + 1);
     }
-
-    // this.players.indexOf[this.players[i]]
 
     this.table.cards.pop();
 
