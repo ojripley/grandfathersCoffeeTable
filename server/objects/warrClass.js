@@ -22,61 +22,112 @@ class Warr extends Game {
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   score() {
-    const prize = this.table.cards[0];
 
-    console.log(`the prize is ${prize.value}\n\n`);
+    if (this.pendingMoves.length === 2) {
 
-    let highestBidValue = 0;
-    let highestBiddingMoves = [];
+      let roundWinner = null;
 
-    for (let move of this.pendingMoves) {
-
-      console.log(`the current evaluated move is ${move.card.value}\n\n`);
-
-      if (move.card.value > highestBidValue) {
-        highestBiddingMoves = [];
-        highestBiddingMoves.push(move);
-        highestBidValue = highestBiddingMoves[0].card.value;
-      } else if (move.card.value === highestBidValue) {
-        highestBiddingMoves.push(move);
+      if (this.pendingMoves[0].card.value > this.pendingMoves[1].card.value) {
+        roundWinner = this.pendingMoves[0].player;
+      } else if (this.pendingMoves[0].card.value > this.pendingMoves[1].card.value) {
+        roundWinner = this.pendingMoves[1].player;
+      } else {
+        // if the round is a tie, the cards are added to the table as part of the next round's prize
+        this.pushPendingToTable();
       }
-    }
 
-    console.log(`the highest bid is ${highestBidValue}\n\n`);
+      if (roundWinner) {
 
-    if (highestBiddingMoves.length === 1) {
-
-      const playerToRecievePoints = this.players.filter(player => highestBiddingMoves[0].player.username === player.username);
-
-      playerToRecievePoints[0].score += (highestBidValue + prize.value);
-    }
-
-
-    console.log('\nPLAYER SCORES:');
-    console.log(this.players[0].username + ': ' + this.players[0].score);
-    console.log(this.players[1].username + ': ' + this.players[1].score);
-    console.log();
-
-    for (let i = 0; i < this.players.length; i++) {
-      for (let j = 1; j < this.players.length; j++) {
-        if (this.players[j].score > this.players[i].score) {
-          let temp = this.players[j];
-          this.players[j] = this.players[i];
-          this.players[i] = temp;
+        //
+        while (this.pendingMoves.length > 0) {
+          roundWinner.hand.cards.push(this.pendingMoves.pop());
         }
       }
+
+
+      console.log('\nPLAYER SCORES:');
+      console.log(this.players[0].username + ': ' + this.players[0].score);
+      console.log(this.players[1].username + ': ' + this.players[1].score);
+      console.log();
+
+      for (let i = 0; i < this.players.length; i++) {
+        for (let j = 1; j < this.players.length; j++) {
+          if (this.players[j].score > this.players[i].score) {
+            let temp = this.players[j];
+            this.players[j] = this.players[i];
+            this.players[i] = temp;
+          }
+        }
+      }
+
+      for (let i = 0; i < this.players.length; i++) {
+        this.players[i].currentPosition = (i + 1);
+      }
     }
-
-    for (let i = 0; i < this.players.length; i++) {
-      this.players[i].currentPosition = (i + 1);
-    }
-
-    // this.players.indexOf[this.players[i]]
-
-    this.table.cards.pop();
-
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   isValidMove(move) {
     if (this.gameState === 'playing') {
@@ -107,13 +158,13 @@ class Warr extends Game {
       const p2 = this.players[1];
 
       if (p1.hand.cards.length === 0) {
-        this.players[0] = p1;
-        this.players[1] = p2;
+        this.players[0] = p2;
+        this.players[1] = p1;
         this.gameState = 'finished';
         return true;
       } else if (p2.hand.cards.length === 0) {
-        this.players[0] = p2;
-        this.players[1] = p1;
+        this.players[0] = p1;
+        this.players[1] = p2;
         this.gameState = 'finished';
         return true;
       } else {

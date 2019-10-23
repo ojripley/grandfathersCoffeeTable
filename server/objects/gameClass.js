@@ -30,8 +30,8 @@ module.exports = class Game {
   }
 
   // adds new instance of a player to existing game
-  addPlayer(id, username) {
-    this.players.push(new Player(id, username));
+  addPlayer(id, username, joinToken) {
+    this.players.push(new Player(id, username, joinToken));
   }
 
   // pushes each move object in pending to the history array
@@ -39,6 +39,12 @@ module.exports = class Game {
   pushPendingToHistory() {
     while (this.pendingMoves.length > 0) {
       this.moveHistory.push(this.pendingMoves.pop());
+    }
+  }
+
+  pushPendingToTable() {
+    while (this.pendingMoves.length > 0) {
+      this.table.cards.push(this.pendingMoves.pop());
     }
   }
 };
