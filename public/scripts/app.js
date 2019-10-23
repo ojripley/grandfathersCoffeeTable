@@ -38,6 +38,7 @@ $(() => {
 
     //If the game hasn't started and we haven't seen this game before
     if (data.gameState === "pending" && !Object.keys(window.activeGames).includes(data.gameState)) {
+      console.log("Creating a new game!")
       window.goofspiel.newGame(data.gameId);
 
       let gameName;
@@ -64,18 +65,16 @@ $(() => {
       $(`#${data.gameId}`).on('click', (event) => {
         views_manager.show(data.gameId);
       });
-    }
-
-
-
-    if (window.curGame === data.gameId) {
-      //Currently on the game screen
-      console.log('User is currently watching the game');
-      views_manager.show(data.gameId, data);
     } else {
-      console.log('I am working in the background');
-      //Not on the gamescreen --> just update the view but don't show it.
-      goofspiel.updateView(window.activeGames[data.gameId].view, data);
+      if (window.curGame === data.gameId) {
+        //Currently on the game screen
+        console.log('User is currently watching the game');
+        views_manager.show(data.gameId, data);
+      } else {
+        console.log('I am working in the background');
+        //Not on the gamescreen --> just update the view but don't show it.
+        goofspiel.updateView(window.activeGames[data.gameId].view, data);
+      }
     }
 
   });
@@ -89,41 +88,42 @@ $(() => {
     //Update the progress bar
   });
 
+  /*
+    socket.on('newGame', (data) => {
+      console.log("ADD THIS NEW GAME");
+      console.log(data);
 
-  socket.on('newGame', (data) => {
-    console.log("ADD THIS NEW GAME");
-    console.log(data);
 
+      //Create a new game in the background (jquery object).
+      window.goofspiel.newGame(data.gameId);
 
-    //Create a new game in the background (jquery object).
-    window.goofspiel.newGame(data.gameId);
+      let gameName;
+      switch (data.gameId.substring(0, 4)) {
+        case 'goof':
+          gameName = 'Goofspiel';
+          break;
+        case 'warr':
+          gameName = 'War';
+          break;
+        case 'seve':
+          gameName = 'Sevens';
+          break;
+        default:
+          gameName = '';
+          break;
 
-    let gameName;
-    switch (data.gameId.substring(0, 4)) {
-      case 'goof':
-        gameName = 'Goofspiel';
-        break;
-      case 'warr':
-        gameName = 'War';
-        break;
-      case 'seve':
-        gameName = 'Sevens';
-        break;
-      default:
-        gameName = '';
-        break;
+      }
+      //Append the game to the nav bar
+      $("#game-list ul").append(`<li class="select-game" id="${data.gameId}">Game ${Object.keys(window.activeGames).length} - ${gameName}</li>
+      `);
 
-    }
-    //Append the game to the nav bar
-    $("#game-list ul").append(`<li class="select-game" id="${data.gameId}">Game ${Object.keys(window.activeGames).length} - ${gameName}</li>
-    `);
+      //Add a listener so that this button will show the generated view
+      $(`#${data.gameId}`).on('click', (event) => {
+        views_manager.show(data.gameId);
+      });
 
-    //Add a listener so that this button will show the generated view
-    $(`#${data.gameId}`).on('click', (event) => {
-      views_manager.show(data.gameId);
-    });
+    });*/
 
-  });
 
   socket.on('leaderBoard', (data) => {
 
