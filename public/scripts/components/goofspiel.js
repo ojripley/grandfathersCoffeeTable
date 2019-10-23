@@ -9,22 +9,13 @@ $(() => {
     window.activeGames[id].view = $(`<div id="game-container">
     <div id="tableArea">
       The table
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="2" style="width: 50%"></div>
+      </div>
+      <p id="progress-text"> 1/2 </p>
     </div>
     <div id="p1Area">
       <div class="playerHand">
-        <img src="./images/cards/PNG/2C.png" class='card img-fluid ui-widget-content' id="2C">
-        <img src="./images/cards/PNG/2H.png" class='card img-fluid' id="2H">
-        <img src="./images/cards/PNG/2D.png" class='card img-fluid' id="2D">
-        <img src="./images/cards/PNG/2S.png" class='card img-fluid' id="2S">
-        <img src="./images/cards/PNG/3S.png" class='card img-fluid' id="3S">
-        <img src="./images/cards/PNG/4S.png" class='card img-fluid' id="4S">
-        <img src="./images/cards/PNG/5D.png" class='card img-fluid' id="5D">
-        <img src="./images/cards/PNG/6H.png" class='card img-fluid' id="6H">
-        <img src="./images/cards/PNG/7S.png" class='card img-fluid' id="7S">
-        <img src="./images/cards/PNG/8C.png" class='card img-fluid' id="8C">
-        <img src="./images/cards/PNG/9H.png" class='card img-fluid' id="9H">
-        <img src="./images/cards/PNG/10C.png" class='card img-fluid' id="10C">
-        <img src="./images/cards/PNG/KS.png" class='card img-fluid' id="KS">
       </div>
     </div>
     <div id="p2Area">
@@ -39,18 +30,16 @@ $(() => {
   </div>`);
   };
 
+  window.goofspiel.joinUser = function($game, data) {
 
+  }
   window.goofspiel.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
     let player = findPlayer(data.players, window.myUsername);
-    console.log("I think this is me:");
-    console.log(player);
+
     window.activeGames[data.gameId].player = player;
     window.activeGames[data.gameId].myCards = player.hand.cards;
-    console.log("my cards are");
-    console.log(player.hand);
 
-    // let table = data.table;
 
     let playerCards = ``;
     for (let card of player.hand.cards) {
@@ -61,17 +50,21 @@ $(() => {
     let tableCards = ``;
     for (let card of data.table.cards) {
       //Visibility state must be set based on goofspiel logic
+
+
       tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content"></img>`;
     }
 
     let pendingCards = ``;
-    for (let move of data.pendingMoves) {
+    let hiddenCards = [];
+    for (let i in data.pendingMoves) {
       //Pending moves are face down
-      let card = move.card;
+      let card = data.pendingMoves[i].card;
       if (data.pendingMoves.length < data.players.length) {
         pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content"></img>`;
       } else {
-        tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content"></img>`;
+        hiddenCards.push(`./images/cards/PNG/${card.name}.png`);
+        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content" id="hidden${i}"></img>`;
       }
     }
 
@@ -105,6 +98,29 @@ $(() => {
     </div>
   </div>
 `);
+    if (hiddenCards.length > 0) {
+      for (let i in hiddenCards) {
+        let el = window.activeGames[data.gameId].view.find(`#hidden${i}`);
+        console.log("The jquery element is:");
+        console.log(el.attr("id"));
+
+        setTimeout(() => {
+          el.attr('src', hiddenCards[i]);
+
+        }, 1000);
+
+        //Fade effect to show the hidden card. Takes 1.5s.
+        //Fades to gray, then fades back.
+        /*
+        el.fadeTo(1000, 0.5, () => {
+          el.attr('src', hiddenCards[i]);
+        }).fadeTo(500, 1);
+        */
+      }
+    }
+
+
+
   };
 
 });

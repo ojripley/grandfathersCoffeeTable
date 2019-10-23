@@ -2,13 +2,13 @@
 require('dotenv').config();
 
 // Web server config
-const PORT       = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 // const ENV        = process.env.ENV || "development";
-const express    = require("express");
+const express = require("express");
 const bodyParser = require("body-parser");
 // const sass       = require("node-sass-middleware");
-const app        = express();
-const morgan     = require('morgan');
+const app = express();
+const morgan = require('morgan');
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const cookieParser = require('cookie-session');
@@ -65,7 +65,7 @@ app.get("/", (req, res) => {
   if (req.session.username) {
     res.render("index");
   } else {
-    res.render('login', {loginAttempt: true});
+    res.render('login', { loginAttempt: true });
   }
 });
 
@@ -177,7 +177,7 @@ io.on('connection', (client) => {
 
           // send game details to client, and player join status to room
           client.emit('newGame', { gameId: newGame.id, players: newGame.players });
-          io.to(newGame.id).emit('join', {gameId: newGame, numberOfPlayers: newGame.players.length});
+          io.to(newGame.id).emit('join', { gameId: newGame, numberOfPlayers: newGame.players.length });
         }
       })
       .catch(error => {
@@ -273,7 +273,7 @@ io.on('connection', (client) => {
                 .catch(error => {
                   console.error(error);
                 });
-            }, 2000);
+            }, 20000);
           } else {
             // broadcast the game to all players
             io.to(game).emit('gameView', {
@@ -284,7 +284,7 @@ io.on('connection', (client) => {
               gameId: game,
             });
           }
-        }, 2000);
+        }, 20000);
       }
     }
   });

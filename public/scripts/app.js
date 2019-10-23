@@ -2,7 +2,7 @@
 
 $(() => {
   window.myUsername = extractUserName(document.cookie);
-
+  $("#username").text(window.myUsername);
   //Nav bar logic:
   $('#menu-bars').on('click', () => {
     $('#navbar').toggleClass('hidden', 500);
@@ -15,8 +15,6 @@ $(() => {
   $('#high-scores').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
 
-    //show highscores (move this to the response of leaderboard)
-    views_manager.show('leaderboard');
   });
 
   //Change this to class:
@@ -24,7 +22,7 @@ $(() => {
     views_manager.show('goof');
   });
   $("#profile").on('click', (event) => {
-    views_manager.show('profile');
+    socket.emit('requestHistory', myUsername);
   });
 
   $(".request-game").on('click', (event) => {
@@ -48,6 +46,16 @@ $(() => {
     }
 
   });
+
+
+  socket.on('join', (data) => {
+    console.log("PLAYER HAS JOINED");
+    //goofspiel.updateView(window.activeGames[data.gameId].view, data);
+
+    console.log(data);
+    //Update the progress bar
+  });
+
 
   socket.on('newGame', (data) => {
     console.log("ADD THIS NEW GAME");
@@ -84,13 +92,10 @@ $(() => {
 
   });
 
-  socket.on('join', (data) => {
-    console.log("PLAYER HAS JOINED");
-    console.log(data);
-    //Update the progress bar
-  });
-
   socket.on('leaderBoard', (data) => {
+
+    //show highscores (move this to the response of leaderboard)
+    views_manager.show('leaderboard', data);
     console.log("Here is the leaderboard");
     console.log(data);
   });
@@ -104,17 +109,36 @@ $(() => {
     console.log(data);
   });
 
-  socket.emit('requestHistory', myUsername);
+
   socket.on('history', (data) => {
     console.log('Here is the history');
     console.log(data);
+    if (data[0]) {
+      profile.updateMatchHistoryTable(data);
+      socket.emit('requestMatchDetails', data[0].id);
+    } else {
+      //This will only happen when user searches someone that doesnt' exist OR first time user
+      let histMessage = $("#historyErrorMessage");
+      if (histMessage) {
+        console.log("Hello");
+        profile.updateMatchHistoryTable(data);
+        $("#historyErrorMessage").text("User does not exist");
+      } else {
+        console.log("trying to render");
+        profile.updateMatchHistoryTable(data);
+
+      }
+    }
   });
 
-  socket.emit('requestMatchDetails', 1);
+  //socket.emit('requestMatchDetails', 1);
 
   socket.on('matchDetails', (data) => {
     console.log('Here are the match details');
     console.log(data);
+    profile.updateMatchSpecificTable(data);
+
+    views_manager.show('profile');
   })
 
   socket.on('msg', (data) => {

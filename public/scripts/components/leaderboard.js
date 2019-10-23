@@ -14,7 +14,7 @@ $(() => {
     </div>
   </div>
 
-  <table class="table table-striped table-hover">
+  <table class="table table-striped table-hover" id="leaderboardTable">
     <thead>
       <tr>
         <th scope="col"></th>
@@ -78,25 +78,16 @@ $(() => {
     </tbody>
   </table>
 </div>`);
+
   window.leaderboard = {};
   window.leaderboard.updateTable = function(data) {
-    window.$leaderboard.empty(); //Clear what we had before;
-    console.log(`Trying to display ${data}`);
-    let str = `<div id="leaderboardContainer">
-    <h1>Leaderboard </h1>
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="leaderboardDropdown" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        Goofspiel
-      </button>
-      <div class="dropdown-menu" aria-labelledby="leaderboardDropdown">
-        <a class="dropdown-item" id="goofLead">Goofspiel</a>
-        <a class="dropdown-item" id="warLead">War</a>
-      </div>
-    </div>
 
-    <table class="table table-striped table-hover">
-      <thead>
+    let leaderboardTable = window.$leaderboard.find("#leaderboardTable");
+    leaderboardTable.empty();
+    console.log(`Trying to display ${data}`);
+    console.log(data);
+    console.log(leaderboardTable);
+    let str = `<thead>
         <tr>
           <th scope="col"></th>
           <th scope="col">Username</th>
@@ -105,12 +96,20 @@ $(() => {
       </thead>
       <tbody>
       <tr>
-      <th scope="row">3</th>
-        <td>${data}</td>
-        <td>${data}</td>
-      </tr>`;
+      `;
+    data.forEach((el, i) => {
+      str += `
+ <th scope="row">${i + 1}</th>
+        <td>${el.username}</td>
+        <td>${el.users_total_game_score}</td>
+      </tr>
+ `
+    });
+    $(str).appendTo(leaderboardTable);
+
+
     //Set the leaderboard object based on the data provided
-    window.$leaderboard = $(str);
+    // window.$leaderboard = $(str);
   };
 
 
