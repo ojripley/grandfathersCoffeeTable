@@ -65,6 +65,8 @@ $(() => {
       $(`#${data.gameId}`).on('click', (event) => {
         views_manager.show(data.gameId);
       });
+
+      views_manager.show(data.gameId); //display the game immediately
     } else {
       if (window.curGame === data.gameId) {
         //Currently on the game screen

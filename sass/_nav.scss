@@ -28,7 +28,19 @@ nav {
   z-index: 2;
   position: absolute;
 
+  .select-game {
+    border-radius: 1em;
+    &.selected {
+      background-color: yellow;
+    }
+  }
+  // .selected{
+  //   background-co
+  // }
+
   li:hover {
+    border-radius: 1em;
+
     background-color: yellow;
   }
 

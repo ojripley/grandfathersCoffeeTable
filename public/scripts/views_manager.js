@@ -31,7 +31,7 @@ $(() => {
         $('#warLead').on('click', (event) => {
           event.preventDefault();
           $("#leaderboardDropdown").text("War");
-          socket.emit('requestLeaderBoard', 'war');
+          socket.emit('requestLeaderBoard', 'warr');
         });
 
         break;

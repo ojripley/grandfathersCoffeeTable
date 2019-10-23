@@ -43,7 +43,12 @@ nav {
   top: 0;
   z-index: 2;
   position: absolute; }
+  nav .select-game {
+    border-radius: 1em; }
+    nav .select-game.selected {
+      background-color: yellow; }
   nav li:hover {
+    border-radius: 1em;
     background-color: yellow; }
   nav hr {
     border-top: 1px solid black;
