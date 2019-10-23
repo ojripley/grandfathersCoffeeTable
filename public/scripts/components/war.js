@@ -32,22 +32,23 @@ $(() => {
       <span id="p2numCards">(0 cards)</span>
       </p>
     </div>
-    <div id="p3Area">
-    <p id="player3Text">
-    <span id="p3Name"> Player 3</span>
-    <span id="p3score">- 0 pts -</span>
-    <span id="p3numCards">(0 cards)</span>
-    </p>
-    </div>
-    <div id="p4Area">
-    <p id="player4Text">
-    <span id="p4Name"> Player 4</span>
-    <span id="p4score">- 0 pts -</span>
-    <span id="p3numCards">(0 cards)</span>
-    </p>
-    </div>
   </div>`);
   };
+
+  // <div id="p3Area">
+  //   <p id="player3Text">
+  //     <span id="p3Name"> Player 3</span>
+  //     <span id="p3score">- 0 pts -</span>
+  //     <span id="p3numCards">(0 cards)</span>
+  //   </p>
+  // </div>
+  //   <div id="p4Area">
+  //     <p id="player4Text">
+  //       <span id="p4Name"> Player 4</span>
+  //       <span id="p4score">- 0 pts -</span>
+  //       <span id="p3numCards">(0 cards)</span>
+  //     </p>
+  //   </div>
 
   window.war.joinUser = function($game, data) {
     //Update the view progress bar here if more than two players are joining
@@ -167,20 +168,6 @@ $(() => {
       <span id="p2score">- ${players[1].score} pts -</span>
       <span id="p2numCards">(${players[1].hand.cards.length} cards)</span>
       </p>
-    </div>
-    <div id="p3Area">
-    <p id="player3Text">
-    <span id="p3Name"> Player 3</span>
-    <span id="p3score">- 0 pts -</span>
-    <span id="p3numCards">(0 cards)</span>
-    </p>
-    </div>
-    <div id="p4Area">
-    <p id="player4Text">
-    <span id="p4Name"> Player 4</span>
-    <span id="p4score">- 0 pts -</span>
-    <span id="p3numCards">(0 cards)</span>
-    </p>
     </div>
   </div>
 `);

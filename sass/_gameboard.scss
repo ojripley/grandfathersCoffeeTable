@@ -1,5 +1,6 @@
 #game-container {
-  background-color: $bgCol;
+  background-color: #382300;
+  background-image: url("https://www.transparenttextures.com/patterns/purty-wood.png");;
   position: relative;
   top: 0;
   z-index: 1;
@@ -87,13 +88,19 @@
   #tableArea {
     grid-row-start: 2;
     grid-column-start: 2;
-    background-color: $col4;
-    color: lightblue;
+    background-color: #648864;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     .myProgressBar {
       width: 80%;
+    }
+
+    #background-text{
+      position: absolute;
+      color: lightgray;
+      font-size: 3.5em;
     }
   }
   #end-game-header {
