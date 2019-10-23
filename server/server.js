@@ -258,6 +258,12 @@ io.on('connection', (client) => {
         setTimeout(() => {
           // evaluate the move scores and push moves to history
           activeGames[game].score();
+
+          console.log('\nPLAYER SCORES AFTER SCORE():');
+          console.log(activeGames[game].players[0].username + ': ' + activeGames[game].players[0].score);
+          console.log(activeGames[game].players[1].username + ': ' + activeGames[game].players[1].score);
+          console.log();
+
           activeGames[game].pushPendingToHistory();
 
           // broadcast the game to all players
@@ -270,9 +276,6 @@ io.on('connection', (client) => {
             deck: activeGames[game].deck,
             gameId: game,
           });
-
-          console.log('\n\nplayer one hand:\n');
-          console.log(activeGames[game].players[0].hand.cards);
 
           // evaluate if game and case has been reached
           if (activeGames[game].isGameDone()) {
@@ -358,9 +361,4 @@ io.on('connection', (client) => {
         client.emit('leaderBoard', res);
       });
   });
-
-  // CHANGE ROOM TO DYNMAIC ROOM NAME BASED ON gameId
-  io.to('room').emit('playerJoin', 'game.players.length');
-
-  io.to('room').emit('endGame', 'the game is over');
 });

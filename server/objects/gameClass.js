@@ -43,8 +43,14 @@ module.exports = class Game {
   }
 
   pushPendingToTable() {
-    while (this.pendingMoves.length > 0) {
-      this.table.cards.push(this.pendingMoves.pop());
-    }
+
+    this.pendingMoves.forEach(move => {
+      this.table.cards.push(move.card);
+    });
+
+    // while (this.pendingMoves.length > 0) {
+    //   const tempCard = this.pendingMoves.pop().card;
+    //   this.table.cards.push(this.pendingMoves.pop());
+    // }
   }
 };

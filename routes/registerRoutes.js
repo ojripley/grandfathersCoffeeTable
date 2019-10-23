@@ -31,9 +31,7 @@ module.exports = (db) => {
               // sets username cookie
               req.session.username = req.body.username;
 
-              res.cookie(req.body.username);
-
-              console.log('expecting session.username', req.session.username);
+              res.cookie(username, req.body.username);
 
               res.redirect('/');
             })
