@@ -96,6 +96,26 @@
       width: 80%;
     }
   }
+  #end-game-header {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    align-content: center;
+    color: lavender;
+  }
+  #end-game-table {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    height: 100px;
+  }
+  #remove-game {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    position: relative;
+    height: 50px;
+  }
 
   @media screen and (min-width: $break) {
     position: absolute;

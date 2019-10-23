@@ -8,9 +8,9 @@ $(() => {
     $('#navbar').toggleClass('hidden', 500);
   });
 
-  window.socket = io.connect('172.46.3.253:8080');
+  // window.socket = io.connect('172.46.3.253:8080');
 
-  // window.socket = io.connect('localhost:8080');
+  window.socket = io.connect('localhost:8080');
 
   $('#high-scores').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
@@ -37,7 +37,7 @@ $(() => {
     console.log(data);
 
     //If the game hasn't started and we haven't seen this game before
-    if (data.gameState === "pending" && !Object.keys(window.activeGames).includes(data.gameState)) {
+    if (data.gameState === "pending" && !Object.keys(window.activeGames).includes(data.gameId)) {
       console.log("Creating a new game!")
       window.goofspiel.newGame(data.gameId);
 
