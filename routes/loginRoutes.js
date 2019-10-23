@@ -30,7 +30,7 @@ module.exports = (db) => {
           req.session.username = req.body.username;
 
           // if we have time, make this an encrypted token later (STRETCH)
-          res.cookie(req.body.username);
+          res.cookie(username, req.body.username);
 
           res.redirect('/');
         } else {

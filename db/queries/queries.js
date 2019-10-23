@@ -71,7 +71,7 @@ const fetchUserHistory = function(username) {
   JOIN matches ON match_id = matches.id
   WHERE users.username = $1
   GROUP BY users.id, results.id, matches.id
-  ORDER BY matches.time_stamp;
+  ORDER BY matches.time_stamp DESC;
   `, queryVars)
     .then(res => {
       return res.rows;

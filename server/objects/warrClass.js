@@ -59,17 +59,22 @@ class Warr extends Game {
 
   score() {
 
-    console.log(this.pendingMoves.length);
     if (this.pendingMoves.length === 2) {
 
       let roundWinner = null;
+      let roundLoser = null;
+      let roundWinnerIndex = null;
 
       if (this.pendingMoves[0].card.value > this.pendingMoves[1].card.value) {
         console.log('round winner is player 1');
-        roundWinner = this.pendingMoves[0].player;
+        roundWinnerIndex = 0;
+        roundWinner = this.pendingMoves[0].player.username;
+        roundLoser = this.pendingMoves[1].player;
       } else if (this.pendingMoves[1].card.value > this.pendingMoves[0].card.value) {
         console.log('round winner is player 2');
-        roundWinner = this.pendingMoves[1].player;
+        roundWinnerIndex = 1;
+        roundWinner = this.pendingMoves[1].player.username;
+        roundLoser = this.pendingMoves[0].player;
       } else {
         // if the round is a tie, the cards are added to the table as part of the next round's prize
         console.log('no winner!');
@@ -81,24 +86,41 @@ class Warr extends Game {
 
         // push cards into the winners hand and then log move to history
         while (this.pendingMoves.length > 0) {
-          roundWinner.hand.cards.push(this.pendingMoves[0].card);
-          this.moveHistory.push(this.pendingMoves.pop());
+
+
+          console.log('\n\nround winner hand lengths: ');
+
+
+          // console.log(roundWinner.hand.cards.length);
+          // console.log(this.players[roundWinnerIndex].hand.cards.length);
+
+          // roundWinner.hand.cards.push(this.pendingMoves[0].card);
+
+          this.players.filter(player => player.username === roundWinner)[0].hand.cards.push(this.pendingMoves[0].card);
+
+          // console.log(roundWinner.hand.cards.length);
+          // console.log(this.players[roundWinnerIndex].hand.cards.length);
+
+          this.moveHistory.push(this.pendingMoves.shift());
         }
 
+
+
+
+
+
         // player also takes all prize cards from previous rounds
-        for (let card of this.table.cards) {
-          this.table.moveCard(card, roundWinner.hand.cards);
+        while (this.table.cards.length > 0) {
+          this.table.moveCard(this.table.cards[0], this.players.filter(player => player.username === roundWinner)[0].hand.cards);
         }
+        // console.log(roundWinner.hand.cards.length);
+        // console.log(this.players[roundWinnerIndex].hand.cards.length);
+        console.log();
       }
 
       // assign scores
       this.players[0].score = this.players[0].hand.cards.length;
       this.players[1].score = this.players[1].hand.cards.length;
-
-      // console.log('\nPLAYER SCORES:');
-      // console.log(this.players[0].username + ': ' + this.players[0].score);
-      // console.log(this.players[1].username + ': ' + this.players[1].score);
-      // console.log();
 
       // sort players, highest score first
       for (let i = 0; i < this.players.length; i++) {
