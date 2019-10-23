@@ -29,7 +29,7 @@ const activeGames = {
       return new Warr('warr' + this.idCount, fullDeck);
     case 'sevens':
       this.idCount++;
-      return new Sevens('sevens' + this,this.idCount, fullDeck);
+      return new Sevens('sevens' + this.idCount, fullDeck);
     }
   },
 
