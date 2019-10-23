@@ -143,6 +143,7 @@ $(() => {
     window.activeGames[data.gameId].view = $(`
     <div id="game-container">
     <div id="tableArea">
+    <h1 id="background-text"> W A R R </h1>
     ${tableCards}
     ${pendingCards}
     </div>
