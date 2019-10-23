@@ -128,7 +128,18 @@ io.on('connection', (client) => {
                 activeGames[game].addPlayer(res[0].id, res[0].username, (activeGames[game].players.length + 1));
 
                 // send game details to client, and player join status to room
-                client.emit('newGame', { gameId: game, players: activeGames[game].players });
+                // client.emit('newGame', { gameId: game, players: activeGames[game].players });
+
+                io.to(game).emit('gameView', {
+                  gameState: activeGames[game].gameState,
+                  currentPlayers: activeGames[game].currentPlayers,
+                  players: activeGames[game].players,
+                  table: activeGames[game].table,
+                  pendingMoves: activeGames[game].pendingMoves,
+                  deck: activeGames[game].deck,
+                  gameId: game,
+                });
+
                 io.to(game).emit('join', { gameId: game, numberOfPlayers: activeGames[game].players.length });
 
                 isInGame = true;
@@ -222,6 +233,7 @@ io.on('connection', (client) => {
         }
       }
 
+      // add to the array of moves to be evaluated
       activeGames[game].pendingMoves.push(move);
 
       // remove player from currentPlayers for turn
