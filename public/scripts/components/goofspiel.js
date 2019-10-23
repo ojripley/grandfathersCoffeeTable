@@ -70,9 +70,10 @@ $(() => {
         </thead>
         <tbody>`;
       data.players.forEach((player, i) => {
+        console.log(player);
         scoreBoard += `<tr>
           <td scope="row">${i + 1}</td>
-          <td>${player.name}</td>
+          <td>${player.username}</td>
           <td>${player.score}</td>
         </tr>`;
       });
@@ -85,9 +86,10 @@ $(() => {
 
       <h1 id="end-game-header"> GAME OVER! </h1>
             ${scoreBoard}
-
+        <button type="button" class="btn btn-warning" id="remove-game">Exit</button>
       </div>
       `);
+
       return;
     }
     console.log("Youy should not see this");

@@ -110,6 +110,12 @@
     grid-column-start: 2;
     height: 100px;
   }
+  #remove-game {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    position: relative;
+    height: 50px;
+  }
 
   @media screen and (min-width: $break) {
     position: absolute;
