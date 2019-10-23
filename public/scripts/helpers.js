@@ -16,7 +16,7 @@ const findPlayer = function(players, username) {
 
     if (player.username === username) {
       //retArr.push player;
-
+      return player;
     }
   }
   return undefined; //Username could not be found
