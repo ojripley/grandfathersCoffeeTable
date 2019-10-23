@@ -17,20 +17,34 @@ $(() => {
     console.log(`requesting the ${item} screen `)
     switch (item.substring(0, 4)) {
       case 'lead':
+        window.curGame = 'lead';
+        console.log("sending...");
+        console.log(data);
         leaderboard.updateTable(data);
         $leaderboard.appendTo($main);
-        window.curGame = 'lead';
+
+        $('#goofLead').on('click', (event) => {
+          event.preventDefault();
+          $("#leaderboardDropdown").text("Goofspiel");
+          socket.emit('requestLeaderBoard', 'goofspiel');
+        });
+        $('#warLead').on('click', (event) => {
+          event.preventDefault();
+          $("#leaderboardDropdown").text("War");
+          socket.emit('requestLeaderBoard', 'war');
+        });
+
         break;
       case 'prof':
+        window.curGame = 'prof';
         $profile.appendTo($main);
         //Search bar functionality
         $('#reqMatchHistoryBut').on('click', (event) => {
           event.preventDefault();
           let userToSearch = $("#user-to-search").val();
+          $("#matchHistoryHeader").text(` ${userToSearch}'s Match history `)
           socket.emit('requestHistory', userToSearch);
-
         })
-
 
         break;
       case 'goof':
@@ -42,6 +56,7 @@ $(() => {
         }
 
         //Add game-specific listeners
+        //Change the logic here to check if the card is playable
         $('.card').on('click', (event) => {
           // let $chosenCard = $(event.target);
           console.log('click');

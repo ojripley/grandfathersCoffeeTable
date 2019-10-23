@@ -2,7 +2,7 @@
 
 $(() => {
   window.myUsername = extractUserName(document.cookie);
-
+  $("#username").text(window.myUsername);
   //Nav bar logic:
   $('#menu-bars').on('click', () => {
     $('#navbar').toggleClass('hidden', 500);
@@ -15,8 +15,6 @@ $(() => {
   $('#high-scores').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
 
-    //show highscores (move this to the response of leaderboard)
-    views_manager.show('leaderboard');
   });
 
   //Change this to class:
@@ -91,6 +89,9 @@ $(() => {
   });
 
   socket.on('leaderBoard', (data) => {
+
+    //show highscores (move this to the response of leaderboard)
+    views_manager.show('leaderboard', data);
     console.log("Here is the leaderboard");
     console.log(data);
   });
@@ -112,9 +113,17 @@ $(() => {
       profile.updateMatchHistoryTable(data);
       socket.emit('requestMatchDetails', data[0].id);
     } else {
-      //This will only happen when user searches someone that doesnt' exist
-      $("#historyErrorMessage").text("User does not exist");
+      //This will only happen when user searches someone that doesnt' exist OR first time user
+      let histMessage = $("#historyErrorMessage");
+      if (histMessage) {
+        console.log("Hello");
+        profile.updateMatchHistoryTable(data);
+        $("#historyErrorMessage").text("User does not exist");
+      } else {
+        console.log("trying to render");
+        profile.updateMatchHistoryTable(data);
 
+      }
     }
   });
 

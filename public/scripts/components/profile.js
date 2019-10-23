@@ -2,7 +2,7 @@ $(() => {
   //Need to generate this for each game. May need to make a game container first
   window.$profile = $(`
 <div id="matchHistoryContainer">
-  <h1> CurrentUsers's Match history </h1>
+  <h1 id="matchHistoryHeader"> ${window.myUsername}'s Match history </h1>
   <form>
     <div class="form-row">
       <div class="col">
