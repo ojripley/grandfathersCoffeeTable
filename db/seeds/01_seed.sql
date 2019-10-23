@@ -1,7 +1,7 @@
 -- Users table seeds here (Example)
 INSERT INTO users (username, password, profile_picture)
-VALUES ('Owen', 'password', 'http://www.messagescollection.com/wp-content/uploads/2015/04/cute-fb-profile-picture.jpg'),
-('Thilakshan', 'password', 'http://www.messagescollection.com/wp-content/uploads/2015/04/cute-fb-profile-picture.jpg');
+VALUES ('Owen', '$2b$10$3E3dOlmiEADLQ09ViClGCulfRNm0nUI2cX5kRdiqMHlbRmZAkWyvW', 'http://www.messagescollection.com/wp-content/uploads/2015/04/cute-fb-profile-picture.jpg'),
+('Thilakshan', '$2b$10$3E3dOlmiEADLQ09ViClGCulfRNm0nUI2cX5kRdiqMHlbRmZAkWyvW', 'http://www.messagescollection.com/wp-content/uploads/2015/04/cute-fb-profile-picture.jpg');
 
 INSERT INTO matches (gametype)
 VALUES ('goofspiel'),

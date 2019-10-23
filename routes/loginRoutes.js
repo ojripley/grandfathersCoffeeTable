@@ -1,7 +1,7 @@
 // all login related routes go here
 const express = require('express');
 const router = express.Router();
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 module.exports = (db) => {
 
@@ -24,7 +24,7 @@ module.exports = (db) => {
       .then(user => {
         console.log(user);
 
-        if (user[0].password === req.body.password) {
+        if (bcrypt.compareSync(req.body.password, user[0].password)) {
 
           // create session cookie
           req.session.username = req.body.username;

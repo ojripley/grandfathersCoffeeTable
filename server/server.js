@@ -125,7 +125,7 @@ io.on('connection', (client) => {
                 // add the player
                 client.join(activeGames[game].id);
                 console.log(`JOINING a game with the id: ${activeGames[game].id}`);
-                activeGames[game].addPlayer(res[0].id, res[0].username);
+                activeGames[game].addPlayer(res[0].id, res[0].username, (activeGames[game].players.length + 1));
 
                 // send game details to client, and player join status to room
                 client.emit('newGame', { gameId: game, players: activeGames[game].players });
@@ -162,36 +162,6 @@ io.on('connection', (client) => {
                     });
                   }, 2000);
                 }
-
-
-
-
-
-
-
-                // let playBall = true;
-
-                // while (playBall) {
-                //   console.log(activeGames[game].table.cards.length);
-                //   activeGames[game].pendingMoves.push(activeGames[game].players[0].playCard(activeGames[game].players[0].hand.selectRandom(), activeGames[game].table.cards));
-                //   activeGames[game].pendingMoves.push(activeGames[game].players[1].playCard(activeGames[game].players[1].hand.selectRandom(), activeGames[game].table.cards));
-                //   activeGames[game].score();
-                //   console.log(activeGames[game].players[0].username + ' ' + activeGames[game].players[0].score);
-                //   console.log(activeGames[game].players[1].username + ' ' + activeGames[game].players[1].score + '\n');
-
-                //   console.log('deck size ' + activeGames[game].deck.cards.length + '\n\n');
-
-                //   activeGames[game].pushPendingToHistory();
-
-                //   if (activeGames[game].isGameDone()) {
-                //     break;
-                //   } else {
-                //     activeGames[game].deck.moveCard(activeGames[game].deck.selectRandom(), activeGames[game].table.cards);
-                //   }
-                // }
-
-                // console.log(`\n the winner is... ${activeGames[game].players[0].username} \n\n`);
-
                 break;
               }
             }
@@ -203,7 +173,7 @@ io.on('connection', (client) => {
           const newGame = activeGames.addGame(data.gametype);
           console.log(`ADDING a new game with the id: ${newGame.id}`);
           client.join(newGame.id);
-          newGame.addPlayer(res[0].id, res[0].username);
+          newGame.addPlayer(res[0].id, res[0].username, (newGame.players.length + 1));
 
           // send game details to client, and player join status to room
           client.emit('newGame', { gameId: newGame.id, players: newGame.players });
@@ -214,13 +184,6 @@ io.on('connection', (client) => {
         console.error(error);
       });
   });
-
-
-
-
-
-
-
 
 
   client.on('move', (data) => {
@@ -310,7 +273,7 @@ io.on('connection', (client) => {
                 .catch(error => {
                   console.error(error);
                 });
-            }, 20000);
+            }, 2000);
           } else {
             // broadcast the game to all players
             io.to(game).emit('gameView', {
@@ -321,30 +284,10 @@ io.on('connection', (client) => {
               gameId: game,
             });
           }
-        }, 20000);
+        }, 2000);
       }
     }
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   // client requests history of a user (data = a username)
