@@ -77,15 +77,8 @@ $(() => {
         //Change the logic here to check if the card is playable
         $('.card').on('click', (event) => {
           // let $chosenCard = $(event.target);
-          console.log('click');
           let cardName = event.target.id;
           let card = findCardByName(cardName, window.activeGames[item].myCards);
-          console.log("The card being sent is:")
-          console.log(cardName);
-          console.log("The card object:")
-          console.log(card);
-          console.log("My player object:")
-          console.log(window.activeGames[item].player);
 
           socket.emit('move', {
             gameId: window.curGame,
@@ -99,9 +92,48 @@ $(() => {
         window.curGame = item;
         break;
       case 'warr':
-        //Make a version of the view for war
-        goofspiel.updateView(data);
-        $goofspiel.appendTo($main);
+        if (data.gameState === "playing") { //If we are in the playing game state
+          war.updateView(window.activeGames[item].view, data);
+          window.activeGames[item].view.appendTo($main);
+          $("#remove-game").on('click', (event) => {
+            console.log(`click`);
+            $(`#${data.gameId}`).remove(); //Get rid of the game
+            //Render a different screen
+            window.views_manager.show('lead');
+          });
+        } else if (data.gameState === "pending" || data === "none") {
+          //If we are waiting for another player or game does not exist
+          window.activeGames[item].view.appendTo($main);
+        } else {
+          console.log("the data" + data);
+          war.updateView(window.activeGames[item].view, data);
+          window.activeGames[item].view.appendTo($main);
+          console.log("I am assigning the button");
+          $("#remove-game").on('click', (event) => {
+            console.log(`click`);
+            $(`#${data.gameId}`).remove(); //Get rid of the game
+            //Render a different screen
+            window.views_manager.show('lead');
+          });
+        }
+
+        //Add game-specific listeners
+        //Change the logic here to check if the card is playable
+        $('.card').on('click', (event) => {
+          // let $chosenCard = $(event.target);
+          let cardName = event.target.id;
+          let card = findCardByName(cardName, window.activeGames[item].myCards);
+
+          socket.emit('move', {
+            gameId: window.curGame,
+            move: {
+              player: window.activeGames[item].player,
+              card
+            }
+          }); //Send the client's player object & card
+        });
+
+        window.curGame = item;
         break;
 
       /*  case 'erro': {
