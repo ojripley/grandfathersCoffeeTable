@@ -273,7 +273,7 @@ io.on('connection', (client) => {
                 .catch(error => {
                   console.error(error);
                 });
-            }, 20000);
+            }, 2000);
           } else {
             // broadcast the game to all players
             io.to(game).emit('gameView', {
@@ -284,7 +284,7 @@ io.on('connection', (client) => {
               gameId: game,
             });
           }
-        }, 20000);
+        }, 2000);
       }
     }
   });
