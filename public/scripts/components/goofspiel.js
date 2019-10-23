@@ -55,6 +55,10 @@ $(() => {
   }
   window.goofspiel.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
+
+
+
+
     let players = findPlayer(data.players, window.myUsername);
 
     //Check if the game is over

@@ -5,7 +5,7 @@ $(() => {
   window.activeGames = {};
 
 
-  window.views_manager.show = function(item, data = "test") {
+  window.views_manager.show = function(item, data = 'none') {
     $leaderboard.detach();
     $profile.detach();
     for (let game in window.activeGames) {
@@ -57,9 +57,12 @@ $(() => {
             //Render a different screen
             window.views_manager.show('lead');
           });
-        } else if (data.gameState === "pending") {//If we are waiting for another player
+        } else if (data.gameState === "pending" || data === "none") {
+          //If we are waiting for another player or game does not exist
           window.activeGames[item].view.appendTo($main);
         } else {
+          console.log("the data" + data);
+          goofspiel.updateView(window.activeGames[item].view, data);
           window.activeGames[item].view.appendTo($main);
           console.log("I am assigning the button");
           $("#remove-game").on('click', (event) => {
