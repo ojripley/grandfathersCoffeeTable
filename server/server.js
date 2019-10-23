@@ -206,7 +206,7 @@ io.on('connection', (client) => {
           });
 
 
-          io.to(newGame.id).emit('join', { gameId: newGame, numberOfPlayers: newGame.players.length });
+          io.to(newGame.id).emit('join', { gameId: newGame.id, numberOfPlayers: newGame.players.length });
         }
       })
       .catch(error => {
