@@ -103,7 +103,7 @@ $(() => {
     matchesTable.empty();//clear just this table
 
     console.log(`Trying to display ${data}`);
-    let str = `<
+    let str = `
         <thead>
           <tr>
             <th scope="col">Game mode</th>

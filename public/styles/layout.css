@@ -162,6 +162,18 @@ nav {
     justify-content: center; }
     #game-container #tableArea .myProgressBar {
       width: 80%; }
+  #game-container #end-game-header {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    align-content: center;
+    color: lavender; }
+  #game-container #end-game-table {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    height: 100px; }
   @media screen and (min-width: 1024px) {
     #game-container {
       position: absolute;

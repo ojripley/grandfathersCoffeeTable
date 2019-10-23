@@ -53,7 +53,6 @@ $(() => {
           window.activeGames[item].view.appendTo($main);
         } else if (data.gameState === "pending") {//If we are waiting for another player
           window.activeGames[item].view.appendTo($main);
-        } else if (data.gameState === "finished") {
         }
         else {
           window.activeGames[item].view.appendTo($main);

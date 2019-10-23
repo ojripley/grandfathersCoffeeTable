@@ -56,8 +56,41 @@ $(() => {
   window.goofspiel.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
     let players = findPlayer(data.players, window.myUsername);
-    //  let player = players[0];
 
+    //Check if the game is over
+    if (data.gameState === "finished") {
+      let scoreBoard = `
+      <table class="table table-striped table-hover" id="end-game-table">
+        <thead>
+          <tr>
+            <th scope="col">Placing</th>
+            <th scope="col">Name</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody>`;
+      data.players.forEach((player, i) => {
+        scoreBoard += `<tr>
+          <td scope="row">${i + 1}</td>
+          <td>${player.name}</td>
+          <td>${player.score}</td>
+        </tr>`;
+      });
+
+      scoreBoard += `</tbody> </table>`;
+
+
+      window.activeGames[data.gameId].view = $(`
+      <div id="game-container">
+
+      <h1 id="end-game-header"> GAME OVER! </h1>
+            ${scoreBoard}
+
+      </div>
+      `);
+      return;
+    }
+    console.log("Youy should not see this");
     window.activeGames[data.gameId].player = players[0];
     window.activeGames[data.gameId].myCards = players[0].hand.cards;
 
@@ -67,8 +100,9 @@ $(() => {
     for (let i in players) {
       playersCards[i] = ``;
       for (let card of players[i].hand.cards) {
-        //Add playable state here
         if (i == 0) {
+          //This is the client, show their cards to them
+          //Add playable state here
           playersCards[i] += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content" id="${card.name}"></img>`;
         } else {
           playersCards[i] += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content"></img>`;
