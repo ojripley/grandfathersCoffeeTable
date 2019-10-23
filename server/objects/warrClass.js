@@ -62,19 +62,13 @@ class Warr extends Game {
     if (this.pendingMoves.length === 2) {
 
       let roundWinner = null;
-      let roundLoser = null;
-      let roundWinnerIndex = null;
 
       if (this.pendingMoves[0].card.value > this.pendingMoves[1].card.value) {
         console.log('round winner is player 1');
-        roundWinnerIndex = 0;
         roundWinner = this.pendingMoves[0].player.username;
-        roundLoser = this.pendingMoves[1].player;
       } else if (this.pendingMoves[1].card.value > this.pendingMoves[0].card.value) {
         console.log('round winner is player 2');
-        roundWinnerIndex = 1;
         roundWinner = this.pendingMoves[1].player.username;
-        roundLoser = this.pendingMoves[0].player;
       } else {
         // if the round is a tie, the cards are added to the table as part of the next round's prize
         console.log('no winner!');
