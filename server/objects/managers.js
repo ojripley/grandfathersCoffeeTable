@@ -1,4 +1,5 @@
-const { Goofspiel } = require('./goofspielGame');
+const { Goofspiel } = require('./goofspielClass');
+const { Warr } = require('./warrObject');
 const fullDeck = require('./fullDeck');
 
 // constant objects (single instance entities only)
@@ -22,6 +23,9 @@ const activeGames = {
     case 'goofspiel':
       this.idCount++;
       return new Goofspiel('goof' + this.idCount, fullDeck);
+    case 'warr':
+      this.idCount++;
+      return new Warr('warr' + this.idCount, fullDeck);
     }
   },
 

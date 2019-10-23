@@ -1,4 +1,6 @@
-const Game = require('./entities');
+'use strict';
+
+const Game = require('./gameObject');
 
 class Goofspiel extends Game {
 
@@ -59,8 +61,6 @@ class Goofspiel extends Game {
 
       const playerToRecievePoints = this.players.filter(player => highestBiddingMoves[0].player.username === player.username);
 
-      console.log(playerToRecievePoints);
-      // highestBiddingMoves[0].player.score += (highestBidValue + prize.value);
       playerToRecievePoints[0].score += (highestBidValue + prize.value);
     }
 

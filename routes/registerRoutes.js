@@ -20,6 +20,8 @@ module.exports = (db) => {
 
     const username = req.body.username;
     const user = req.body;
+    user.password = bcrypt.hashSync(user.password, 10);
+    console.log(user.password);
     db.doesUserExist(username)
       .then(rows => {
         if (rows.length === 0) {
