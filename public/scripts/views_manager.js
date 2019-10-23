@@ -48,11 +48,14 @@ $(() => {
 
         break;
       case 'goof':
-        if (data.players) { //If we are in the playing game state
+        if (data.gameState === "playing") { //If we are in the playing game state
           goofspiel.updateView(window.activeGames[item].view, data);
           window.activeGames[item].view.appendTo($main);
-        } else {//If we are waiting for another player
+        } else if (data.gameState === "pending") {//If we are waiting for another player
           window.activeGames[item].view.appendTo($main);
+        } else { //end game screen
+          window.activeGames[item].view.appendTo($main);
+
         }
 
         //Add game-specific listeners
