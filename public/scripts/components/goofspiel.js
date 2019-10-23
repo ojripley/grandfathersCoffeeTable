@@ -43,14 +43,10 @@ $(() => {
   window.goofspiel.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
     let player = findPlayer(data.players, window.myUsername);
-    console.log("I think this is me:");
-    console.log(player);
+
     window.activeGames[data.gameId].player = player;
     window.activeGames[data.gameId].myCards = player.hand.cards;
-    console.log("my cards are");
-    console.log(player.hand);
 
-    // let table = data.table;
 
     let playerCards = ``;
     for (let card of player.hand.cards) {
@@ -61,17 +57,21 @@ $(() => {
     let tableCards = ``;
     for (let card of data.table.cards) {
       //Visibility state must be set based on goofspiel logic
+
+
       tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content"></img>`;
     }
 
     let pendingCards = ``;
-    for (let move of data.pendingMoves) {
+    let hiddenCards = [];
+    for (let i in data.pendingMoves) {
       //Pending moves are face down
-      let card = move.card;
+      let card = data.pendingMoves[i].card;
       if (data.pendingMoves.length < data.players.length) {
         pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content"></img>`;
       } else {
-        tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content"></img>`;
+        hiddenCards.push(`./images/cards/PNG/${card.name}.png`);
+        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content" id="hidden${i}"></img>`;
       }
     }
 
@@ -105,6 +105,29 @@ $(() => {
     </div>
   </div>
 `);
+    if (hiddenCards.length > 0) {
+      for (let i in hiddenCards) {
+        let el = window.activeGames[data.gameId].view.find(`#hidden${i}`);
+        console.log("The jquery element is:");
+        console.log(el.attr("id"));
+
+        setTimeout(() => {
+          el.attr('src', hiddenCards[i]);
+
+        }, 1000);
+
+        //Fade effect to show the hidden card. Takes 1.5s.
+        //Fades to gray, then fades back.
+        /*
+        el.fadeTo(1000, 0.5, () => {
+          el.attr('src', hiddenCards[i]);
+        }).fadeTo(500, 1);
+        */
+      }
+    }
+
+
+
   };
 
 });

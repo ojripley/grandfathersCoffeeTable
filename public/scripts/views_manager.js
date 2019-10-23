@@ -26,11 +26,12 @@ $(() => {
 
         break;
       case 'goof':
-        if (data.players) { //Temporary
-          //This line is called whenever there is an additional card to display
+        if (data.players) { //If we are in the playing game state
           goofspiel.updateView(window.activeGames[item].view, data);
+          window.activeGames[item].view.appendTo($main);
+        } else {//If we are waiting for another player
+          window.activeGames[item].view.appendTo($main);
         }
-        window.activeGames[item].view.appendTo($main);
 
         //Add game-specific listeners
         $('.card').on('click', (event) => {
