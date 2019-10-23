@@ -2,14 +2,14 @@
 
 const Game = require('./gameClass');
 
-class Goofspiel extends Game {
+class Warr extends Game {
 
   constructor(id, fullDeck) {
 
     let tempFullDeck = fullDeck.slice(0);
 
     super(id, tempFullDeck);
-    this.gameType = 'goofspiel';
+    this.gameType = 'warr';
     this.table.faceUp = true;
   }
 
@@ -128,4 +128,4 @@ class Goofspiel extends Game {
   }
 }
 
-module.exports = { Goofspiel };
+module.exports = { Warr };
