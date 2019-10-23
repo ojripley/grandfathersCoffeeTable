@@ -11,15 +11,35 @@ const findPlayer = function(players, username) {
   console.log(players);
   console.log("looking for");
   console.log(username);
-  const flag = false;
-  for (let player of players) {
 
-    if (player.username === username) {
-      //retArr.push player;
-      return player;
+  players = players.sort((p1, p2) => {
+    return p1.joinToken - p2.joinToken;
+  });
+
+  for (let i = 0; i < players.length; i++) {
+    if (players[0].username === username) {
+      console.log("returning this");
+      console.log(players);
+      return players; //current player is always player 1
     }
+    //move the player to the end of the array
+    players.push(players.shift());
   }
-  return undefined; //Username could not be found
+  return players;
+
+  /* Old version
+    console.log("Sorted list");
+    console.log(players);
+
+    for (let player of players) {
+
+      if (player.username === username) {
+        //retArr.push player;
+        return player;
+      }
+    }
+    return undefined; //Username could not be found
+    */
 }
 
 //Finds a card object given the name of the card and an array of cards

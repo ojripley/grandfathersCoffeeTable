@@ -21,25 +21,29 @@ $(() => {
       </div>
       <p id="player1Text">
       <span id="p1Name"> ${window.myUsername}</span>
-      <span id="p1score">(score - 0)</span>
+      <span id="p1score"> - 0 pts - </span>
+      <span id="p1numCards"> (0 cards) </span>
       </p>
     </div>
     <div id="p2Area">
     <p id="player2Text">
       <span id="p2Name"> Player 2</span>
-      <span id="p2score">(score - 0)</span>
+      <span id="p2score">- 0 pts -</span>
+      <span id="p2numCards">(0 cards)</span>
       </p>
     </div>
     <div id="p3Area">
     <p id="player3Text">
     <span id="p3Name"> Player 3</span>
-    <span id="p3score">(score - 0)</span>
+    <span id="p3score">- 0 pts -</span>
+    <span id="p3numCards">(0 cards)</span>
     </p>
     </div>
     <div id="p4Area">
     <p id="player4Text">
     <span id="p4Name"> Player 4</span>
-    <span id="p4score">(score - 0)</span>
+    <span id="p4score">- 0 pts -</span>
+    <span id="p3numCards">(0 cards)</span>
     </p>
     </div>
   </div>`);
@@ -51,7 +55,8 @@ $(() => {
   }
   window.goofspiel.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
-    let player = findPlayer(data.players, window.myUsername);
+    let players = findPlayer(data.players, window.myUsername);
+    let player = players[0];
 
     window.activeGames[data.gameId].player = player;
     window.activeGames[data.gameId].myCards = player.hand.cards;
@@ -106,26 +111,29 @@ $(() => {
       </div>
       <p id="player1Text">
       <span id="p1Name"> ${window.myUsername}</span>
-      <span id="p1score">(score - 0)</span>
+      <span id="p1score"> - 0 pts - </span>
+      <span id="p1numCards"> (0 cards) </span>
       </p>
     </div>
     <div id="p2Area">
-      Player 2
-      <p id="player2Text">
-      <span id="p2Name"> Player 2</span>
-      <span id="p2score">(score - 0)</span>
+    <p id="player2Text">
+      <span id="p2Name"> ${players[1].username}</span>
+      <span id="p2score">- 0 pts -</span>
+      <span id="p2numCards">(0 cards)</span>
       </p>
     </div>
     <div id="p3Area">
     <p id="player3Text">
     <span id="p3Name"> Player 3</span>
-    <span id="p3score">(score - 0)</span>
+    <span id="p3score">- 0 pts -</span>
+    <span id="p3numCards">(0 cards)</span>
     </p>
     </div>
     <div id="p4Area">
     <p id="player4Text">
     <span id="p4Name"> Player 4</span>
-    <span id="p4score">(score - 0)</span>
+    <span id="p4score">- 0 pts -</span>
+    <span id="p3numCards">(0 cards)</span>
     </p>
     </div>
   </div>
