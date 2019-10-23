@@ -56,17 +56,28 @@ $(() => {
   window.goofspiel.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
     let players = findPlayer(data.players, window.myUsername);
-    let player = players[0];
+    //  let player = players[0];
 
-    window.activeGames[data.gameId].player = player;
-    window.activeGames[data.gameId].myCards = player.hand.cards;
+    window.activeGames[data.gameId].player = players[0];
+    window.activeGames[data.gameId].myCards = players[0].hand.cards;
 
 
-    let playerCards = ``;
-    for (let card of player.hand.cards) {
-      //Add playable state here
-      playerCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content" id="${card.name}"></img>`;
+    //let playerCards = ``;
+    let playersCards = [];
+    for (let i in players) {
+      playersCards[i] = ``;
+      for (let card of players[i].hand.cards) {
+        //Add playable state here
+        if (i == 0) {
+          playersCards[i] += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content" id="${card.name}"></img>`;
+        } else {
+          playersCards[i] += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content"></img>`;
+        }
+      }
     }
+    console.log(playersCards);
+
+
 
     let tableCards = ``;
     for (let card of data.table.cards) {
@@ -89,37 +100,31 @@ $(() => {
       }
     }
 
-
-    console.log("playerCards");
-    console.log(playerCards);
-    console.log("tableCards");
-    console.log(tableCards);
-    console.log("pendingCards");
-    console.log(pendingCards);
-
     window.activeGames[data.gameId].view = $(`
     <div id="game-container">
     <div id="tableArea">
-
     ${tableCards}
-      ${pendingCards}
-
+    ${pendingCards}
     </div>
     <div id="p1Area">
       <div class="playerHand">
-      ${playerCards}
+      ${playersCards[0]}
       </div>
       <p id="player1Text">
-      <span id="p1Name"> ${window.myUsername}</span>
-      <span id="p1score"> - 0 pts - </span>
-      <span id="p1numCards"> (0 cards) </span>
+      <span id="p1Name"> ${players[0].username}</span>
+      <span id="p1score"> - ${players[0].score} pts - </span>
+      <span id="p1numCards"> (${players[0].hand.cards.length} cards) </span>
       </p>
     </div>
     <div id="p2Area">
+    <div class="playerHand">
+    ${playersCards[1]}
+    </div>
+
     <p id="player2Text">
       <span id="p2Name"> ${players[1].username}</span>
-      <span id="p2score">- 0 pts -</span>
-      <span id="p2numCards">(0 cards)</span>
+      <span id="p2score">- ${players[1].score} pts -</span>
+      <span id="p2numCards">(${players[1].hand.cards.length} cards)</span>
       </p>
     </div>
     <div id="p3Area">
