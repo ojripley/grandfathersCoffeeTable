@@ -16,22 +16,10 @@ class Warr extends Game {
   deal() {
     console.log('\n\ndealing.....');
 
-    console.log(this.deck);
-    console.log();
-
-    for (let i = 0; i < 13; i++) {
-      this.deck.moveCard(this.deck.cards[0], this.players[0].hand.cards);
-      this.deck.moveCard(this.deck.cards[12 - i], this.players[1].hand.cards);
-      if (this.players.length === 3) {
-        this.deck.moveCard(this.deck.cards[24 - (i * 2)], this.players[2].hand.cards);
-      } else {
-        this.deck.moveCard(this.deck.cards[24 - (i * 2)], this.burntDeck.cards);
-      }
+    if (this.players.length === 2) {
+      this.players[0].hand.cards = this.deck.cards.splice(0, 26);
+      this.players[1].hand.cards = this.deck.cards.splice(0, 26);
     }
-
-    // first card is placed on the table
-    // this kicks off the the game
-    this.deck.moveCard(this.deck.selectRandom(), this.table.cards);
   }
 
   score() {
@@ -106,7 +94,6 @@ class Warr extends Game {
     if (this.pendingMoves.length === this.players.length) {
       return true;
     }
-
     return false;
   }
 
@@ -114,16 +101,24 @@ class Warr extends Game {
 
     console.log('\n\n\n\n' + this.gameState + '\n\n\n\n');
 
-    if (this.deck.cards.length === 0) {
-      this.gameState === 'finished';
-      console.log(`\n the winner is... ${this.players[0].username} \n\n`);
-      return true;
-    } else {
+    if (this.players.length === 2) {
 
-      // proceed with the game
-      this.deck.moveCard(this.deck.selectRandom(), this.table.cards);
+      const p1 = this.players[0];
+      const p2 = this.players[1];
 
-      return false;
+      if (p1.hand.cards.length === 0) {
+        this.players[0] = p1;
+        this.players[1] = p2;
+        this.gameState = 'finished';
+        return true;
+      } else if (p2.hand.cards.length === 0) {
+        this.players[0] = p2;
+        this.players[1] = p1;
+        this.gameState = 'finished';
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }
