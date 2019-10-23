@@ -25,8 +25,7 @@ $(() => {
       </p>
     </div>
     <div id="p2Area">
-      Player 2
-      <p id="player2Text">
+    <p id="player2Text">
       <span id="p2Name"> Player 2</span>
       <span id="p2score">(score - 0)</span>
       </p>
@@ -47,6 +46,7 @@ $(() => {
   };
 
   window.goofspiel.joinUser = function($game, data) {
+    //Update the view progress bar here if more than two players are joining
 
   }
   window.goofspiel.updateView = function($game, data) {
