@@ -142,6 +142,7 @@ io.on('connection', (client) => {
                 // show the game to clients
                 if (activeGames[game].gameState === 'playing') {
                   io.to(game).emit('gameView', {
+                    gameState: activeGames[game].gameState,
                     players: activeGames[game].players,
                     table: activeGames[game].table,
                     pendingMoves: activeGames[game].pendingMoves,
@@ -154,6 +155,7 @@ io.on('connection', (client) => {
                     activeGames[game].deal();
                     console.log('\n\nsending dealt game to players....\n\n');
                     io.to(game).emit('gameView', {
+                      gameState: activeGames[game].gameState,
                       players: activeGames[game].players,
                       table: activeGames[game].table,
                       pendingMoves: activeGames[game].pendingMoves,
@@ -176,7 +178,20 @@ io.on('connection', (client) => {
           newGame.addPlayer(res[0].id, res[0].username, (newGame.players.length + 1));
 
           // send game details to client, and player join status to room
-          client.emit('newGame', { gameId: newGame.id, players: newGame.players });
+
+          // client.emit('newGame', { gameId: newGame.id, players: newGame.players });
+
+
+          io.to(newGame).emit('gameView', {
+            gameState: activeGames[newGame].gameState,
+            players: activeGames[newGame].players,
+            table: activeGames[newGame].table,
+            pendingMoves: activeGames[newGame].pendingMoves,
+            deck: activeGames[newGame].deck,
+            gameId: newGame,
+          });
+
+
           io.to(newGame.id).emit('join', { gameId: newGame, numberOfPlayers: newGame.players.length });
         }
       })
@@ -208,6 +223,7 @@ io.on('connection', (client) => {
 
       // broadcast the game to all players
       io.to(game).emit('gameView', {
+        gameState: activeGames[game].gameState,
         players: activeGames[game].players,
         table: activeGames[game].table,
         pendingMoves: activeGames[game].pendingMoves,
@@ -227,6 +243,7 @@ io.on('connection', (client) => {
 
           // broadcast the game to all players
           io.to(game).emit('gameView', {
+            gameState: activeGames[game].gameState,
             players: activeGames[game].players,
             table: activeGames[game].table,
             pendingMoves: activeGames[game].pendingMoves,
@@ -242,6 +259,7 @@ io.on('connection', (client) => {
 
             // broadcast the game to all players
             io.to(game).emit('gameView', {
+              gameState: activeGames[game].gameState,
               players: activeGames[game].players,
               table: activeGames[game].table,
               pendingMoves: activeGames[game].pendingMoves,
@@ -277,6 +295,7 @@ io.on('connection', (client) => {
           } else {
             // broadcast the game to all players
             io.to(game).emit('gameView', {
+              gameState: activeGames[game].gameState,
               players: activeGames[game].players,
               table: activeGames[game].table,
               pendingMoves: activeGames[game].pendingMoves,
