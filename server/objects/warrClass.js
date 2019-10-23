@@ -59,20 +59,22 @@ class Warr extends Game {
 
   score() {
 
+    console.log(this.pendingMoves.length);
     if (this.pendingMoves.length === 2) {
 
       let roundWinner = null;
-      let roundLoser = null;
 
       if (this.pendingMoves[0].card.value > this.pendingMoves[1].card.value) {
+        console.log('round winner is player 1');
         roundWinner = this.pendingMoves[0].player;
-        roundLoser = this.pendingMoves[1].player;
-      } else if (this.pendingMoves[0].card.value > this.pendingMoves[1].card.value) {
+      } else if (this.pendingMoves[1].card.value > this.pendingMoves[0].card.value) {
+        console.log('round winner is player 2');
         roundWinner = this.pendingMoves[1].player;
-        roundLoser = this.pendingMoves[0].player;
       } else {
         // if the round is a tie, the cards are added to the table as part of the next round's prize
+        console.log('no winner!');
         this.pushPendingToTable();
+        console.log(this.pendingMoves);
       }
 
       if (roundWinner) {
@@ -87,16 +89,16 @@ class Warr extends Game {
         for (let card of this.table.cards) {
           this.table.moveCard(card, roundWinner.hand.cards);
         }
-
-        roundWinner.score = roundWinner.hand.cards.length;
-        roundLoser.score = roundLoser.hand.cards.length;
       }
 
+      // assign scores
+      this.players[0].score = this.players[0].hand.cards.length;
+      this.players[1].score = this.players[1].hand.cards.length;
 
-      console.log('\nPLAYER SCORES:');
-      console.log(this.players[0].username + ': ' + this.players[0].score);
-      console.log(this.players[1].username + ': ' + this.players[1].score);
-      console.log();
+      // console.log('\nPLAYER SCORES:');
+      // console.log(this.players[0].username + ': ' + this.players[0].score);
+      // console.log(this.players[1].username + ': ' + this.players[1].score);
+      // console.log();
 
       // sort players, highest score first
       for (let i = 0; i < this.players.length; i++) {
@@ -175,13 +177,25 @@ class Warr extends Game {
         this.players[0] = p2;
         this.players[1] = p1;
         this.gameState = 'finished';
+        console.log('\nPLAYER SCORES:');
+        console.log(this.players[0].username + ': ' + this.players[0].score);
+        console.log(this.players[1].username + ': ' + this.players[1].score);
+        console.log();
         return true;
       } else if (p2.hand.cards.length === 0) {
         this.players[0] = p1;
         this.players[1] = p2;
         this.gameState = 'finished';
+        console.log('\nPLAYER SCORES:');
+        console.log(this.players[0].username + ': ' + this.players[0].score);
+        console.log(this.players[1].username + ': ' + this.players[1].score);
+        console.log();
         return true;
       } else {
+        console.log('\nPLAYER SCORES:');
+        console.log(this.players[0].username + ': ' + this.players[0].score);
+        console.log(this.players[1].username + ': ' + this.players[1].score);
+        console.log();
         return false;
       }
     }

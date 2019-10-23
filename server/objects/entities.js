@@ -10,10 +10,18 @@ class Player {
     this.hand = new Stack([]);
   }
 
-  playCard(card, table) {
-    this.hand.moveCard(card, table.cards);
+  // playCard(card, table) {
+  //   this.hand.moveCard(card, table.cards);
 
-    return new Move(this, card);
+  //   return new Move(this, card);
+  // }
+
+  playCard(card, burntDeck) {
+    const move = new Move(this, card);
+
+    this.hand.moveCard(card, burntDeck.cards);
+
+    return move;
   }
 }
 
