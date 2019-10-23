@@ -27,8 +27,7 @@ $(() => {
         $('#reqMatchHistoryBut').on('click', (event) => {
           event.preventDefault();
           let userToSearch = $("#user-to-search").val();
-
-          socket.emit('requestHistory', myUsername);
+          socket.emit('requestHistory', userToSearch);
 
         })
 

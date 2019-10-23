@@ -108,8 +108,14 @@ $(() => {
   socket.on('history', (data) => {
     console.log('Here is the history');
     console.log(data);
-    profile.updateMatchHistoryTable(data);
-    socket.emit('requestMatchDetails', data[0].id);
+    if (data[0]) {
+      profile.updateMatchHistoryTable(data);
+      socket.emit('requestMatchDetails', data[0].id);
+    } else {
+      //This will only happen when user searches someone that doesnt' exist
+      $("#historyErrorMessage").text("User does not exist");
+
+    }
   });
 
   //socket.emit('requestMatchDetails', 1);

@@ -3,7 +3,6 @@ $(() => {
   window.$profile = $(`
 <div id="matchHistoryContainer">
   <h1> CurrentUsers's Match history </h1>
-
   <form>
     <div class="form-row">
       <div class="col">
@@ -14,6 +13,7 @@ $(() => {
         </div>
       </div>
       </form>
+      <p id="historyErrorMessage"><p>
 
 
     <table class="table table-striped table-hover" id="matchHistoryTable">
