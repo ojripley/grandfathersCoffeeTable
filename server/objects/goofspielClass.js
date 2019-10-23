@@ -115,7 +115,7 @@ class Goofspiel extends Game {
     console.log('\n\n\n\n' + this.gameState + '\n\n\n\n');
 
     if (this.deck.cards.length === 0) {
-      this.gameState === 'finished';
+      this.gameState = 'finished';
       console.log(`\n the winner is... ${this.players[0].username} \n\n`);
       return true;
     } else {
