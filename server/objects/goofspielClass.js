@@ -32,6 +32,9 @@ class Goofspiel extends Game {
     // first card is placed on the table
     // this kicks off the the game
     this.deck.moveCard(this.deck.selectRandom(), this.table.cards);
+
+    // used to notify all the players that is time to play a card
+    this.currentPlayers = this.players.slice(0);
   }
 
   score() {
@@ -85,7 +88,6 @@ class Goofspiel extends Game {
     }
 
     this.table.cards.pop();
-
   }
 
   isValidMove(move) {
@@ -121,7 +123,8 @@ class Goofspiel extends Game {
       // proceed with the game
       this.deck.moveCard(this.deck.selectRandom(), this.table.cards);
 
-      this.currentPlayers = this.players;
+      // reset players who's turn it is (all players for goof)
+      this.currentPlayers = this.players.slice(0);
 
       return false;
     }
