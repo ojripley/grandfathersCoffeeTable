@@ -1,0 +1,259 @@
+.sign-up-form,
+.registration-form {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 2em; }
+  .sign-up-form input,
+  .registration-form input {
+    width: 100%; }
+  .sign-up-form p,
+  .registration-form p {
+    font-size: small;
+    color: red; }
+
+#menu-bars {
+  height: auto;
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  align-self: unset;
+  margin: 10px 10px 10px 10px;
+  z-index: 3; }
+  @media screen and (min-width: 1024px) {
+    #menu-bars {
+      display: none; } }
+
+nav {
+  background-color: #c7c2b5;
+  display: flex;
+  overflow-y: scroll;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 30%;
+  padding-top: 5%;
+  padding-left: 5%;
+  height: 100%;
+  top: 0;
+  z-index: 2;
+  position: absolute; }
+  nav li:hover {
+    background-color: yellow; }
+  nav hr {
+    border-top: 1px solid black;
+    height: 1px;
+    width: 100%;
+    z-index: 10;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0; }
+  nav.hidden {
+    opacity: 0%;
+    left: -500px; }
+  @media screen and (min-width: 1024px) {
+    nav {
+      font-size: 1.5em;
+      background-color: navCol;
+      width: 25%;
+      padding-top: 2%;
+      padding-left: 2%; }
+      nav.hidden {
+        opacity: 100%;
+        left: 0px; } }
+  nav h1 {
+    font-size: 1em;
+    display: flex; }
+  nav #profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-around; }
+    nav #profile img {
+      flex-grow: 0;
+      flex-shrink: 0; }
+  nav ul {
+    list-style-type: none;
+    padding-left: 0px; }
+  nav .menu-list {
+    display: flex;
+    flex-flow: column nowrap;
+    align-content: stretch;
+    text-align: center;
+    justify-content: space-around; }
+
+#game-container {
+  background-color: #648864;
+  position: relative;
+  top: 0;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 28fr 1fr;
+  grid-template-rows: 1fr 19fr 10fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  overflow: hidden; }
+  #game-container #p1Area {
+    grid-row-start: 3;
+    grid-column: 1/4;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    position: relative; }
+    #game-container #p1Area p {
+      position: absolute;
+      top: 0;
+      color: lavender; }
+  #game-container #p2Area {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    position: relative; }
+    #game-container #p2Area p {
+      position: absolute;
+      bottom: 0;
+      color: lavender; }
+  #game-container #p3Area {
+    grid-row-start: 2;
+    grid-column-start: 3;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    position: relative; }
+    #game-container #p3Area p {
+      position: absolute;
+      transform: rotate(-90deg);
+      width: 150px;
+      left: -90px;
+      color: lavender; }
+  #game-container #p4Area {
+    grid-row-start: 2;
+    grid-column-start: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    position: relative; }
+    #game-container #p4Area p {
+      position: absolute;
+      transform: rotate(90deg);
+      width: 150px;
+      right: -90px;
+      color: lavender; }
+  #game-container #tableArea {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    background-color: #46609f;
+    color: lightblue;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    #game-container #tableArea .myProgressBar {
+      width: 80%; }
+  @media screen and (min-width: 1024px) {
+    #game-container {
+      position: absolute;
+      left: 25%;
+      width: 75%;
+      grid-template-columns: 1fr 4fr 1fr;
+      grid-template-rows: 1fr 4fr 1fr;
+      grid-column-gap: 0px;
+      grid-row-gap: 0px; } }
+
+#leaderboardContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center; }
+  #leaderboardContainer h1 {
+    margin-top: 20px; }
+  #leaderboardContainer table {
+    margin: 2em;
+    width: 70%; }
+  @media screen and (min-width: 1024px) {
+    #leaderboardContainer {
+      position: absolute;
+      left: 25%;
+      width: 75%;
+      grid-template-columns: 1fr 4fr 1fr;
+      grid-template-rows: 1fr 4fr 1fr;
+      grid-column-gap: 0px;
+      grid-row-gap: 0px; } }
+
+#matchHistoryContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center; }
+  #matchHistoryContainer form {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    width: 100%; }
+    #matchHistoryContainer form .form-control {
+      width: 200px; }
+  #matchHistoryContainer h1 {
+    margin-top: 20px; }
+  #matchHistoryContainer table {
+    margin: 2em;
+    display: block;
+    align-content: center;
+    height: 500px;
+    overflow-y: scroll;
+    width: 70%; }
+  @media screen and (min-width: 1024px) {
+    #matchHistoryContainer {
+      position: absolute;
+      left: 25%;
+      width: 75%; } }
+
+.playerHand {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80%;
+  background-color: black; }
+
+.card {
+  max-height: 100px;
+  width: auto;
+  margin: 2px;
+  z-index: 1; }
+
+.card:hover {
+  max-height: 110px;
+  border: solid #d0b16b 2px;
+  width: auto;
+  margin: 2px; }
+
+body {
+  background-color: white;
+  height: 100%; }
+  body h1 {
+    color: #244751; }
+
+html,
+#main-content {
+  height: 100%;
+  width: 100%; }
+
+p {
+  text-align: center; }
