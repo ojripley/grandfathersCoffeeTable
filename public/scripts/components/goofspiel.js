@@ -8,24 +8,40 @@ $(() => {
     window.activeGames[id] = {};
     window.activeGames[id].view = $(`<div id="game-container">
     <div id="tableArea">
-      The table
-      <div class="progress">
+    <div class ="myProgressBar">
+    <div class="progress">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="2" style="width: 50%"></div>
+        </div>
+        <p id="progress-text"> 1/2 </p>
       </div>
-      <p id="progress-text"> 1/2 </p>
     </div>
     <div id="p1Area">
       <div class="playerHand">
+
       </div>
+      <p id="player1Text">
+      <span id="p1Name"> ${window.myUsername}</span>
+      <span id="p1score">(score - 0)</span>
+      </p>
     </div>
     <div id="p2Area">
       Player 2
+      <p id="player2Text">
+      <span id="p2Name"> Player 2</span>
+      <span id="p2score">(score - 0)</span>
+      </p>
     </div>
     <div id="p3Area">
-      Player 3
+    <p id="player3Text">
+    <span id="p3Name"> Player 3</span>
+    <span id="p3score">(score - 0)</span>
+    </p>
     </div>
     <div id="p4Area">
-      Player 4
+    <p id="player4Text">
+    <span id="p4Name"> Player 4</span>
+    <span id="p4score">(score - 0)</span>
+    </p>
     </div>
   </div>`);
   };
@@ -79,22 +95,38 @@ $(() => {
     window.activeGames[data.gameId].view = $(`
     <div id="game-container">
     <div id="tableArea">
-      ${tableCards}
+
+    ${tableCards}
       ${pendingCards}
+
     </div>
     <div id="p1Area">
       <div class="playerHand">
       ${playerCards}
       </div>
+      <p id="player1Text">
+      <span id="p1Name"> ${window.myUsername}</span>
+      <span id="p1score">(score - 0)</span>
+      </p>
     </div>
     <div id="p2Area">
       Player 2
+      <p id="player2Text">
+      <span id="p2Name"> Player 2</span>
+      <span id="p2score">(score - 0)</span>
+      </p>
     </div>
     <div id="p3Area">
-      Player 3
+    <p id="player3Text">
+    <span id="p3Name"> Player 3</span>
+    <span id="p3score">(score - 0)</span>
+    </p>
     </div>
     <div id="p4Area">
-      Player 4
+    <p id="player4Text">
+    <span id="p4Name"> Player 4</span>
+    <span id="p4score">(score - 0)</span>
+    </p>
     </div>
   </div>
 `);
