@@ -23,6 +23,15 @@ $(() => {
         break;
       case 'prof':
         $profile.appendTo($main);
+        //Search bar functionality
+        $('#reqMatchHistoryBut').on('click', (event) => {
+          event.preventDefault();
+          let userToSearch = $("#user-to-search").val();
+
+          socket.emit('requestHistory', myUsername);
+
+        })
+
 
         break;
       case 'goof':

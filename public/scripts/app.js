@@ -24,7 +24,7 @@ $(() => {
     views_manager.show('goof');
   });
   $("#profile").on('click', (event) => {
-    views_manager.show('profile');
+    socket.emit('requestHistory', myUsername);
   });
 
   $(".request-game").on('click', (event) => {
@@ -104,17 +104,22 @@ $(() => {
     console.log(data);
   });
 
-  socket.emit('requestHistory', myUsername);
+
   socket.on('history', (data) => {
     console.log('Here is the history');
     console.log(data);
+    profile.updateMatchHistoryTable(data);
+    socket.emit('requestMatchDetails', data[0].id);
   });
 
-  socket.emit('requestMatchDetails', 1);
+  //socket.emit('requestMatchDetails', 1);
 
   socket.on('matchDetails', (data) => {
     console.log('Here are the match details');
     console.log(data);
+    profile.updateMatchSpecificTable(data);
+
+    views_manager.show('profile');
   })
 
   socket.on('msg', (data) => {
