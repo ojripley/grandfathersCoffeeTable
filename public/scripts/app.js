@@ -10,9 +10,9 @@ $(() => {
     $('#navbar').toggleClass('hidden', 500);
   });
   // new Promise();
-  // window.socket = io.connect('172.46.3.253:8080');
+  window.socket = io.connect('172.46.3.253:8080');
 
-  window.socket = io.connect('localhost:8080');
+  // window.socket = io.connect('localhost:8080');
 
   $('#leaderboard').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
@@ -117,6 +117,7 @@ $(() => {
 
   socket.on('leaderBoard', (data) => {
     //show highscores (move this to the response of leaderboard)
+    $('#landing-container').css({ display: 'none' });
     views_manager.show('leaderboard', data);
 
   });
@@ -134,6 +135,7 @@ $(() => {
   socket.on('history', (data) => {
     console.log('Here is the history');
     console.log(data);
+    $('#landing-container').css({ display: 'none' });
     if (data[0]) {
       profile.updateMatchHistoryTable(data);
       socket.emit('requestMatchDetails', data[0].id);

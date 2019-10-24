@@ -50,3 +50,150 @@ p {
     left: $navWidthLarge;
   }
 }
+
+#landing-container {
+  background-color: #382300;
+  background-image: url("https://www.transparenttextures.com/patterns/purty-wood.png");;
+  position: relative;
+  top: 0;
+  z-index: 100;
+  height: 100%;
+  width: 100%;
+  display: grid;
+
+
+  #logo-body {
+    position: absolute;
+    // margin-top: 10%;
+    // margin-left: 25%;
+    width: 50%;
+  }
+
+  //Mobile view will only show player cards and the board
+  grid-template-columns: 1fr 28fr 1fr;
+  grid-template-rows: 1fr 19fr 10fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+
+  overflow: hidden;
+
+  #p1Area {
+    grid-row-start: 3;
+    grid-column: 1/4;
+    // background-color: coral; //uncomment to see player area
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    p {
+      // height: $labelheight;
+      position: absolute;
+      top: 0; //-$labelheight;
+      color: lavender;
+    }
+  }
+  #p2Area {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    // background-color: coral; //uncomment to see player area
+    p {
+      // height: $labelheight;
+      position: absolute;
+      bottom: 0; //-$labelheight;
+      color: lavender;
+    }
+  }
+  // #p3Area {
+  //   grid-row-start: 2;
+  //   grid-column-start: 3;
+
+  //   display: flex;
+  //   flex-flow: column nowrap;
+  //   justify-content: center;
+  //   align-items: center;
+  //   position: relative;
+  //   // background-color: coral; //uncomment to see player area
+  //   p {
+  //     // height: $labelheight;
+  //     position: absolute;
+  //     transform: rotate(-90deg);
+  //     width: 150px;
+  //     left: -90px;
+  //     color: lavender;
+  //   }
+  // }
+  // #p4Area {
+  //   grid-row-start: 2;
+  //   grid-column-start: 1;
+  //   display: flex;
+  //   flex-flow: column nowrap;
+  //   justify-content: center;
+  //   align-items: center;
+  //   position: relative;
+  //   // background-color: coral; //uncomment to see player area
+  //   p {
+  //     // height: $labelheight;
+  //     position: absolute;
+  //     transform: rotate(90deg);
+  //     width: 150px;
+  //     right: -90px;
+  //     color: lavender;
+  //   }
+    // }
+  #tableArea {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    background-color: #5b885b;
+    box-shadow: inset 0px 0px 15px #000;
+    color: white;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .myProgressBar {
+      width: 80%;
+    }
+
+    #background-text{
+      position: absolute;
+      color: lightgray;
+      font-size: 4em;
+    }
+  }
+  #end-game-header {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    align-content: center;
+    color: lavender;
+  }
+  #end-game-table {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    height: 100px;
+  }
+  #remove-game {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    position: relative;
+    height: 50px;
+  }
+@media screen and (min-width: $break) {
+    position: absolute;
+    left: 20%;
+    width: 80%;
+
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: 1fr 4fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+  }
+}
