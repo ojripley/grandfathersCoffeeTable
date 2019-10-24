@@ -52,6 +52,7 @@ $(() => {
           console.log(event.target);
           let matchId = $(event.target).parent().attr('id');
           if (matchId != window.curMatchStats) {
+            $(event.target).parent().toggleClass('table-info');
             socket.emit('requestMatchDetails', matchId);
             window.curMatchStats = matchId;
           }

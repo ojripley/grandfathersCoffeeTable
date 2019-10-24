@@ -15,7 +15,7 @@ $(() => {
       </form>
       <p id="historyErrorMessage"><p>
 
-
+    <h2> Match history </h2>
     <table class="table table-striped table-hover" id="matchHistoryTable">
       <thead>
         <tr>
@@ -59,22 +59,22 @@ $(() => {
 
       </tbody>
     </table>
-
+    <h2> Match results</h2>
     <table class="table table-striped" id="match-specific">
       <thead>
-        <tr>
+        <tr class = "table-info">
           <th scope="col">Username</th>
           <th scope="col">Position</th>
           <th scope="col">Score</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr class = "table-info">
           <td scope="row">Goofspiel</td>
           <td>2</td>
           <td>100</td>
         </tr>
-        <tr>
+        <tr class = "table-info">
           <td scope="row">Goofspiel</td>
           <td>2</td>
           <td>100</td>
@@ -137,7 +137,7 @@ $(() => {
     console.log(`Trying to display ${data}`);
     let str = `<
     <thead>
-    <tr>
+    <tr class = "table-info">
       <th scope="col">Username</th>
       <th scope="col">Placing</th>
       <th scope="col">Score</th>
@@ -146,7 +146,7 @@ $(() => {
   <tbody>
     `;
     data.forEach((el) => {
-      str += `<tr id="${el.id}" class="match_row">
+      str += `<tr class = "table-info">
           <td scope="row">${el.username}</td>
           <td>${el.placing}</td>
           <td>${el.score}</td>
