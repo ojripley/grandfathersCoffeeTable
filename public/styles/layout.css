@@ -295,3 +295,14 @@ html,
 
 p {
   text-align: center; }
+
+#alert {
+  opacity: 0;
+  float: left;
+  z-index: 3;
+  margin-top: 50px;
+  width: 40%;
+  left: 30%; }
+  @media screen and (min-width: 1024px) {
+    #alert {
+      left: 25%; } }
