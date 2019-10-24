@@ -57,7 +57,6 @@ $(() => {
   window.goofspiel.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
 
-    let players = orderPlayers(data.players, window.myUsername); //Get an array of the players
     let scoreboard = `
     <thead>
       <tr>
@@ -94,6 +93,7 @@ $(() => {
     }
     scoreboard = `<table class="table table-striped table-hover" id="scoreboard">` + scoreboard;
 
+    let players = orderPlayers(data.players, window.myUsername); //Get an array of the players
 
     window.activeGames[data.gameId].player = players[0];
     window.activeGames[data.gameId].myCards = players[0].hand.cards;
