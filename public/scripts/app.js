@@ -10,9 +10,9 @@ $(() => {
     $('#navbar').toggleClass('hidden', 500);
   });
   // new Promise();
-  window.socket = io.connect('172.46.3.253:8080');
+  // window.socket = io.connect('172.46.3.253:8080');
 
-  // window.socket = io.connect('localhost:8080');
+  window.socket = io.connect('localhost:8080');
   $('#leaderboard').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
   });
@@ -80,7 +80,6 @@ $(() => {
 
         //Show  notification if user is supposed to make a move
         $("#alert").promise().done(() => {
-          console.log("POP");
           //Is it the players turn?
           if (data.currentPlayers && userIsIn(data.currentPlayers, myUsername)) {
             let $alert = $("#alert");
@@ -90,9 +89,8 @@ $(() => {
               $gameButton.trigger('click');
             });
             $gameButton.find('.badge').text(' !');
-            //$(`<span class="badge badge-pill badge-warning">  !</span> `).appendTo($(`#${data.gameId}`));
 
-            $alert.find(".card-body").text(`A move has been played in ${gameName}. `);
+            $alert.find(".card-body").text(`It is your turn in ${gameName}. `);
             $alert.toggle('slide', 1000, () => {
               setTimeout(() => $alert.toggle('slide', 1000), 1000);
             })
