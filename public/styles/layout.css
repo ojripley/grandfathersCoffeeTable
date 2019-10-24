@@ -194,9 +194,13 @@ nav {
   overflow: hidden; }
   #game-container #scoreboard {
     grid-row: 2;
+    display: none;
     grid-column: 3;
     color: white;
     height: 100px; }
+    @media screen and (min-width: 1024px) {
+      #game-container #scoreboard {
+        display: block; } }
   #game-container #p1Area {
     grid-row-start: 3;
     grid-column: 1/4;
@@ -206,23 +210,15 @@ nav {
     align-items: center;
     position: relative;
     overflow: scroll; }
-    #game-container #p1Area p {
-      position: absolute;
-      top: 0;
-      color: lavender; }
   #game-container #p2Area {
     grid-row-start: 1;
-    grid-column-start: 2;
+    grid-column: 1/4;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
     position: relative; }
-    #game-container #p2Area p {
-      position: absolute;
-      bottom: 0;
-      color: lavender; }
-  #game-container #tableArea {
+  #game-container #table-area-goof {
     grid-row-start: 2;
     grid-column-start: 2;
     background-color: #5b885b;
@@ -231,10 +227,56 @@ nav {
     border-radius: 1em;
     display: flex;
     align-items: center;
+    position: relative;
     justify-content: center; }
-    #game-container #tableArea .myProgressBar {
+    #game-container #table-area-goof #p1pendingCard {
+      position: absolute;
+      transform: translatey(140px); }
+    #game-container #table-area-goof #p2pendingCard {
+      position: absolute;
+      transform: translatey(-140px); }
+    #game-container #table-area-goof #player1Text {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px;
+      margin-bottom: 10px; }
+    #game-container #table-area-goof #player2Text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px;
+      margin-top: 10px; }
+    #game-container #table-area-goof .myProgressBar {
       width: 80%; }
-    #game-container #tableArea #background-text {
+    #game-container #table-area-goof #background-text {
+      position: absolute;
+      color: lightgray;
+      font-size: 4em; }
+  #game-container #table-area-war {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    background-color: #5b885b;
+    box-shadow: inset 2px 2px 25px #000;
+    color: white;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center; }
+    #game-container #table-area-war #player1Text {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px; }
+    #game-container #table-area-war #player2Text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px; }
+    #game-container #table-area-war .myProgressBar {
+      width: 80%; }
+    #game-container #table-area-war #background-text {
       position: absolute;
       color: lightgray;
       font-size: 4em; }
@@ -249,12 +291,14 @@ nav {
   #game-container #end-game-table {
     grid-row-start: 2;
     grid-column-start: 2;
-    height: 100px; }
+    height: 100px;
+    color: azure; }
   #game-container #remove-game {
     grid-row-start: 2;
     grid-column-start: 2;
     position: relative;
-    height: 50px; }
+    height: 50px;
+    top: 150px; }
   @media screen and (min-width: 1024px) {
     #game-container {
       position: absolute;
@@ -293,9 +337,12 @@ nav {
   display: flex;
   width: 100%;
   height: 100%;
+  top: 0;
   flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center; }
+  scroll-behavior: auto;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: scroll; }
   #matchHistoryContainer form {
     display: flex;
     flex-flow: row nowrap;
@@ -307,11 +354,14 @@ nav {
     margin-top: 20px; }
   #matchHistoryContainer table {
     margin: 2em;
-    display: block;
     align-content: center;
-    height: 500px;
-    overflow-y: scroll;
     width: 70%; }
+    #matchHistoryContainer table tr:hover {
+      background-color: #bee5eb; }
+  #matchHistoryContainer #profile-scroll {
+    width: 100%;
+    height: 100%;
+    overflow: scroll; }
   @media screen and (min-width: 1024px) {
     #matchHistoryContainer {
       position: absolute;
@@ -320,8 +370,8 @@ nav {
 
 .playerHand {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
+  flex-flow: row;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   height: 80%;
@@ -415,8 +465,8 @@ html,
         position: absolute;
         bottom: 0;
         color: lavender; }
-    html #landing-container #tableArea,
-    #main-content #landing-container #tableArea {
+    html #landing-container #table-area-goof,
+    #main-content #landing-container #table-area-goof {
       grid-row-start: 2;
       grid-column-start: 2;
       background-color: #5b885b;
@@ -426,11 +476,11 @@ html,
       display: flex;
       align-items: center;
       justify-content: center; }
-      html #landing-container #tableArea .myProgressBar,
-      #main-content #landing-container #tableArea .myProgressBar {
+      html #landing-container #table-area-goof .myProgressBar,
+      #main-content #landing-container #table-area-goof .myProgressBar {
         width: 80%; }
-      html #landing-container #tableArea #background-text,
-      #main-content #landing-container #tableArea #background-text {
+      html #landing-container #table-area-goof #background-text,
+      #main-content #landing-container #table-area-goof #background-text {
         position: absolute;
         color: lightgray;
         font-size: 4em; }

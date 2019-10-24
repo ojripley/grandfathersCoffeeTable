@@ -7,7 +7,7 @@ $(() => {
   window.goofspiel.newGame = function(id) {
     window.activeGames[id] = {};
     window.activeGames[id].view = $(`<div id="game-container">
-    <div id="tableArea">
+    <div id="table-area-goof">
     <div class ="myProgressBar">
     <div class="progress">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="2" style="width: 50%"></div>
@@ -20,16 +20,16 @@ $(() => {
 
       </div>
       <p id="player1Text">
-      <span id="p1Name"> ${window.myUsername}</span>
-      <span id="p1score"> - 0 pts - </span>
-      <span id="p1numCards"> (0 cards) </span>
+      <span id="p1Name"> </span>
+      <span id="p1score"></span>
+      <span id="p1numCards"> </span>
       </p>
     </div>
     <div id="p2Area">
     <p id="player2Text">
-      <span id="p2Name"> Player 2</span>
-      <span id="p2score">- 0 pts -</span>
-      <span id="p2numCards">(0 cards)</span>
+      <span id="p2Name"> </span>
+      <span id="p2score"></span>
+      <span id="p2numCards"></span>
       </p>
     </div>
   </div>`);
@@ -140,7 +140,7 @@ $(() => {
         if (theOneWhoPlays === myUsername) {
           pendingCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
         } else {
-          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="hidden${i}"></img>`;
+          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="hidden playing-card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
         }
       }
     }
@@ -148,37 +148,40 @@ $(() => {
     window.activeGames[data.gameId].view = $(`
     <div id="game-container">
     ${scoreboard}
-    <div id="tableArea">
+    <div id="table-area-goof">
     <h1 id="background-text"> G O O F S P I E L </h1>
+    <p id="player2Text">
+    <span id="p2Name"> ${players[1].username}</span>
+    <span id="p2score">- ${players[1].score} pts -</span>
+    <span id="p2numCards">(${players[1].hand.cards.length} cards)</span>
+    </p>
     ${tableCards}
     ${pendingCards}
+    <p id="player1Text">
+    <span id="p1Name"> ${players[0].username}</span>
+    <span id="p1score"> - ${players[0].score} pts - </span>
+    <span id="p1numCards"> (${players[0].hand.cards.length} cards) </span>
+    </p>
+
     </div>
     <div id="p1Area">
       <div class="playerHand">
       ${playersCards[0]}
       </div>
-      <p id="player1Text">
-      <span id="p1Name"> ${players[0].username}</span>
-      <span id="p1score"> - ${players[0].score} pts - </span>
-      <span id="p1numCards"> (${players[0].hand.cards.length} cards) </span>
-      </p>
+
     </div>
     <div id="p2Area">
     <div class="playerHand">
     ${playersCards[1]}
     </div>
 
-    <p id="player2Text">
-      <span id="p2Name"> ${players[1].username}</span>
-      <span id="p2score">- ${players[1].score} pts -</span>
-      <span id="p2numCards">(${players[1].hand.cards.length} cards)</span>
-      </p>
+
     </div>
   </div>
 `);
     if (hiddenCards.length > 0) {
       for (let i in hiddenCards) {
-        let el = window.activeGames[data.gameId].view.find(`#hidden${i}`);
+        let el = window.activeGames[data.gameId].view.find(`.hidden`);
         console.log("The jquery element is:");
         console.log(el.attr("id"));
 

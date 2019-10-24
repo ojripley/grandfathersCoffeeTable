@@ -18,9 +18,13 @@
 
   #scoreboard {
     grid-row: 2;
+    display: none;
     grid-column: 3;
     color: white;
     height: 100px;
+    @media screen and (min-width: $break) {
+      display: block;
+    }
   }
 
   #p1Area {
@@ -33,31 +37,19 @@
     align-items: center;
     position: relative;
     overflow: scroll;
-    p {
-      // height: $labelheight;
-      position: absolute;
-      top: 0; //-$labelheight;
-      color: lavender;
-    }
   }
   #p2Area {
     grid-row-start: 1;
-    grid-column-start: 2;
+    grid-column: 1/4;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
     position: relative;
     // background-color: coral; //uncomment to see r area
-    p {
-      // height: $labelheight;
-      position: absolute;
-      bottom: 0; //-$labelheight;
-      color: lavender;
-    }
   }
 
-  #tableArea {
+  #table-area-goof {
     grid-row-start: 2;
     grid-column-start: 2;
     background-color: #5b885b;
@@ -66,7 +58,33 @@
     border-radius: 1em;
     display: flex;
     align-items: center;
+    position: relative;
     justify-content: center;
+
+    #p1pendingCard {
+      position: absolute;
+      transform: translatey(140px);
+    }
+    #p2pendingCard {
+      position: absolute;
+      transform: translatey(-140px);
+    }
+
+    #player1Text {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    #player2Text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px;
+      margin-top: 10px;
+    }
+
     .myProgressBar {
       width: 80%;
     }
@@ -77,6 +95,43 @@
       font-size: 4em;
     }
   }
+
+  #table-area-war {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    background-color: #5b885b;
+    box-shadow: inset 2px 2px 25px #000;
+    color: white;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+
+    #player1Text {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px;
+    }
+    #player2Text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px;
+    }
+
+    .myProgressBar {
+      width: 80%;
+    }
+
+    #background-text {
+      position: absolute;
+      color: lightgray;
+      font-size: 4em;
+    }
+  }
+
   #end-game-header {
     grid-row-start: 1;
     grid-column-start: 2;
@@ -90,12 +145,14 @@
     grid-row-start: 2;
     grid-column-start: 2;
     height: 100px;
+    color: azure;
   }
   #remove-game {
     grid-row-start: 2;
     grid-column-start: 2;
     position: relative;
     height: 50px;
+    top: 150px;
   }
   @media screen and (min-width: $break) {
     position: absolute;

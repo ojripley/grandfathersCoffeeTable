@@ -7,7 +7,7 @@ $(() => {
   window.war.newGame = function(id) {
     window.activeGames[id] = {};
     window.activeGames[id].view = $(`<div id="game-container">
-    <div id="tableArea">
+    <div id="table-area-warr">
     <div class ="myProgressBar">
     <div class="progress">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="2" style="width: 50%"></div>
@@ -20,16 +20,16 @@ $(() => {
 
       </div>
       <p id="player1Text">
-      <span id="p1Name"> ${window.myUsername}</span>
-      <span id="p1score"> - 0 pts - </span>
-      <span id="p1numCards"> (0 cards) </span>
+      <span id="p1Name"></span>
+      <span id="p1score"></span>
+      <span id="p1numCards"></span>
       </p>
     </div>
     <div id="p2Area">
     <p id="player2Text">
-      <span id="p2Name"> Player 2</span>
-      <span id="p2score">- 0 pts -</span>
-      <span id="p2numCards">(0 cards)</span>
+      <span id="p2Name"></span>
+      <span id="p2score"></span>
+      <span id="p2numCards"></span>
       </p>
     </div>
   </div>`);
@@ -57,7 +57,6 @@ $(() => {
   window.war.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
 
-    let players = orderPlayers(data.players, window.myUsername); //Get an array of the players
     let scoreboard = `
     <thead>
       <tr>
@@ -95,6 +94,7 @@ $(() => {
     scoreboard = `<table class="table table-striped table-hover" id="scoreboard">` + scoreboard;
 
 
+    let players = orderPlayers(data.players, window.myUsername); //Get an array of the players
     window.activeGames[data.gameId].player = players[0];
     window.activeGames[data.gameId].myCards = players[0].hand.cards;
 
@@ -149,31 +149,35 @@ $(() => {
 
     window.activeGames[data.gameId].view = $(`
     <div id="game-container">
-    <div id="tableArea">
+    ${scoreboard}
+    <div id="table-area-goof">
     <h1 id="background-text"> W A R R </h1>
+    <p id="player2Text">
+    <span id="p2Name"> ${players[1].username}</span>
+    <span id="p2score">- ${players[1].score} pts -</span>
+    <span id="p2numCards">(${players[1].hand.cards.length} cards)</span>
+    </p>
     ${tableCards}
     ${pendingCards}
+    <p id="player1Text">
+    <span id="p1Name"> ${players[0].username}</span>
+    <span id="p1score"> - ${players[0].score} pts - </span>
+    <span id="p1numCards"> (${players[0].hand.cards.length} cards) </span>
+    </p>
+
     </div>
     <div id="p1Area">
       <div class="playerHand">
       ${playersCards[0]}
       </div>
-      <p id="player1Text">
-      <span id="p1Name"> ${players[0].username}</span>
-      <span id="p1score"> - ${players[0].score} pts - </span>
-      <span id="p1numCards"> (${players[0].hand.cards.length} cards) </span>
-      </p>
+
     </div>
     <div id="p2Area">
     <div class="playerHand">
     ${playersCards[1]}
     </div>
 
-    <p id="player2Text">
-      <span id="p2Name"> ${players[1].username}</span>
-      <span id="p2score">- ${players[1].score} pts -</span>
-      <span id="p2numCards">(${players[1].hand.cards.length} cards)</span>
-      </p>
+
     </div>
   </div>
 `);
