@@ -19,7 +19,7 @@ nav {
   overflow-y: scroll;
   flex-flow: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   align-content: flex-start;
   width: 30%;
   padding-top: 2%;
@@ -29,15 +29,19 @@ nav {
   z-index: 2;
   position: absolute;
 
+  * {
+    padding: 0 1em 0 1em;
+  }
+
+  .selected {
+    //Styling for the current screen
+    background-color: #d27165;
+    border-radius: 1em;
+  }
+
   .select-game {
     border-radius: 1em;
-    &.selected {
-      background-color: #d27165;
-    }
   }
-  // .selected{
-  //   background-co
-  // }
 
   li {
     padding-left: 0.5em;
@@ -132,7 +136,6 @@ nav {
   }
 
   .menu-list {
-
     .menu-title {
       width: 100%;
       margin-left: 0.3em;

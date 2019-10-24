@@ -43,7 +43,7 @@ nav {
   overflow-y: scroll;
   flex-flow: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   align-content: flex-start;
   width: 30%;
   padding-top: 2%;
@@ -51,10 +51,13 @@ nav {
   top: 0;
   z-index: 2;
   position: absolute; }
+  nav * {
+    padding: 0 1em 0 1em; }
+  nav .selected {
+    background-color: #d27165;
+    border-radius: 1em; }
   nav .select-game {
     border-radius: 1em; }
-    nav .select-game.selected {
-      background-color: #d27165; }
   nav li {
     padding-left: 0.5em;
     padding-right: 0.5em; }

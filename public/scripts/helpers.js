@@ -1,6 +1,10 @@
 //Gets username from cookie
 const extractUserName = function(str) {
   return str.split("=")[0];
+
+  //Use the version below once cookie is fixed:
+  return str.split(";").filter(match => match.indexOf('username') != -1)[0].split("=")[1];
+
 };
 
 //Returns true if the user is in the player array
@@ -14,8 +18,7 @@ const userIsIn = function(playerArray, username) {
 };
 
 //Given an array of players, order them as player 1,2,3,4. Player 1 is always the current player. Other players are based on their tokens
-const findPlayer = function(players, username) {
-  let retArr;
+const orderPlayers = function(players, username) {
 
   console.log("these are the players");
   console.log(players);

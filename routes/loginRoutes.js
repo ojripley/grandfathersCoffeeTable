@@ -24,7 +24,7 @@ module.exports = (db) => {
       .then(user => {
         console.log(user);
 
-        if (bcrypt.compareSync(req.body.password, user[0].password)) {
+        if (user[0] && bcrypt.compareSync(req.body.password, user[0].password)) {
 
           // create session cookie
           req.session.username = req.body.username;
@@ -34,7 +34,7 @@ module.exports = (db) => {
 
           res.redirect('/');
         } else {
-          res.render('login', {loginAttempt: false});
+          res.render('login', { loginAttempt: false });
         }
       })
       .catch(error => {
