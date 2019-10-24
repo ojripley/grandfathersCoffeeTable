@@ -54,31 +54,33 @@
 
 
     <div id="profile">
-      <p id="username"> Username </p>
-      <img id="profile-img" src="./images/user.png">
+      <h2 id="username"> Username </h2>
       <form action="/logout" method="post">
-        <input type="submit" name="logout" value="Logout" class="btn btn-outline-light" />
+        <input id="logout-button" type="submit" name="logout" value="Logout" class="btn btn-outline-light" />
       </form>
     </div>
-    <hr>
-    <p class="text-center" id='high-scores'> High Scores</p>
+    <!-- <hr> -->
 
-    <div id="game-list" class="menu-list">
-      <hr>
-      <h2> Active games </h2>
-      <!-- This list is dynamically generated -->
-      <ul>
-      </ul>
-      <hr>
+    <div id="stats-buttons">
+      <input id="user-history-button" type="button" name="Play History" value="Play History" class="btn btn-outline-light" />
+      <input id="high-scores" type="button" name="Leaderboards" value="Leaderboards" class="btn btn-outline-light" />
     </div>
-
+    <hr>
 
     <div id="create-game" class="menu-list">
-      <button type="button" class="btn btn-primary">Join game</button>
+      <h3 class="menu-title">New Game</h3>
       <ul>
-        <li class="request-game" id="goofspiel"> Goofspiel</li>
-        <li class="request-game" id="warr">Join war</li>
-        <li class="request-game" id='sevens'>Join sevens</li>
+        <li class="request-game" id="goofspiel">Goofspiel</li>
+        <li class="request-game" id="warr">Warr</li>
+        <li class="request-game" id='sevens'>Sevens</li>
+      </ul>
+    </div>
+    <hr>
+
+    <div id="game-list" class="menu-list">
+      <h3 class="menu-title"> Active Games </h3>
+      <!-- This list is dynamically generated -->
+      <ul>
       </ul>
     </div>
   </nav>

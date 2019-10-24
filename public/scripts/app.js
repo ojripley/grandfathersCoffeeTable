@@ -25,11 +25,10 @@ $(() => {
     });
   });
 
-  //Change this to class:
   $(".select-game").on('click', (event) => {
     views_manager.show('goof');
   });
-  $("#profile").on('click', (event) => {
+  $("#user-history-button").on('click', (event) => {
     socket.emit('requestHistory', myUsername);
   });
 
