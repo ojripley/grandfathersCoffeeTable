@@ -95,7 +95,7 @@ nav {
     // justify-content: center;
 
     #username {
-      font-size: 1.75em;
+      font-size: 1.5em;
       color: #92bfe1;
       margin-bottom: 0.3em;
       margin-right: 5%;
@@ -104,22 +104,24 @@ nav {
   }
 
   #buttons {
-      width: 100%;
+      width: 80%;
       display: flex;
       flex-direction: column;
+      margin-right: 10%;
       // align-items: center;
       // justify-content: center;
 
       #leaderboard {
-        width: 80%;
+        width: 100%;
         font-size: 0.5em;
         background-color: #d38d5f;
         margin: 2%;
         margin-top: 0;
+        text-align: center;
       }
 
       #user-history-button {
-        width: 80%;
+        width: 100%;
         font-size: 0.5em;
         background-color: #d38d5f;
         margin: 2%;
@@ -127,7 +129,7 @@ nav {
       }
 
       #logout-button {
-        width: 80%;
+        width: 100%;
         font-size: 0.5em;
         margin: 2%;
         margin-top: 0;

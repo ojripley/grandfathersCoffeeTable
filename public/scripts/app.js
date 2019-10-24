@@ -10,9 +10,9 @@ $(() => {
     $('#navbar').toggleClass('hidden', 500);
   });
   // new Promise();
-  // window.socket = io.connect('172.46.3.253:8080');
+  window.socket = io.connect('172.46.3.253:8080');
 
-  window.socket = io.connect('localhost:8080');
+  // window.socket = io.connect('localhost:8080');
   $('#leaderboard').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
   });
