@@ -120,8 +120,6 @@ $(() => {
     let tableCards = ``;
     for (let card of data.table.cards) {
       //Visibility state must be set based on goofspiel logic
-
-
       tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content"></img>`;
     }
 
@@ -131,7 +129,12 @@ $(() => {
       //Pending moves are face down
       let card = data.pendingMoves[i].card;
       if (data.pendingMoves.length < data.players.length) {
-        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content"></img>`;
+        let theOneWhoPlays = data.pendingMoves[i].player.username; //Stores who played the card
+        if (theOneWhoPlays === myUsername) {
+          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
+        } else {
+          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
+        }
       } else {
         hiddenCards.push(`./images/cards/PNG/${card.name}.png`);
         pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content" id="hidden${i}"></img>`;

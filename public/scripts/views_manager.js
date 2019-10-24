@@ -100,7 +100,6 @@ $(() => {
           console.log("the data" + data);
           war.updateView(window.activeGames[item].view, data);
           window.activeGames[item].view.appendTo($main);
-          console.log("I am assigning the button");
           $("#remove-game").on('click', (event) => {
 
             $(`#${data.gameId}`).remove(); //Get rid of the game
