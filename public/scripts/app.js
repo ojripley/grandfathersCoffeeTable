@@ -1,20 +1,28 @@
-
-
 $(() => {
   window.myUsername = extractUserName(document.cookie);
+  window.alertChain = $("#alert").toggle('slide');
+  $("#alert").fadeTo(10, 1);
+
   $("#username").text(window.myUsername);
   //Nav bar logic:
   $('#menu-bars').on('click', () => {
+    //$('#navbar').toggle('slide');
     $('#navbar').toggleClass('hidden', 500);
   });
-
+  // new Promise();
   window.socket = io.connect('172.46.3.253:8080');
 
   // window.socket = io.connect('localhost:8080');
 
   $('#high-scores').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
-
+    //Alert trigger (temporary)
+    $("#alert").promise().done(() => {
+      console.log("POP");
+      $('#alert').toggle('slide', 1000, () => {
+        setTimeout(() => $("#alert").toggle('slide', 1000), 1000);
+      })
+    });
   });
 
   //Change this to class:
@@ -58,11 +66,14 @@ $(() => {
 
       }
       //Append the game to the nav bar
-      $("#game-list ul").append(`<li class="select-game" id="${data.gameId}">Game ${Object.keys(window.activeGames).length} - ${gameName}</li>
+      $("#game-list ul").append(`<li class="select-game" id="${data.gameId}">Game ${Object.keys(window.activeGames).length} - ${gameName} <span class="badge badge-pill badge-warning"></span>  </li>
       `);
 
-      //Add a listener so that this button will show the generated view
+
       $(`#${data.gameId}`).on('click', (event) => {
+        //User clicked on a particular game
+        //$(`#${data.gameId}`).find(`.badge`).remove();
+        $(event.target).find('.badge').text('');
         views_manager.show(data.gameId);
       });
 
@@ -76,56 +87,40 @@ $(() => {
         console.log('I am working in the background');
         //Not on the gamescreen --> just update the view but don't show it.
         goofspiel.updateView(window.activeGames[data.gameId].view, data);
+        //Show  notification if user is supposed to make a move
+
+        $("#alert").promise().done(() => {
+          console.log("POP");
+          //Is it the players turn?
+          if (data.currentPlayers && userIsIn(data.currentPlayers, myUsername)) {
+            let $alert = $("#alert");
+            let $gameButton = $(`#${data.gameId}`);
+            let gameName = $gameButton.text();
+            $alert.on('click', (event) => {
+              $gameButton.trigger('click');
+            });
+            $gameButton.find('.badge').text(' !');
+            //$(`<span class="badge badge-pill badge-warning">  !</span> `).appendTo($(`#${data.gameId}`));
+
+            $alert.find(".card-body").text(`A move has been played in ${gameName}. `);
+            $alert.toggle('slide', 1000, () => {
+              setTimeout(() => $alert.toggle('slide', 1000), 1000);
+            })
+          }
+        });
       }
     }
 
   });
 
 
-  socket.on('join', (data) => {
+  socket.on('join', (data) => { //not used
     console.log("PLAYER HAS JOINED");
     //goofspiel.updateView(window.activeGames[data.gameId].view, data);
 
     console.log(data);
     //Update the progress bar
   });
-
-  /*
-    socket.on('newGame', (data) => {
-      console.log("ADD THIS NEW GAME");
-      console.log(data);
-
-
-      //Create a new game in the background (jquery object).
-      window.goofspiel.newGame(data.gameId);
-
-      let gameName;
-      switch (data.gameId.substring(0, 4)) {
-        case 'goof':
-          gameName = 'Goofspiel';
-          break;
-        case 'warr':
-          gameName = 'War';
-          break;
-        case 'seve':
-          gameName = 'Sevens';
-          break;
-        default:
-          gameName = '';
-          break;
-
-      }
-      //Append the game to the nav bar
-      $("#game-list ul").append(`<li class="select-game" id="${data.gameId}">Game ${Object.keys(window.activeGames).length} - ${gameName}</li>
-      `);
-
-      //Add a listener so that this button will show the generated view
-      $(`#${data.gameId}`).on('click', (event) => {
-        views_manager.show(data.gameId);
-      });
-
-    });*/
-
 
   socket.on('leaderBoard', (data) => {
 

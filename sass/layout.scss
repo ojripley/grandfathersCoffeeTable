@@ -1,7 +1,8 @@
 //Constants:
 $break: 1024px;
 // $labelheight: 10px;
-//$navColor: purple;
+$navWidthMobile: 30%;
+$navWidthLarge: 25%;
 $labelheight: 10px;
 //Color scheme
 $col1: #d55b4a;
@@ -35,4 +36,17 @@ html,
 
 p {
   text-align: center;
+}
+
+#alert {
+  opacity: 0;
+  position: fixed;
+  z-index: 3;
+  margin-top: 50px;
+  width: 40%;
+  left: $navWidthMobile;
+
+  @media screen and (min-width: $break) {
+    left: $navWidthLarge;
+  }
 }
