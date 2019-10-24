@@ -1,11 +1,12 @@
 #menu-bars {
+  color: red;
   height: auto;
   position: absolute;
   display: inline-block;
-  width: 20px;
+  width: 30px;
   align-self: unset;
-  margin: 10px 10px 10px 10px;
-  z-index: 3;
+  // margin: 10px 10px 10px 10px;
+  z-index: 3000;
 
   @media screen and (min-width: $break) {
     display: none;
@@ -26,7 +27,7 @@ nav {
   // padding-left: 5%;
   height: 100%;
   top: 0;
-  z-index: 2;
+  z-index: 500;
   position: absolute;
 
   #logo {

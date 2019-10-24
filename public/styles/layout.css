@@ -25,13 +25,13 @@
     color: red; }
 
 #menu-bars {
+  color: red;
   height: auto;
   position: absolute;
   display: inline-block;
-  width: 20px;
+  width: 30px;
   align-self: unset;
-  margin: 10px 10px 10px 10px;
-  z-index: 3; }
+  z-index: 3000; }
   @media screen and (min-width: 1024px) {
     #menu-bars {
       display: none; } }
@@ -48,7 +48,7 @@ nav {
   padding-top: 2%;
   height: 100%;
   top: 0;
-  z-index: 2;
+  z-index: 500;
   position: absolute; }
   nav #logo {
     width: 90%;
@@ -293,6 +293,102 @@ html,
 #main-content {
   height: 100%;
   width: 100%; }
+  html #landing-container,
+  #main-content #landing-container {
+    background-color: #382300;
+    background-image: url("https://www.transparenttextures.com/patterns/purty-wood.png");
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 28fr 1fr;
+    grid-template-rows: 1fr 19fr 10fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    overflow: hidden; }
+    html #landing-container #logo-body,
+    #main-content #landing-container #logo-body {
+      position: absolute;
+      width: 50%; }
+    html #landing-container #p1Area,
+    #main-content #landing-container #p1Area {
+      grid-row-start: 3;
+      grid-column: 1/4;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      position: relative; }
+      html #landing-container #p1Area p,
+      #main-content #landing-container #p1Area p {
+        position: absolute;
+        top: 0;
+        color: lavender; }
+    html #landing-container #p2Area,
+    #main-content #landing-container #p2Area {
+      grid-row-start: 1;
+      grid-column-start: 2;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      position: relative; }
+      html #landing-container #p2Area p,
+      #main-content #landing-container #p2Area p {
+        position: absolute;
+        bottom: 0;
+        color: lavender; }
+    html #landing-container #tableArea,
+    #main-content #landing-container #tableArea {
+      grid-row-start: 2;
+      grid-column-start: 2;
+      background-color: #5b885b;
+      box-shadow: inset 0px 0px 15px #000;
+      color: white;
+      border-radius: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      html #landing-container #tableArea .myProgressBar,
+      #main-content #landing-container #tableArea .myProgressBar {
+        width: 80%; }
+      html #landing-container #tableArea #background-text,
+      #main-content #landing-container #tableArea #background-text {
+        position: absolute;
+        color: lightgray;
+        font-size: 4em; }
+    html #landing-container #end-game-header,
+    #main-content #landing-container #end-game-header {
+      grid-row-start: 1;
+      grid-column-start: 2;
+      display: flex;
+      margin-top: 10px;
+      justify-content: center;
+      align-content: center;
+      color: lavender; }
+    html #landing-container #end-game-table,
+    #main-content #landing-container #end-game-table {
+      grid-row-start: 2;
+      grid-column-start: 2;
+      height: 100px; }
+    html #landing-container #remove-game,
+    #main-content #landing-container #remove-game {
+      grid-row-start: 2;
+      grid-column-start: 2;
+      position: relative;
+      height: 50px; }
+    @media screen and (min-width: 1024px) {
+      html #landing-container,
+      #main-content #landing-container {
+        position: absolute;
+        left: 20%;
+        width: 80%;
+        grid-template-columns: 1fr 4fr 1fr;
+        grid-template-rows: 1fr 4fr 1fr;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px; } }
 
 p {
   text-align: center; }
@@ -307,87 +403,3 @@ p {
   @media screen and (min-width: 1024px) {
     #alert {
       left: 20%; } }
-
-#landing-container {
-  background-color: #382300;
-  background-image: url("https://www.transparenttextures.com/patterns/purty-wood.png");
-  position: relative;
-  top: 0;
-  z-index: 100;
-  height: 100%;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 28fr 1fr;
-  grid-template-rows: 1fr 19fr 10fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  overflow: hidden; }
-  #landing-container #logo-body {
-    position: absolute;
-    width: 50%; }
-  #landing-container #p1Area {
-    grid-row-start: 3;
-    grid-column: 1/4;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    position: relative; }
-    #landing-container #p1Area p {
-      position: absolute;
-      top: 0;
-      color: lavender; }
-  #landing-container #p2Area {
-    grid-row-start: 1;
-    grid-column-start: 2;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    position: relative; }
-    #landing-container #p2Area p {
-      position: absolute;
-      bottom: 0;
-      color: lavender; }
-  #landing-container #tableArea {
-    grid-row-start: 2;
-    grid-column-start: 2;
-    background-color: #5b885b;
-    box-shadow: inset 0px 0px 15px #000;
-    color: white;
-    border-radius: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: center; }
-    #landing-container #tableArea .myProgressBar {
-      width: 80%; }
-    #landing-container #tableArea #background-text {
-      position: absolute;
-      color: lightgray;
-      font-size: 4em; }
-  #landing-container #end-game-header {
-    grid-row-start: 1;
-    grid-column-start: 2;
-    display: flex;
-    margin-top: 10px;
-    justify-content: center;
-    align-content: center;
-    color: lavender; }
-  #landing-container #end-game-table {
-    grid-row-start: 2;
-    grid-column-start: 2;
-    height: 100px; }
-  #landing-container #remove-game {
-    grid-row-start: 2;
-    grid-column-start: 2;
-    position: relative;
-    height: 50px; }
-  @media screen and (min-width: 1024px) {
-    #landing-container {
-      position: absolute;
-      left: 20%;
-      width: 80%;
-      grid-template-columns: 1fr 4fr 1fr;
-      grid-template-rows: 1fr 4fr 1fr;
-      grid-column-gap: 0px;
-      grid-row-gap: 0px; } }

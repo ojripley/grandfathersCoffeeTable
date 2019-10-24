@@ -27,34 +27,16 @@ body {
   h1 {
     color: #244751;
   }
+
 }
 html,
 #main-content {
   height: 100%;
   width: 100%;
-}
-
-p {
-  text-align: center;
-}
-
-#alert {
-  opacity: 0;
-  position: fixed;
-  z-index: 3;
-  margin-top: 50px;
-  width: 40%;
-  left: $navWidthMobile;
-
-  @media screen and (min-width: $break) {
-    left: $navWidthLarge;
-  }
-}
-
-#landing-container {
+  #landing-container {
   background-color: #382300;
   background-image: url("https://www.transparenttextures.com/patterns/purty-wood.png");;
-  position: relative;
+  position: absolute;
   top: 0;
   z-index: 100;
   height: 100%;
@@ -109,43 +91,7 @@ p {
       color: lavender;
     }
   }
-  // #p3Area {
-  //   grid-row-start: 2;
-  //   grid-column-start: 3;
 
-  //   display: flex;
-  //   flex-flow: column nowrap;
-  //   justify-content: center;
-  //   align-items: center;
-  //   position: relative;
-  //   // background-color: coral; //uncomment to see player area
-  //   p {
-  //     // height: $labelheight;
-  //     position: absolute;
-  //     transform: rotate(-90deg);
-  //     width: 150px;
-  //     left: -90px;
-  //     color: lavender;
-  //   }
-  // }
-  // #p4Area {
-  //   grid-row-start: 2;
-  //   grid-column-start: 1;
-  //   display: flex;
-  //   flex-flow: column nowrap;
-  //   justify-content: center;
-  //   align-items: center;
-  //   position: relative;
-  //   // background-color: coral; //uncomment to see player area
-  //   p {
-  //     // height: $labelheight;
-  //     position: absolute;
-  //     transform: rotate(90deg);
-  //     width: 150px;
-  //     right: -90px;
-  //     color: lavender;
-  //   }
-    // }
   #tableArea {
     grid-row-start: 2;
     grid-column-start: 2;
@@ -195,5 +141,23 @@ p {
     grid-template-rows: 1fr 4fr 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
+  }
+}
+}
+
+p {
+  text-align: center;
+}
+
+#alert {
+  opacity: 0;
+  position: fixed;
+  z-index: 3;
+  margin-top: 50px;
+  width: 40%;
+  left: $navWidthMobile;
+
+  @media screen and (min-width: $break) {
+    left: $navWidthLarge;
   }
 }
