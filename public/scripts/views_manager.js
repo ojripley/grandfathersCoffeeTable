@@ -43,7 +43,19 @@ $(() => {
           let userToSearch = $("#user-to-search").val();
           $("#matchHistoryHeader").text(` ${userToSearch}'s Match history `)
           socket.emit('requestHistory', userToSearch);
-        })
+        });
+        window.curMatchStats = 0;
+
+
+        $('.match_row').hover((event) => {
+          console.log("you clicked a row");
+          console.log(event.target);
+          let matchId = $(event.target).parent().attr('id');
+          if (matchId != window.curMatchStats) {
+            socket.emit('requestMatchDetails', matchId);
+            window.curMatchStats = matchId;
+          }
+        });
 
         break;
       case 'goof':

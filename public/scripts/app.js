@@ -16,13 +16,6 @@ $(() => {
 
   $('#leaderboard').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
-    //Alert trigger (temporary)
-    $("#alert").promise().done(() => {
-      console.log("POP");
-      $('#alert').toggle('slide', 1000, () => {
-        setTimeout(() => $("#alert").toggle('slide', 1000), 1000);
-      })
-    });
   });
 
   //Change this to class:
@@ -42,7 +35,7 @@ $(() => {
   let player;
   socket.on('gameView', (data) => {
     console.log("RENDER THIS:");
-    console.log(data);
+    console.log(data); //Data contains all the info needed to render a screen
 
     //If the game hasn't started and we haven't seen this game before
     if (data.gameState === "pending" && !Object.keys(window.activeGames).includes(data.gameId)) {
@@ -72,8 +65,8 @@ $(() => {
 
       $(`#${data.gameId}`).on('click', (event) => {
         //User clicked on a particular game
-        //$(`#${data.gameId}`).find(`.badge`).remove();
-        $(event.target).find('.badge').text('');
+
+        $(event.target).find('.badge').text(''); //Adds a badge for the user to know which games are waiting
         views_manager.show(data.gameId);
       });
 
@@ -84,11 +77,11 @@ $(() => {
         console.log('User is currently watching the game');
         views_manager.show(data.gameId, data);
       } else {
-        console.log('I am working in the background');
+
         //Not on the gamescreen --> just update the view but don't show it.
         goofspiel.updateView(window.activeGames[data.gameId].view, data);
-        //Show  notification if user is supposed to make a move
 
+        //Show  notification if user is supposed to make a move
         $("#alert").promise().done(() => {
           console.log("POP");
           //Is it the players turn?
@@ -113,21 +106,20 @@ $(() => {
 
   });
 
+  /*
+    socket.on('join', (data) => { //not used
+      console.log("PLAYER HAS JOINED");
+      //goofspiel.updateView(window.activeGames[data.gameId].view, data);
 
-  socket.on('join', (data) => { //not used
-    console.log("PLAYER HAS JOINED");
-    //goofspiel.updateView(window.activeGames[data.gameId].view, data);
-
-    console.log(data);
-    //Update the progress bar
-  });
+      console.log(data);
+      //Update the progress bar
+    });
+    */
 
   socket.on('leaderBoard', (data) => {
-
     //show highscores (move this to the response of leaderboard)
     views_manager.show('leaderboard', data);
-    console.log("Here is the leaderboard");
-    console.log(data);
+
   });
 
 
