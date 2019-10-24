@@ -57,46 +57,44 @@ $(() => {
   window.goofspiel.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
 
+    let players = orderPlayers(data.players, window.myUsername); //Get an array of the players
+    let scoreboard = `
+    <thead>
+      <tr>
+        <th scope="col">Placing</th>
+        <th scope="col">Name</th>
+        <th scope="col">Score</th>
+      </tr>
+    </thead>
+    <tbody>`;
 
+    data.players.forEach((player, i) => {
+      console.log(player);
+      scoreboard += `<tr>
+        <td scope="row">${i + 1}</td>
+        <td>${player.username}</td>
+        <td>${player.score}</td>
+      </tr>`;
+    });
 
-
-    let players = findPlayer(data.players, window.myUsername);
+    scoreboard += `</tbody> </table>`;
 
     //Check if the game is over
     if (data.gameState === "finished") {
-      let scoreBoard = `
-      <table class="table table-striped table-hover" id="end-game-table">
-        <thead>
-          <tr>
-            <th scope="col">Placing</th>
-            <th scope="col">Name</th>
-            <th scope="col">Score</th>
-          </tr>
-        </thead>
-        <tbody>`;
-      data.players.forEach((player, i) => {
-        console.log(player);
-        scoreBoard += `<tr>
-          <td scope="row">${i + 1}</td>
-          <td>${player.username}</td>
-          <td>${player.score}</td>
-        </tr>`;
-      });
-
-      scoreBoard += `</tbody> </table>`;
-
-
+      scoreboard = `<table class="table table-striped table-hover" id="end-game-table">` + scoreboard;
       window.activeGames[data.gameId].view = $(`
       <div id="game-container">
 
       <h1 id="end-game-header"> GAME OVER! </h1>
-            ${scoreBoard}
+            ${scoreboard}
         <button type="button" class="btn btn-warning" id="remove-game">Exit</button>
       </div>
       `);
-
       return;
     }
+    scoreboard = `<table class="table table-striped table-hover" id="scoreboard">` + scoreboard;
+
+
     window.activeGames[data.gameId].player = players[0];
     window.activeGames[data.gameId].myCards = players[0].hand.cards;
 
@@ -142,6 +140,7 @@ $(() => {
 
     window.activeGames[data.gameId].view = $(`
     <div id="game-container">
+    ${scoreboard}
     <div id="tableArea">
     <h1 id="background-text"> G O O F S P I E L </h1>
     ${tableCards}

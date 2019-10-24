@@ -57,10 +57,7 @@ $(() => {
   window.war.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
 
-
-
-
-    let players = findPlayer(data.players, window.myUsername);
+    let players = orderPlayers(data.players, window.myUsername);
 
     //Check if the game is over
     if (data.gameState === "finished") {
@@ -97,7 +94,7 @@ $(() => {
 
       return;
     }
-    console.log("Youy should not see this");
+
     window.activeGames[data.gameId].player = players[0];
     window.activeGames[data.gameId].myCards = players[0].hand.cards;
 

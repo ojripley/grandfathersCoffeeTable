@@ -14,8 +14,7 @@ const userIsIn = function(playerArray, username) {
 };
 
 //Given an array of players, order them as player 1,2,3,4. Player 1 is always the current player. Other players are based on their tokens
-const findPlayer = function(players, username) {
-  let retArr;
+const orderPlayers = function(players, username) {
 
   console.log("these are the players");
   console.log(players);
