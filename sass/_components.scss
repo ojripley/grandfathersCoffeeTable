@@ -16,7 +16,8 @@
   margin: 2px;
   z-index: 1;
 }
-.card:hover {
+
+.playable-card:hover {
   max-height: 110px;
   border: solid $col2 2px;
   width: auto;

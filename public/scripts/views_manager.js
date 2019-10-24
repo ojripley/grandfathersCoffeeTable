@@ -75,7 +75,7 @@ $(() => {
 
         //Add game-specific listeners
         //Change the logic here to check if the card is playable
-        $('.card').on('click', (event) => {
+        $('.playablecard').on('click', (event) => {
           // let $chosenCard = $(event.target);
           let cardName = event.target.id;
           let card = findCardByName(cardName, window.activeGames[item].myCards);
@@ -119,7 +119,7 @@ $(() => {
 
         //Add game-specific listeners
         //Change the logic here to check if the card is playable
-        $('.card').on('click', (event) => {
+        $('.playablecard').on('click', (event) => {
           // let $chosenCard = $(event.target);
           let cardName = event.target.id;
           let card = findCardByName(cardName, window.activeGames[item].myCards);

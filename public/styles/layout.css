@@ -276,7 +276,7 @@ nav {
   margin: 2px;
   z-index: 1; }
 
-.card:hover {
+.playable-card:hover {
   max-height: 110px;
   border: solid #d0b16b 2px;
   width: auto;
@@ -298,7 +298,7 @@ p {
 
 #alert {
   opacity: 0;
-  float: left;
+  position: fixed;
   z-index: 3;
   margin-top: 50px;
   width: 40%;

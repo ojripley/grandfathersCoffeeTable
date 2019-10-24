@@ -110,7 +110,7 @@ $(() => {
         if (i == 0) {
           //This is the client, show their cards to them
           //Add playable state here
-          playersCards[i] += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content" id="${card.name}"></img>`;
+          playersCards[i] += `<img src="./images/cards/PNG/${card.name}.png" class="playablecard card img-fluid ui-widget-content" id="${card.name}"></img>`;
         } else {
           playersCards[i] += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content"></img>`;
         }

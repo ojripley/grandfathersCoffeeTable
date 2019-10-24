@@ -10,9 +10,9 @@ $(() => {
     $('#navbar').toggleClass('hidden', 500);
   });
   // new Promise();
-  // window.socket = io.connect('172.46.3.253:8080');
+  window.socket = io.connect('172.46.3.253:8080');
 
-  window.socket = io.connect('localhost:8080');
+  // window.socket = io.connect('localhost:8080');
 
   $('#high-scores').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
@@ -66,14 +66,14 @@ $(() => {
 
       }
       //Append the game to the nav bar
-      $("#game-list ul").append(`<li class="select-game" id="${data.gameId}">Game ${Object.keys(window.activeGames).length} - ${gameName}</li>
+      $("#game-list ul").append(`<li class="select-game" id="${data.gameId}">Game ${Object.keys(window.activeGames).length} - ${gameName} <span class="badge badge-pill badge-warning"></span>  </li>
       `);
 
 
       $(`#${data.gameId}`).on('click', (event) => {
         //User clicked on a particular game
         //$(`#${data.gameId}`).find(`.badge`).remove();
-        $(event.target).find('.badge').remove();
+        $(event.target).find('.badge').text('');
         views_manager.show(data.gameId);
       });
 
@@ -99,7 +99,8 @@ $(() => {
             $alert.on('click', (event) => {
               $gameButton.trigger('click');
             });
-            $(`<span class="badge badge-pill badge-warning">  !</span> `).appendTo($(`#${data.gameId}`));
+            $gameButton.find('.badge').text(' !');
+            //$(`<span class="badge badge-pill badge-warning">  !</span> `).appendTo($(`#${data.gameId}`));
 
             $alert.find(".card-body").text(`A move has been played in ${gameName}. `);
             $alert.toggle('slide', 1000, () => {
