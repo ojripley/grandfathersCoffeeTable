@@ -12,7 +12,7 @@ $(() => {
     <div class="progress">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="2" style="width: 50%"></div>
         </div>
-        <p id="progress-text"> 1/2 </p>
+        <p id="progress-text"> Searching for players (1/2) </p>
       </div>
     </div>
     <div id="p1Area">

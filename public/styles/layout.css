@@ -142,8 +142,8 @@ nav {
   #game-container #tableArea {
     grid-row-start: 2;
     grid-column-start: 2;
-    background-color: #648864;
-    box-shadow: inset 3px 3px 5px #000;
+    background-color: #5b885b;
+    box-shadow: inset 0px 0px 15px #000;
     color: white;
     border-radius: 1em;
     display: flex;
@@ -244,18 +244,18 @@ nav {
   /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */ }
 
 .card {
-  max-height: 125px;
+  max-height: 120px;
   width: auto;
   margin: 2px;
   z-index: 1;
   box-shadow: 2px 2px 1px #000; }
 
 .card:hover {
-  max-height: 135px;
+  max-height: 130px;
   border: solid #d0b16b 2px;
   width: auto;
   margin: 2px;
-  box-shadow: 2px 2px 2px #000; }
+  box-shadow: 2px 2px 4px #000; }
 
 body {
   background-color: white;
