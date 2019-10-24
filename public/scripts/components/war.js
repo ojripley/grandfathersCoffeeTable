@@ -107,9 +107,9 @@ $(() => {
         if (i == 0) {
           //This is the client, show their cards to them
           //Add playable state here
-          playersCards[i] += `<img src="./images/cards/PNG/${card.name}.png" class="playablecard card img-fluid ui-widget-content" id="${card.name}"></img>`;
+          playersCards[i] += `<img src="./images/cards/PNG/${card.name}.png" class="playable playing-card img-fluid ui-widget-content" id="${card.name}"></img>`;
         } else {
-          playersCards[i] += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content"></img>`;
+          playersCards[i] += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content"></img>`;
         }
       }
     }
@@ -122,7 +122,7 @@ $(() => {
       //Visibility state must be set based on war logic
 
 
-      tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content"></img>`;
+      tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content"></img>`;
     }
 
     let pendingCards = ``;
@@ -131,10 +131,10 @@ $(() => {
       //Pending moves are face down
       let card = data.pendingMoves[i].card;
       if (data.pendingMoves.length < data.players.length) {
-        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content"></img>`;
+        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content"></img>`;
       } else {
         hiddenCards.push(`./images/cards/PNG/${card.name}.png`);
-        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content" id="hidden${i}"></img>`;
+        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="hidden${i}"></img>`;
       }
     }
 

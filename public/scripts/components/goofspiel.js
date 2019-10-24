@@ -107,9 +107,9 @@ $(() => {
         if (i == 0) {
           //This is the client, show their cards to them
           //Add playable state here
-          playersCards[i] += `<img src="./images/cards/PNG/${card.name}.png" class="playablecard card img-fluid ui-widget-content" id="${card.name}"></img>`;
+          playersCards[i] += `<img src="./images/cards/PNG/${card.name}.png" class="playable playing-card img-fluid ui-widget-content" id="${card.name}"></img>`;
         } else {
-          playersCards[i] += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content"></img>`;
+          playersCards[i] += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content"></img>`;
         }
       }
     }
@@ -120,7 +120,7 @@ $(() => {
     let tableCards = ``;
     for (let card of data.table.cards) {
       //Visibility state must be set based on goofspiel logic
-      tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="card img-fluid ui-widget-content"></img>`;
+      tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content"></img>`;
     }
 
     let pendingCards = ``;
@@ -131,13 +131,13 @@ $(() => {
       if (data.pendingMoves.length < data.players.length) {
         let theOneWhoPlays = data.pendingMoves[i].player.username; //Stores who played the card
         if (theOneWhoPlays === myUsername) {
-          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
+          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
         } else {
-          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
+          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
         }
       } else {
         hiddenCards.push(`./images/cards/PNG/${card.name}.png`);
-        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="card img-fluid ui-widget-content" id="hidden${i}"></img>`;
+        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="hidden${i}"></img>`;
       }
     }
 

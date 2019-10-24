@@ -12,16 +12,16 @@
   /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */ //uncomment to see player hand space
 }
 
-.card {
+.playing-card {
   max-height: 120px;
   width: auto;
   margin: 2px;
   z-index: 1;
   box-shadow: 2px 2px 1px #000;
 }
-.card:hover {
+.playing-card:hover {
   max-height: 130px;
-  border: solid $col2 2px;
+  // border: solid $col2 2px;
   width: auto;
   margin: 2px;
   box-shadow: 2px 2px 4px #000;
