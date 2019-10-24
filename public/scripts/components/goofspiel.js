@@ -20,16 +20,16 @@ $(() => {
 
       </div>
       <p id="player1Text">
-      <span id="p1Name"> ${window.myUsername}</span>
-      <span id="p1score"> - 0 pts - </span>
-      <span id="p1numCards"> (0 cards) </span>
+      <span id="p1Name"> </span>
+      <span id="p1score"></span>
+      <span id="p1numCards"> </span>
       </p>
     </div>
     <div id="p2Area">
     <p id="player2Text">
-      <span id="p2Name"> Player 2</span>
-      <span id="p2score">- 0 pts -</span>
-      <span id="p2numCards">(0 cards)</span>
+      <span id="p2Name"> </span>
+      <span id="p2score"></span>
+      <span id="p2numCards"></span>
       </p>
     </div>
   </div>`);
@@ -140,7 +140,7 @@ $(() => {
         if (theOneWhoPlays === myUsername) {
           pendingCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
         } else {
-          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="hidden${i}"></img>`;
+          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="hidden playing-card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
         }
       }
     }
@@ -181,7 +181,7 @@ $(() => {
 `);
     if (hiddenCards.length > 0) {
       for (let i in hiddenCards) {
-        let el = window.activeGames[data.gameId].view.find(`#hidden${i}`);
+        let el = window.activeGames[data.gameId].view.find(`.hidden`);
         console.log("The jquery element is:");
         console.log(el.attr("id"));
 

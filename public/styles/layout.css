@@ -150,9 +150,13 @@ nav {
   overflow: hidden; }
   #game-container #scoreboard {
     grid-row: 2;
+    display: none;
     grid-column: 3;
     color: white;
     height: 100px; }
+    @media screen and (min-width: 1024px) {
+      #game-container #scoreboard {
+        display: block; } }
   #game-container #p1Area {
     grid-row-start: 3;
     grid-column: 1/4;
@@ -164,7 +168,7 @@ nav {
     overflow: scroll; }
   #game-container #p2Area {
     grid-row-start: 1;
-    grid-column-start: 2;
+    grid-column: 1/4;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -181,19 +185,54 @@ nav {
     align-items: center;
     position: relative;
     justify-content: center; }
+    #game-container #table-area-goof #p1pendingCard {
+      position: absolute;
+      transform: translatey(140px); }
+    #game-container #table-area-goof #p2pendingCard {
+      position: absolute;
+      transform: translatey(-140px); }
     #game-container #table-area-goof #player1Text {
       position: absolute;
       bottom: 0;
       right: 0;
-      margin-right: 10px; }
+      margin-right: 10px;
+      margin-bottom: 10px; }
     #game-container #table-area-goof #player2Text {
       position: absolute;
       top: 0;
       left: 0;
-      margin-left: 10px; }
+      margin-left: 10px;
+      margin-top: 10px; }
     #game-container #table-area-goof .myProgressBar {
       width: 80%; }
     #game-container #table-area-goof #background-text {
+      position: absolute;
+      color: lightgray;
+      font-size: 4em; }
+  #game-container #table-area-war {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    background-color: #5b885b;
+    box-shadow: inset 2px 2px 25px #000;
+    color: white;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center; }
+    #game-container #table-area-war #player1Text {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px; }
+    #game-container #table-area-war #player2Text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px; }
+    #game-container #table-area-war .myProgressBar {
+      width: 80%; }
+    #game-container #table-area-war #background-text {
       position: absolute;
       color: lightgray;
       font-size: 4em; }
@@ -208,12 +247,14 @@ nav {
   #game-container #end-game-table {
     grid-row-start: 2;
     grid-column-start: 2;
-    height: 100px; }
+    height: 100px;
+    color: azure; }
   #game-container #remove-game {
     grid-row-start: 2;
     grid-column-start: 2;
     position: relative;
-    height: 50px; }
+    height: 50px;
+    top: 150px; }
   @media screen and (min-width: 1024px) {
     #game-container {
       position: absolute;
@@ -283,8 +324,8 @@ nav {
 
 .playerHand {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
+  flex-flow: row;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   height: 80%;

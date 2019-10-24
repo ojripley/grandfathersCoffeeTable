@@ -7,7 +7,7 @@ $(() => {
   window.war.newGame = function(id) {
     window.activeGames[id] = {};
     window.activeGames[id].view = $(`<div id="game-container">
-    <div id="table-area-goof">
+    <div id="table-area-warr">
     <div class ="myProgressBar">
     <div class="progress">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="2" style="width: 50%"></div>
@@ -20,16 +20,16 @@ $(() => {
 
       </div>
       <p id="player1Text">
-      <span id="p1Name"> ${window.myUsername}</span>
-      <span id="p1score"> - 0 pts - </span>
-      <span id="p1numCards"> (0 cards) </span>
+      <span id="p1Name"></span>
+      <span id="p1score"></span>
+      <span id="p1numCards"></span>
       </p>
     </div>
     <div id="p2Area">
     <p id="player2Text">
-      <span id="p2Name"> Player 2</span>
-      <span id="p2score">- 0 pts -</span>
-      <span id="p2numCards">(0 cards)</span>
+      <span id="p2Name"></span>
+      <span id="p2score"></span>
+      <span id="p2numCards"></span>
       </p>
     </div>
   </div>`);
