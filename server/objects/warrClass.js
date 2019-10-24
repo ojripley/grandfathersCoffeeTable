@@ -20,6 +20,8 @@ class Warr extends Game {
       this.players[0].hand.cards = this.deck.cards.splice(0, 26);
       this.players[1].hand.cards = this.deck.cards.splice(0, 26);
     }
+
+    this.currentPlayers = this.players.slice(0);
   }
 
 
@@ -212,6 +214,7 @@ class Warr extends Game {
         console.log(this.players[0].username + ': ' + this.players[0].score);
         console.log(this.players[1].username + ': ' + this.players[1].score);
         console.log();
+        this.currentPlayers = this.players.slice(0);
         return false;
       }
     }

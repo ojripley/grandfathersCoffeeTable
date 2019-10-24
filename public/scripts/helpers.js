@@ -1,6 +1,6 @@
 //Gets username from cookie
 const extractUserName = function(str) {
-  return str.split("=")[0];
+  // return str.split("=")[0];
 
   //Use the version below once cookie is fixed:
   return str.split(";").filter(match => match.indexOf('username') != -1)[0].split("=")[1];

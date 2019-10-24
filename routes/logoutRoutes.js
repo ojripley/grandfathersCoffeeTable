@@ -6,7 +6,7 @@ module.exports = () => {
   router.post('/logout', (req, res) => {
     delete req.session.username;
 
-    res.clearCookie(req.session.username);
+    res.clearCookie('username');
 
     res.render('login', {loginAttempt: true});
   });

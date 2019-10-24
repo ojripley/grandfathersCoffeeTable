@@ -102,7 +102,7 @@ nav {
   nav #stats-buttons {
     width: 100%;
     display: flex; }
-    nav #stats-buttons #high-scores {
+    nav #stats-buttons #leaderboard {
       font-size: 0.5em;
       background-color: #d38d5f;
       margin: 3%;
