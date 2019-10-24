@@ -14,7 +14,9 @@ $(() => {
       window.activeGames[game].view.detach();
     }
     $(`#${window.curScreen}`).removeClass("selected");
-    $(`#${item}`).addClass("selected");
+    if (id !== "user-history-button" && item !== "leaderboard") {
+      $(`#${item}`).addClass("selected");
+    }
 
 
     console.log(`requesting the ${item} screen `)
