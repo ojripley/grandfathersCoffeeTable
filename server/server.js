@@ -225,7 +225,22 @@ io.on('connection', (client) => {
     if (activeGames[game].isValidMove(move)) {
       // add the submitted move to pending
 
+      const playerPositionInCurrentPlayers = activeGames[game].currentPlayers.map((player) => {
+
+        console.log('\n\ntrying to find player');
+        console.log(player.username);
+
+
+        return player.username;
+      }).indexOf(move.player.username);
+
       const player = activeGames[game].players.filter(player => player.username === move.player.username);
+
+      console.log('\n\n\nPlayer to remove:');
+
+      console.log(playerPositionInCurrentPlayers);
+
+      console.log(activeGames[game].currentPlayers);
 
       for (let card of player[0].hand.cards) {
         if (move.card.name === card.name) {
@@ -233,11 +248,14 @@ io.on('connection', (client) => {
         }
       }
 
+      // remove player from currentPlayers for turn
+      activeGames[game].currentPlayers.splice(playerPositionInCurrentPlayers, 1);
+
+      console.log('\n\ncurrent players after removal:\n', activeGames[game].currentPlayers);
+
       // add to the array of moves to be evaluated
       activeGames[game].pendingMoves.push(move);
 
-      // remove player from currentPlayers for turn
-      activeGames[game].currentPlayers = activeGames[game].currentPlayers.splice(activeGames[game].currentPlayers.indexOf(player), 1);
 
       // broadcast the game to all players
       io.to(game).emit('gameView', {

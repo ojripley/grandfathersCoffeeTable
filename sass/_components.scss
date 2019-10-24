@@ -13,16 +13,16 @@
 }
 
 .card {
-  max-height: 125px;
+  max-height: 120px;
   width: auto;
   margin: 2px;
   z-index: 1;
   box-shadow: 2px 2px 1px #000;
 }
 .card:hover {
-  max-height: 135px;
+  max-height: 130px;
   border: solid $col2 2px;
   width: auto;
   margin: 2px;
-  box-shadow: 2px 2px 2px #000;
+  box-shadow: 2px 2px 4px #000;
 }
