@@ -9,8 +9,6 @@ $(() => {
     $leaderboard.detach();
     $profile.detach();
     for (let game in window.activeGames) {
-      console.log(game);
-      console.log(window.activeGames[game])
       window.activeGames[game].view.detach();
     }
 
@@ -18,8 +16,6 @@ $(() => {
     switch (item.substring(0, 4)) {
       case 'lead':
         window.curGame = 'lead';
-        console.log("sending...");
-        console.log(data);
         leaderboard.updateTable(data);
         $leaderboard.appendTo($main);
 
@@ -52,7 +48,6 @@ $(() => {
           goofspiel.updateView(window.activeGames[item].view, data);
           window.activeGames[item].view.appendTo($main);
           $("#remove-game").on('click', (event) => {
-            console.log(`click`);
             $(`#${data.gameId}`).remove(); //Get rid of the game
             //Render a different screen
             window.views_manager.show('lead');
@@ -61,12 +56,9 @@ $(() => {
           //If we are waiting for another player or game does not exist
           window.activeGames[item].view.appendTo($main);
         } else {
-          console.log("the data" + data);
           goofspiel.updateView(window.activeGames[item].view, data);
           window.activeGames[item].view.appendTo($main);
-          console.log("I am assigning the button");
           $("#remove-game").on('click', (event) => {
-            console.log(`click`);
             $(`#${data.gameId}`).remove(); //Get rid of the game
             //Render a different screen
             window.views_manager.show('lead');
@@ -96,7 +88,7 @@ $(() => {
           war.updateView(window.activeGames[item].view, data);
           window.activeGames[item].view.appendTo($main);
           $("#remove-game").on('click', (event) => {
-            console.log(`click`);
+
             $(`#${data.gameId}`).remove(); //Get rid of the game
             //Render a different screen
             window.views_manager.show('lead');
@@ -110,7 +102,7 @@ $(() => {
           window.activeGames[item].view.appendTo($main);
           console.log("I am assigning the button");
           $("#remove-game").on('click', (event) => {
-            console.log(`click`);
+
             $(`#${data.gameId}`).remove(); //Get rid of the game
             //Render a different screen
             window.views_manager.show('lead');
