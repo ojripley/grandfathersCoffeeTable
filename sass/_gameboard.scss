@@ -48,43 +48,7 @@
     position: relative;
     // background-color: coral; //uncomment to see r area
   }
-  // #p3Area {
-  //   grid-row-start: 2;
-  //   grid-column-start: 3;
 
-  //   display: flex;
-  //   flex-flow: column nowrap;
-  //   justify-content: center;
-  //   align-items: center;
-  //   position: relative;
-  //   // background-color: coral; //uncomment to see player area
-  //   p {
-  //     // height: $labelheight;
-  //     position: absolute;
-  //     transform: rotate(-90deg);
-  //     width: 150px;
-  //     left: -90px;
-  //     color: lavender;
-  //   }
-  // }
-  // #p4Area {
-  //   grid-row-start: 2;
-  //   grid-column-start: 1;
-  //   display: flex;
-  //   flex-flow: column nowrap;
-  //   justify-content: center;
-  //   align-items: center;
-  //   position: relative;
-  //   // background-color: coral; //uncomment to see player area
-  //   p {
-  //     // height: $labelheight;
-  //     position: absolute;
-  //     transform: rotate(90deg);
-  //     width: 150px;
-  //     right: -90px;
-  //     color: lavender;
-  //   }
-  // }
   #table-area-goof {
     grid-row-start: 2;
     grid-column-start: 2;

@@ -1,5 +1,4 @@
 #menu-bars {
-  color: red;
   height: auto;
   position: absolute;
   display: inline-block;
@@ -22,7 +21,7 @@ nav {
   justify-content: flex-start;
   align-items: left;
   align-content: flex-start;
-  width: 30%;
+  width: 60%;
   padding-top: 2%;
   height: 100%;
   top: 0;
@@ -45,9 +44,11 @@ nav {
   }
 
   li {
+    max-width: max-content;
     font-size: 0.75em;
     padding-left: 0.5em;
     padding-right: 0.5em;
+    user-select: none;
   }
 
   li:hover {
@@ -150,7 +151,7 @@ nav {
 
     display: flex;
     flex-flow: column nowrap;
-    align-content: stretch;
+    align-content: center;
     text-align: left;
     justify-content: space-around;
   }

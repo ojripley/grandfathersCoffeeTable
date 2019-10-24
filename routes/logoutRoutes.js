@@ -8,7 +8,7 @@ module.exports = () => {
 
     res.clearCookie('username');
 
-    res.render('login', {loginAttempt: true});
+    res.redirect('/');
   });
 
   return router;

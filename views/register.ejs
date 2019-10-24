@@ -27,27 +27,32 @@
 
 </head>
 
-<body id="registration-body">
+<body id="login-body">
 
-  <form class="registration-form" action="/register" method="POST">
+  <img class="login-logo" src="./images/logo.png">
 
-    <div class="form-group">
-      <label for="inputUsername">Please choose a Username</label>
-      <input type="text" class="form-control" id="inputUsername" placeholder="Enter username" name="username">
-    </div>
+  <div class="signup">
+    <form class="registration-form" action="/register" method="POST">
 
-    <div class="form-group">
-      <label for="inputPassword">Choose a password</label>
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
-    </div>
+      <h2 class="signup-title">Register</h2>
+
+      <div class="form-group">
+        <input type="text" class="form-control" id="inputUsername" placeholder="username" name="username">
+      </div>
+
+      <div class="form-group">
+        <input type="password" class="form-control" id="inputPassword" placeholder="password" name="password">
+      </div>
 
 
-    <% if (!registerAttempt) { %>
-    <p>Sorry, that username is already taken!</p>
-    <% } %>
+      <% if (!registerAttempt) { %>
+      <p>Sorry, that username is already taken!</p>
+      <% } %>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <form action="/login" method="GET"><button class="signup-redirect">Already have an account? Login!</button></form>
+  </div>
 
 </body>
 
