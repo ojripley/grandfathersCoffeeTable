@@ -12,10 +12,11 @@ $(() => {
       window.activeGames[game].view.detach();
     }
 
+
     console.log(`requesting the ${item} screen `)
     switch (item.substring(0, 4)) {
       case 'lead':
-        window.curGame = 'lead';
+        window.curScreen = 'leaderboard';
         leaderboard.updateTable(data);
         $leaderboard.appendTo($main);
 
@@ -32,7 +33,7 @@ $(() => {
 
         break;
       case 'prof':
-        window.curGame = 'prof';
+        window.curScreen = 'profile';
         $profile.appendTo($main);
         //Search bar functionality
         $('#reqMatchHistoryBut').on('click', (event) => {
@@ -47,11 +48,7 @@ $(() => {
         if (data.gameState === "playing") { //If we are in the playing game state
           goofspiel.updateView(window.activeGames[item].view, data);
           window.activeGames[item].view.appendTo($main);
-          $("#remove-game").on('click', (event) => {
-            $(`#${data.gameId}`).remove(); //Get rid of the game
-            //Render a different screen
-            window.views_manager.show('lead');
-          });
+
         } else if (data.gameState === "pending" || data === "none") {
           //If we are waiting for another player or game does not exist
           window.activeGames[item].view.appendTo($main);
@@ -61,27 +58,26 @@ $(() => {
           $("#remove-game").on('click', (event) => {
             $(`#${data.gameId}`).remove(); //Get rid of the game
             //Render a different screen
-            window.views_manager.show('lead');
+            window.views_manager.show('leaderboard');
           });
         }
 
         //Add game-specific listeners
         //Change the logic here to check if the card is playable
         $('.playablecard').on('click', (event) => {
-          // let $chosenCard = $(event.target);
+
           let cardName = event.target.id;
           let card = findCardByName(cardName, window.activeGames[item].myCards);
 
           socket.emit('move', {
-            gameId: window.curGame,
+            gameId: window.curScreen,
             move: {
               player: window.activeGames[item].player,
               card
             }
           }); //Send the client's player object & card
         });
-
-        window.curGame = item;
+        window.curScreen = item;
         break;
       case 'warr':
         if (data.gameState === "playing") { //If we are in the playing game state
@@ -116,7 +112,7 @@ $(() => {
           let card = findCardByName(cardName, window.activeGames[item].myCards);
 
           socket.emit('move', {
-            gameId: window.curGame,
+            gameId: window.curScreen,
             move: {
               player: window.activeGames[item].player,
               card
@@ -124,18 +120,10 @@ $(() => {
           }); //Send the client's player object & card
         });
 
-        window.curGame = item;
+        window.curScreen = item;
         break;
 
-      /*  case 'erro': {
-          const $error = $(`<p>${arguments[1]}</p>`);
-          $error.appendTo('body');
-          setTimeout(() => {
-            $error.remove();
-            views_manager.show('goofspiel');
-          }, 2000);
-          break;
-        }*/
+
     }
 
   }

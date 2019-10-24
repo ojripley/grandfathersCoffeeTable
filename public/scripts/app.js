@@ -79,7 +79,7 @@ $(() => {
 
       views_manager.show(data.gameId); //display the game immediately
     } else {
-      if (window.curGame === data.gameId) {
+      if (window.curScreen === data.gameId) {
         //Currently on the game screen
         console.log('User is currently watching the game');
         views_manager.show(data.gameId, data);
