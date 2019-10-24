@@ -11,6 +11,8 @@ $(() => {
     for (let game in window.activeGames) {
       window.activeGames[game].view.detach();
     }
+    $(`#${window.curScreen}`).removeClass("selected");
+    $(`#${item}`).addClass("selected");
 
 
     console.log(`requesting the ${item} screen `)

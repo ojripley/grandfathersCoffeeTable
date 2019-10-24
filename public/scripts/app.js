@@ -14,7 +14,7 @@ $(() => {
 
   window.socket = io.connect('localhost:8080');
 
-  $('#high-scores').on('click', (event) => {
+  $('#leaderboard').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
     //Alert trigger (temporary)
     $("#alert").promise().done(() => {

@@ -52,10 +52,11 @@ nav {
   top: 0;
   z-index: 2;
   position: absolute; }
+  nav .selected {
+    background-color: #d27165;
+    border-radius: 1em; }
   nav .select-game {
     border-radius: 1em; }
-    nav .select-game.selected {
-      background-color: #d27165; }
   nav li:hover {
     border-radius: 1em;
     background-color: #92bfe1; }

@@ -29,11 +29,14 @@ nav {
   z-index: 2;
   position: absolute;
 
+  .selected {
+    //Styling for the current screen
+    background-color: #d27165;
+    border-radius: 1em;
+  }
+
   .select-game {
     border-radius: 1em;
-    &.selected {
-      background-color: #d27165;
-    }
   }
   // .selected{
   //   background-co
