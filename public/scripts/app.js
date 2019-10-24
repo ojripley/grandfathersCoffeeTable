@@ -12,8 +12,8 @@ $(() => {
   // new Promise();
   // window.socket = io.connect('172.46.3.253:8080');
 
-  window.socket = io.connect('localhost:8080');
-
+  // window.socket = io.connect('localhost:8080');
+  window.socket = io.connect('172.46.3.232:8080');
   $('#leaderboard').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
   });
@@ -31,7 +31,7 @@ $(() => {
     socket.emit('requestGame', { gametype, username: myUsername });
   });
 
-  let player;
+  // let player;
   socket.on('gameView', (data) => {
     console.log("RENDER THIS:");
     console.log(data); //Data contains all the info needed to render a screen
@@ -64,7 +64,6 @@ $(() => {
 
       $(`#${data.gameId}`).on('click', (event) => {
         //User clicked on a particular game
-
         $(event.target).find('.badge').text(''); //Adds a badge for the user to know which games are waiting
         views_manager.show(data.gameId);
       });

@@ -158,8 +158,4 @@ $(() => {
 
   };
 
-
-  $('#warLead').on('click', () => {
-    console.log('request for war profile');
-  })
 });

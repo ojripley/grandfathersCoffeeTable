@@ -6,6 +6,7 @@ $(() => {
 
 
   window.views_manager.show = function(item, data = 'none') {
+
     $leaderboard.detach();
     $profile.detach();
     for (let game in window.activeGames) {
@@ -35,7 +36,7 @@ $(() => {
 
         break;
       case 'prof':
-        window.curScreen = 'profile';
+        window.curScreen = 'cur-history-button';
         $profile.appendTo($main);
         //Search bar functionality
         $('#reqMatchHistoryBut').on('click', (event) => {

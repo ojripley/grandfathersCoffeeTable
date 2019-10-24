@@ -130,11 +130,20 @@ $(() => {
     for (let i in data.pendingMoves) {
       //Pending moves are face down
       let card = data.pendingMoves[i].card;
+      let theOneWhoPlays = data.pendingMoves[i].player.username; //Stores who played the card
       if (data.pendingMoves.length < data.players.length) {
-        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content"></img>`;
+        if (theOneWhoPlays === myUsername) {
+          pendingCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
+        } else {
+          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
+        }
       } else {
         hiddenCards.push(`./images/cards/PNG/${card.name}.png`);
-        pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="hidden${i}"></img>`;
+        if (theOneWhoPlays === myUsername) {
+          pendingCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
+        } else {
+          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="hidden${i}"></img>`;
+        }
       }
     }
 

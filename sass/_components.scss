@@ -12,6 +12,7 @@
   /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */ //uncomment to see player hand space
 }
 
+.playable,
 .playing-card {
   max-height: 120px;
   width: auto;
@@ -19,7 +20,7 @@
   z-index: 1;
   box-shadow: 2px 2px 1px #000;
 }
-.playing-card:hover {
+.playable:hover {
   max-height: 130px;
   // border: solid $col2 2px;
   width: auto;
