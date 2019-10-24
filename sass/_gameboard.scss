@@ -48,48 +48,50 @@
       color: lavender;
     }
   }
-  #p3Area {
-    grid-row-start: 2;
-    grid-column-start: 3;
+  // #p3Area {
+  //   grid-row-start: 2;
+  //   grid-column-start: 3;
 
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    // background-color: coral; //uncomment to see player area
-    p {
-      // height: $labelheight;
-      position: absolute;
-      transform: rotate(-90deg);
-      width: 150px;
-      left: -90px;
-      color: lavender;
-    }
-  }
-  #p4Area {
-    grid-row-start: 2;
-    grid-column-start: 1;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    // background-color: coral; //uncomment to see player area
-    p {
-      // height: $labelheight;
-      position: absolute;
-      transform: rotate(90deg);
-      width: 150px;
-      right: -90px;
-      color: lavender;
-    }
-  }
+  //   display: flex;
+  //   flex-flow: column nowrap;
+  //   justify-content: center;
+  //   align-items: center;
+  //   position: relative;
+  //   // background-color: coral; //uncomment to see player area
+  //   p {
+  //     // height: $labelheight;
+  //     position: absolute;
+  //     transform: rotate(-90deg);
+  //     width: 150px;
+  //     left: -90px;
+  //     color: lavender;
+  //   }
+  // }
+  // #p4Area {
+  //   grid-row-start: 2;
+  //   grid-column-start: 1;
+  //   display: flex;
+  //   flex-flow: column nowrap;
+  //   justify-content: center;
+  //   align-items: center;
+  //   position: relative;
+  //   // background-color: coral; //uncomment to see player area
+  //   p {
+  //     // height: $labelheight;
+  //     position: absolute;
+  //     transform: rotate(90deg);
+  //     width: 150px;
+  //     right: -90px;
+  //     color: lavender;
+  //   }
+    // }
   #tableArea {
     grid-row-start: 2;
     grid-column-start: 2;
     background-color: #648864;
+    box-shadow: inset 3px 3px 5px #000;
     color: white;
+    border-radius: 1em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,7 +102,7 @@
     #background-text{
       position: absolute;
       color: lightgray;
-      font-size: 3.5em;
+      font-size: 4em;
     }
   }
   #end-game-header {
@@ -123,8 +125,7 @@
     position: relative;
     height: 50px;
   }
-
-  @media screen and (min-width: $break) {
+@media screen and (min-width: $break) {
     position: absolute;
     left: 25%;
     width: 75%;

@@ -5,19 +5,24 @@
   align-items: center;
   width: 100%;
   height: 80%;
-  background-color: #382300;
-  background-image: url("https://www.transparenttextures.com/patterns/purty-wood.png");
+  background-color:rgba(0, 0, 0, 0);
+
+
+  // background-color: #382300;
+  // background-image: url("https://www.transparenttextures.com/patterns/purty-wood.png");
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */; //uncomment to see player hand space
 }
 .card {
-  max-height: 100px;
+  max-height: 125px;
   width: auto;
   margin: 2px;
   z-index: 1;
+  box-shadow: 2px 2px 1px #000
 }
 .card:hover {
-  max-height: 110px;
+  max-height: 135px;
   border: solid $col2 2px;
   width: auto;
   margin: 2px;
+  box-shadow: 2px 2px 2px #000
 }
