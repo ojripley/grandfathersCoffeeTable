@@ -22,7 +22,7 @@ nav {
   justify-content: flex-start;
   align-items: left;
   align-content: flex-start;
-  width: 20%;
+  width: 30%;
   padding-top: 2%;
   height: 100%;
   top: 0;
@@ -95,7 +95,7 @@ nav {
     // justify-content: center;
 
     #username {
-      font-size: 2em;
+      font-size: 1.75em;
       color: #92bfe1;
       margin-bottom: 0.3em;
       margin-right: 5%;
@@ -106,27 +106,32 @@ nav {
   #buttons {
       width: 100%;
       display: flex;
+      flex-direction: column;
       // align-items: center;
       // justify-content: center;
 
       #leaderboard {
+        width: 80%;
         font-size: 0.5em;
         background-color: #d38d5f;
-        margin: 3%;
+        margin: 2%;
         margin-top: 0;
       }
 
       #user-history-button {
+        width: 80%;
         font-size: 0.5em;
         background-color: #d38d5f;
-        margin: 3%;
+        margin: 2%;
         margin-top: 0;
       }
 
       #logout-button {
+        width: 80%;
         font-size: 0.5em;
-        margin: 3%;
-        margin-bottom: 0;
+        margin: 2%;
+        margin-top: 0;
+        margin-bottom: 12%
       }
     }
 
