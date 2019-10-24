@@ -9,6 +9,7 @@ $(() => {
 
     $leaderboard.detach();
     $profile.detach();
+    $('#landing-container').remove();
     for (let game in window.activeGames) {
       window.activeGames[game].view.detach();
     }
