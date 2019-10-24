@@ -97,7 +97,6 @@ $(() => {
 
       return;
     }
-    console.log("Youy should not see this");
     window.activeGames[data.gameId].player = players[0];
     window.activeGames[data.gameId].myCards = players[0].hand.cards;
 

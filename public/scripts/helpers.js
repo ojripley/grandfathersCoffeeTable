@@ -3,6 +3,16 @@ const extractUserName = function(str) {
   return str.split("=")[0];
 };
 
+//Returns true if the user is in the player array
+const userIsIn = function(playerArray, username) {
+  for (let player of playerArray) {
+    if (player.username === username) {
+      return true;
+    }
+  }
+  return false;
+};
+
 //Given an array of players, order them as player 1,2,3,4. Player 1 is always the current player. Other players are based on their tokens
 const findPlayer = function(players, username) {
   let retArr;
