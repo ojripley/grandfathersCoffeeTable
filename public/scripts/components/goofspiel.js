@@ -7,7 +7,7 @@ $(() => {
   window.goofspiel.newGame = function(id) {
     window.activeGames[id] = {};
     window.activeGames[id].view = $(`<div id="game-container">
-    <div id="tableArea">
+    <div id="table-area-goof">
     <div class ="myProgressBar">
     <div class="progress">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="2" style="width: 50%"></div>
@@ -148,31 +148,34 @@ $(() => {
     window.activeGames[data.gameId].view = $(`
     <div id="game-container">
     ${scoreboard}
-    <div id="tableArea">
+    <div id="table-area-goof">
     <h1 id="background-text"> G O O F S P I E L </h1>
+    <p id="player2Text">
+    <span id="p2Name"> ${players[1].username}</span>
+    <span id="p2score">- ${players[1].score} pts -</span>
+    <span id="p2numCards">(${players[1].hand.cards.length} cards)</span>
+    </p>
     ${tableCards}
     ${pendingCards}
+    <p id="player1Text">
+    <span id="p1Name"> ${players[0].username}</span>
+    <span id="p1score"> - ${players[0].score} pts - </span>
+    <span id="p1numCards"> (${players[0].hand.cards.length} cards) </span>
+    </p>
+
     </div>
     <div id="p1Area">
       <div class="playerHand">
       ${playersCards[0]}
       </div>
-      <p id="player1Text">
-      <span id="p1Name"> ${players[0].username}</span>
-      <span id="p1score"> - ${players[0].score} pts - </span>
-      <span id="p1numCards"> (${players[0].hand.cards.length} cards) </span>
-      </p>
+
     </div>
     <div id="p2Area">
     <div class="playerHand">
     ${playersCards[1]}
     </div>
 
-    <p id="player2Text">
-      <span id="p2Name"> ${players[1].username}</span>
-      <span id="p2score">- ${players[1].score} pts -</span>
-      <span id="p2numCards">(${players[1].hand.cards.length} cards)</span>
-      </p>
+
     </div>
   </div>
 `);

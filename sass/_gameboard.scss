@@ -33,12 +33,6 @@
     align-items: center;
     position: relative;
     overflow: scroll;
-    p {
-      // height: $labelheight;
-      position: absolute;
-      top: 0; //-$labelheight;
-      color: lavender;
-    }
   }
   #p2Area {
     grid-row-start: 1;
@@ -49,12 +43,6 @@
     align-items: center;
     position: relative;
     // background-color: coral; //uncomment to see r area
-    p {
-      // height: $labelheight;
-      position: absolute;
-      bottom: 0; //-$labelheight;
-      color: lavender;
-    }
   }
   // #p3Area {
   //   grid-row-start: 2;
@@ -93,7 +81,7 @@
   //     color: lavender;
   //   }
   // }
-  #tableArea {
+  #table-area-goof {
     grid-row-start: 2;
     grid-column-start: 2;
     background-color: #5b885b;
@@ -102,7 +90,22 @@
     border-radius: 1em;
     display: flex;
     align-items: center;
+    position: relative;
     justify-content: center;
+
+    #player1Text {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px;
+    }
+    #player2Text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px;
+    }
+
     .myProgressBar {
       width: 80%;
     }

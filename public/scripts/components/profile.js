@@ -2,7 +2,8 @@ $(() => {
   //Need to generate this for each game. May need to make a game container first
   window.$profile = $(`
 <div id="matchHistoryContainer">
-  <h1 id="matchHistoryHeader"> ${window.myUsername}'s Match history </h1>
+
+<h1 id="matchHistoryHeader"> ${window.myUsername}'s Match history </h1>
   <form>
     <div class="form-row">
       <div class="col">
@@ -14,6 +15,41 @@ $(() => {
       </div>
       </form>
       <p id="historyErrorMessage"><p>
+
+
+    <h2> Match results</h2>
+    <table class="table table-striped" id="match-specific">
+      <thead>
+        <tr class = "table-info">
+          <th scope="col">Username</th>
+          <th scope="col">Position</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class = "table-info">
+          <td scope="row">Goofspiel</td>
+          <td>2</td>
+          <td>100</td>
+        </tr>
+        <tr class = "table-info">
+          <td scope="row">Goofspiel</td>
+          <td>2</td>
+          <td>100</td>
+        </tr>
+        <tr>
+          <td scope="row">Goofspiel</td>
+          <td>2</td>
+          <td>100</td>
+        </tr>
+        <tr>
+          <td scope="row">Goofspiel</td>
+          <td>2</td>
+          <td>100</td>
+        </tr>
+      </tbody>
+    </table>
+
 
     <h2> Match history </h2>
     <table class="table table-striped table-hover" id="matchHistoryTable">
@@ -59,38 +95,7 @@ $(() => {
 
       </tbody>
     </table>
-    <h2> Match results</h2>
-    <table class="table table-striped" id="match-specific">
-      <thead>
-        <tr class = "table-info">
-          <th scope="col">Username</th>
-          <th scope="col">Position</th>
-          <th scope="col">Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class = "table-info">
-          <td scope="row">Goofspiel</td>
-          <td>2</td>
-          <td>100</td>
-        </tr>
-        <tr class = "table-info">
-          <td scope="row">Goofspiel</td>
-          <td>2</td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td scope="row">Goofspiel</td>
-          <td>2</td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td scope="row">Goofspiel</td>
-          <td>2</td>
-          <td>100</td>
-        </tr>
-      </tbody>
-    </table>
+
     </div>`);
 
 
