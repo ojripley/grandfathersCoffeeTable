@@ -19,15 +19,19 @@ nav {
   overflow-y: scroll;
   flex-flow: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   align-content: flex-start;
   width: 30%;
   padding-top: 5%;
-  padding-left: 5%;
+
   height: 100%;
   top: 0;
   z-index: 2;
   position: absolute;
+
+  * {
+    padding: 0 1em 0 1em;
+  }
 
   .selected {
     //Styling for the current screen
@@ -38,9 +42,6 @@ nav {
   .select-game {
     border-radius: 1em;
   }
-  // .selected{
-  //   background-co
-  // }
 
   li:hover {
     border-radius: 1em;
