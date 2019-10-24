@@ -141,6 +141,11 @@ nav {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   overflow: hidden; }
+  #game-container #scoreboard {
+    grid-row: 2;
+    grid-column: 3;
+    color: white;
+    height: 100px; }
   #game-container #p1Area {
     grid-row-start: 3;
     grid-column: 1/4;

@@ -16,6 +16,13 @@
 
   overflow: hidden;
 
+  #scoreboard {
+    grid-row: 2;
+    grid-column: 3;
+    color: white;
+    height: 100px;
+  }
+
   #p1Area {
     grid-row-start: 3;
     grid-column: 1/4;
