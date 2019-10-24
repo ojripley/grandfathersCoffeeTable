@@ -1,6 +1,6 @@
 #game-container {
   background-color: #382300;
-  background-image: url("https://www.transparenttextures.com/patterns/purty-wood.png");;
+  background-image: url("https://www.transparenttextures.com/patterns/purty-wood.png");
   position: relative;
   top: 0;
   z-index: 1;
@@ -25,6 +25,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    overflow: scroll;
     p {
       // height: $labelheight;
       position: absolute;
@@ -40,7 +41,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    // background-color: coral; //uncomment to see player area
+    // background-color: coral; //uncomment to see r area
     p {
       // height: $labelheight;
       position: absolute;
@@ -84,7 +85,7 @@
   //     right: -90px;
   //     color: lavender;
   //   }
-    // }
+  // }
   #tableArea {
     grid-row-start: 2;
     grid-column-start: 2;
@@ -99,7 +100,7 @@
       width: 80%;
     }
 
-    #background-text{
+    #background-text {
       position: absolute;
       color: lightgray;
       font-size: 4em;
@@ -125,7 +126,7 @@
     position: relative;
     height: 50px;
   }
-@media screen and (min-width: $break) {
+  @media screen and (min-width: $break) {
     position: absolute;
     left: 20%;
     width: 80%;

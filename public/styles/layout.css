@@ -147,7 +147,8 @@ nav {
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    position: relative; }
+    position: relative;
+    overflow: scroll; }
     #game-container #p1Area p {
       position: absolute;
       top: 0;
@@ -268,16 +269,16 @@ nav {
   background-color: rgba(0, 0, 0, 0);
   /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */ }
 
-.card {
+.playable,
+.playing-card {
   max-height: 120px;
   width: auto;
   margin: 2px;
   z-index: 1;
   box-shadow: 2px 2px 1px #000; }
 
-.card:hover {
+.playable:hover {
   max-height: 130px;
-  border: solid #d0b16b 2px;
   width: auto;
   margin: 2px;
   box-shadow: 2px 2px 4px #000;

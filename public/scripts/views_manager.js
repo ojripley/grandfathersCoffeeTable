@@ -6,6 +6,7 @@ $(() => {
 
 
   window.views_manager.show = function(item, data = 'none') {
+
     $leaderboard.detach();
     $profile.detach();
     for (let game in window.activeGames) {
@@ -35,7 +36,7 @@ $(() => {
 
         break;
       case 'prof':
-        window.curScreen = 'profile';
+        window.curScreen = 'cur-history-button';
         $profile.appendTo($main);
         //Search bar functionality
         $('#reqMatchHistoryBut').on('click', (event) => {
@@ -79,7 +80,7 @@ $(() => {
 
         //Add game-specific listeners
         //Change the logic here to check if the card is playable
-        $('.playablecard').on('click', (event) => {
+        $('.playable').on('click', (event) => {
 
           let cardName = event.target.id;
           let card = findCardByName(cardName, window.activeGames[item].myCards);
@@ -121,7 +122,7 @@ $(() => {
 
         //Add game-specific listeners
         //Change the logic here to check if the card is playable
-        $('.playablecard').on('click', (event) => {
+        $('.playable').on('click', (event) => {
           // let $chosenCard = $(event.target);
           let cardName = event.target.id;
           let card = findCardByName(cardName, window.activeGames[item].myCards);
