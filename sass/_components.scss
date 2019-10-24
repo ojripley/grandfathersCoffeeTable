@@ -14,17 +14,34 @@
 
 .playable,
 .playing-card {
-  max-height: 120px;
+  max-height: 60px;
   width: auto;
   margin: 2px;
   z-index: 1;
   box-shadow: 2px 2px 1px #000;
 }
 .playable:hover {
-  max-height: 130px;
-  // border: solid $col2 2px;
+  max-height: 65px;
   width: auto;
   margin: 2px;
   box-shadow: 2px 2px 4px #000;
   cursor: pointer;
+}
+
+@media screen and (min-width: $break) {
+  .playable,
+  .playing-card {
+    max-height: 120px;
+    width: auto;
+    margin: 2px;
+    z-index: 1;
+    box-shadow: 2px 2px 1px #000;
+  }
+  .playable:hover {
+    max-height: 130px;
+    width: auto;
+    margin: 2px;
+    box-shadow: 2px 2px 4px #000;
+    cursor: pointer;
+  }
 }

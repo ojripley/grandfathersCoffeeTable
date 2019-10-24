@@ -154,7 +154,7 @@ p {
   position: fixed;
   z-index: 3;
   margin-top: 50px;
-  width: 40%;
+  width: auto;
   left: $navWidthMobile;
 
   @media screen and (min-width: $break) {

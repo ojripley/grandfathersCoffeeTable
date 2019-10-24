@@ -27,31 +27,35 @@
 
 </head>
 
-<body>
-
-  <form class="sign-up-form" action="/login" method="POST">
-
-    <div class="form-group">
-      <label for="inputUsername">Username</label>
-      <input type="text" class="form-control" id="inputUsername" placeholder="Enter username" name="username">
-    </div>
-
-    <div class="form-group">
-      <label for="inputPassword">Password</label>
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
-    </div>
+<body id="login-body">
 
 
-    <% if (!loginAttempt) { %>
-    <p>Incorrect login credentials!</p>
-    <% } %>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-    aria-controls="collapseExample">
-    Click here to register a new account
-  </a>
+  <img class="login-logo" src="./images/logo.png">
+
+  <div class="signup">
+    <form class="sign-up-form" action="/login" method="POST">
+
+      <h2 class="signup-title">Login</h2>
+
+      <div class="form-group">
+        <input type="text" class="form-control" id="inputUsername" placeholder="username" name="username">
+      </div>
+
+      <div class="form-group">
+        <input type="password" class="form-control" id="inputPassword" placeholder="password" name="password">
+      </div>
+
+      <% if (!loginAttempt) { %>
+      <p>Incorrect login credentials!</p>
+      <% } %>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <form action="/register" method="GET"><button class="signup-redirect">Don't have an account? Sign up!</button></form>
+  </div>
+
+
 
 
 </body>
