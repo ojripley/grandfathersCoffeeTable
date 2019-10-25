@@ -318,6 +318,61 @@ nav {
       position: absolute;
       color: lightgray;
       font-size: 3em; }
+  #game-container #table-area-sevens {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    background-color: #5b885b;
+    box-shadow: inset 2px 2px 25px #000;
+    color: white;
+    border-radius: 1em;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    /*
+    #p1pendingCard {
+      position: absolute;
+      transform: translatey(140px);
+    }
+    #p2pendingCard {
+      position: absolute;
+      transform: translatey(-140px);
+    }
+    */ }
+    #game-container #table-area-sevens .sevens-table-container {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center; }
+      #game-container #table-area-sevens .sevens-table-container#hearts {
+        grid-row-start: 1; }
+      #game-container #table-area-sevens .sevens-table-container#spades {
+        grid-row-start: 2; }
+      #game-container #table-area-sevens .sevens-table-container#diamond {
+        grid-row-start: 3; }
+      #game-container #table-area-sevens .sevens-table-container#clubs {
+        grid-row-start: 4; }
+    #game-container #table-area-sevens #player1Text {
+      grid-row-start: 4;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px;
+      font-size: 0.6em; }
+    #game-container #table-area-sevens #player2Text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px;
+      font-size: 0.6em; }
+    #game-container #table-area-sevens .myProgressBar {
+      width: 80%; }
+    #game-container #table-area-sevens #background-text {
+      position: absolute;
+      color: lightgray;
+      font-size: 3em; }
   #game-container #end-game-header {
     grid-row-start: 1;
     grid-column-start: 2;
@@ -438,6 +493,9 @@ nav {
 
 .card-container {
   display: flex; }
+
+.unplayable {
+  opacity: 0.5; }
 
 .playable,
 .playing-card {

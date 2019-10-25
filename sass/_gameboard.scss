@@ -28,7 +28,7 @@
     color: white;
     height: 150px;
     width: 230px;
-    background-color:rgba(61, 30, 0, 0.335);
+    background-color: rgba(61, 30, 0, 0.335);
     box-shadow: inset 0px 0px 10px #000;
     border-radius: 0.5em;
     @media screen and (min-width: $break) {
@@ -162,6 +162,80 @@
     }
   }
 
+  #table-area-sevens {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    background-color: #5b885b;
+    box-shadow: inset 2px 2px 25px #000;
+    color: white;
+    border-radius: 1em;
+
+    width: 100%;
+    display: grid;
+
+    //Mobile view will only show player cards and the board
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    .sevens-table-container {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      &#hearts {
+        grid-row-start: 1;
+      }
+      &#spades {
+        grid-row-start: 2;
+      }
+      &#diamond {
+        grid-row-start: 3;
+      }
+      &#clubs {
+        grid-row-start: 4;
+      }
+    }
+    /*
+    #p1pendingCard {
+      position: absolute;
+      transform: translatey(140px);
+    }
+    #p2pendingCard {
+      position: absolute;
+      transform: translatey(-140px);
+    }
+    */
+
+    #player1Text {
+      grid-row-start: 4;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px;
+      font-size: 0.6em;
+    }
+    #player2Text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px;
+      font-size: 0.6em;
+    }
+
+    .myProgressBar {
+      width: 80%;
+    }
+
+    #background-text {
+      position: absolute;
+      color: lightgray;
+      font-size: 3em;
+    }
+  }
+
   #end-game-header {
     grid-row-start: 1;
     grid-column-start: 2;
@@ -189,13 +263,13 @@
     left: 20%;
     width: 80%;
 
-     #table-area-war {
+    #table-area-war {
       #background-text {
         position: absolute;
         color: lightgray;
         font-size: 5em;
       }
-     }
+    }
 
     #table-area-goof {
       #background-text {

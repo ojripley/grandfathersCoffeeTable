@@ -16,6 +16,10 @@
   display: flex;
 }
 
+.unplayable {
+  opacity: 0.5; //Gray out the card
+}
+
 .playable,
 .playing-card {
   height: 100px;
