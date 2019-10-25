@@ -78,7 +78,12 @@
     #menu-bars {
       display: none; } }
 
+nav::-webkit-scrollbar {
+  display: none; }
+
 nav {
+  overflow: -moz-scrollbars-none;
+  overflow-x: hidden;
   color: white;
   background-color: #47628c;
   display: flex;
@@ -201,11 +206,19 @@ nav {
   grid-row-gap: 0px;
   overflow: hidden; }
   #game-container #scoreboard {
+    margin-right: 5%;
+    margin-left: 5%;
     grid-row: 2;
     display: none;
     grid-column: 3;
     color: white;
-    height: 100px; }
+    height: 150px;
+    width: 230px;
+    background-color: rgba(61, 30, 0, 0.335);
+    box-shadow: inset 0px 0px 10px #000;
+    border-radius: 0.5em; }
+    #game-container #scoreboard th {
+      border-top: none; }
     @media screen and (min-width: 1024px) {
       #game-container #scoreboard {
         display: block; } }

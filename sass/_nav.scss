@@ -12,7 +12,15 @@
   }
 }
 
+nav::-webkit-scrollbar {
+ display: none;
+}
+
 nav {
+
+  overflow: -moz-scrollbars-none;
+
+  overflow-x: hidden;
   color: white;
   background-color: #47628c;
   display: flex;
