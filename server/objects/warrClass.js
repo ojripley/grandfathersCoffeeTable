@@ -25,40 +25,6 @@ class Warr extends Game {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   score() {
 
     if (this.pendingMoves.length === 2) {
@@ -135,32 +101,6 @@ class Warr extends Game {
       }
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   isValidMove(move) {

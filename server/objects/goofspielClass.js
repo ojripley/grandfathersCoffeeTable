@@ -16,9 +16,6 @@ class Goofspiel extends Game {
   deal() {
     console.log('\n\ndealing.....');
 
-    console.log(this.deck);
-    console.log();
-
     for (let i = 0; i < 13; i++) {
       this.deck.moveCard(this.deck.cards[0], this.players[0].hand.cards);
       this.deck.moveCard(this.deck.cards[12 - i], this.players[1].hand.cards);

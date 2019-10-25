@@ -125,8 +125,7 @@ nav {
     margin: 0 auto;
     margin-bottom: 0.5em; }
   nav.hidden {
-    opacity: 0%;
-    left: -500px; }
+    left: -650px; }
   @media screen and (min-width: 1024px) {
     nav {
       font-size: 1.5em;
@@ -421,6 +420,9 @@ nav {
         left: 0;
         margin-left: 10px;
         font-size: 1em; } }
+
+::-webkit-scrollbar {
+  display: none; }
 
 #leaderboardContainer {
   background-color: #5b885b;
