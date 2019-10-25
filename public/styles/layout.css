@@ -268,19 +268,21 @@ nav {
       bottom: 0;
       right: 0;
       margin-right: 10px;
-      margin-bottom: 10px; }
+      margin-bottom: 10px;
+      font-size: 0.6em; }
     #game-container #table-area-goof #player2Text {
       position: absolute;
       top: 0;
       left: 0;
       margin-left: 10px;
-      margin-top: 10px; }
+      margin-top: 10px;
+      font-size: 0.6em; }
     #game-container #table-area-goof .myProgressBar {
       width: 80%; }
     #game-container #table-area-goof #background-text {
       position: absolute;
       color: lightgray;
-      font-size: 4em; }
+      font-size: 3em; }
   #game-container #table-area-war {
     grid-row-start: 2;
     grid-column-start: 2;
@@ -302,18 +304,20 @@ nav {
       position: absolute;
       bottom: 0;
       right: 0;
-      margin-right: 10px; }
+      margin-right: 10px;
+      font-size: 0.6em; }
     #game-container #table-area-war #player2Text {
       position: absolute;
       top: 0;
       left: 0;
-      margin-left: 10px; }
+      margin-left: 10px;
+      font-size: 0.6em; }
     #game-container #table-area-war .myProgressBar {
       width: 80%; }
     #game-container #table-area-war #background-text {
       position: absolute;
       color: lightgray;
-      font-size: 4em; }
+      font-size: 3em; }
   #game-container #end-game-header {
     grid-row-start: 1;
     grid-column-start: 2;
@@ -341,7 +345,27 @@ nav {
       grid-template-columns: 1fr 4fr 1fr;
       grid-template-rows: 1fr 4fr 1fr;
       grid-column-gap: 0px;
-      grid-row-gap: 0px; } }
+      grid-row-gap: 0px; }
+      #game-container #table-area-war #background-text {
+        position: absolute;
+        color: lightgray;
+        font-size: 5em; }
+      #game-container #table-area-goof #background-text {
+        position: absolute;
+        color: lightgray;
+        font-size: 5em; }
+      #game-container #table-area-goof #player1Text {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin-right: 10px;
+        font-size: 1em; }
+      #game-container #table-area-goof #player2Text {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-left: 10px;
+        font-size: 1em; } }
 
 #leaderboardContainer {
   background-color: #5b885b;
