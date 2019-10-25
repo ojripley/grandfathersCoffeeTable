@@ -16,16 +16,28 @@ class Sevens extends Game {
 
   deal() {
 
+
     for (let card of this.deck.cards) {
-      card.playble = false;
+
+      if (card.name === '7H') {
+        card.playable = true;
+      } else {
+        card.playable = false;
+      }
     }
+
+    // console.log(this.deck.cards);
 
     console.log('\n\ndealing.....');
 
+    this.deck.moveCard(this.deck.cards[19], this.players[0].hand.cards);
+    this.deck.moveCard(this.deck.cards[6], this.players[1].hand.cards);
+
+
     if (this.players.length === 2) {
       while (this.deck.cards.length > 0) {
-        this.deck.moveCard(this.deck.cards.selectRandom(), this.players[0].hand.cards);
-        this.deck.moveCard(this.deck.cards.selectRandom(), this.players[1].hand.cards);
+        this.deck.moveCard(this.deck.selectRandom(), this.players[0].hand.cards);
+        this.deck.moveCard(this.deck.selectRandom(), this.players[1].hand.cards);
       }
     }
 
@@ -58,36 +70,51 @@ class Sevens extends Game {
 
   isValidMove(move) {
 
+
+
     if (this.gameState === 'playing') {
       for (let pendingMove of this.pendingMoves) {
         if (move.player.username === pendingMove.player.username) {
           // can't have more than one pending move per player
           return false;
         }
+      }
 
+      if (this.currentPlayers.length !== 0) {
         if (move.player.username !== this.currentPlayers[0].username) {
           // not that players turn
           return false;
         }
+      }
 
-        if (move.card === null) {
-          // if empty move, automatically valid. Point count will remain unchanged
+      if (move.card === null) {
+        // if empty move, automatically valid. Point count will remain unchanged
+        this.turns++;
+        return true;
+      }
+
+      if (move.card.value === 7 && move.card.playable) {
+        this.table.cards.splice(0, 0, move.card);
+        this.turns++;
+        console.log(`${move.card.name} accepted as a move`);
+        return true;
+      }
+
+      for (let i = 0; i < this.table.cards.length; i++) {
+        if (move.card.name[move.card.name.length - 1] === this.table.cards[i].name[this.table.cards[i].name.length - 1] && move.card.value === (this.table.cards[i].value + 1)) {
+          // insert after
+          console.log(`${move.card.name} is playable on ${this.table.cards[i].name}. Insert AFTER`);
+          this.table.cards.splice((i + 1), 0, move.card);
           this.turns++;
+          console.log(`${move.card.name} accepted as a move`);
           return true;
-        }
-
-        for (let i = 0; i < this.table.cards.length; i++) {
-          if (move.card.suit() === this.table.cards[i].suit() && move.card.value === (this.table.cards[i].value + 1)) {
-            // insert after
-            this.table.cards.splice(i, 0, move.card);
-            this.turns++;
-            return true;
-          } else if (move.card.suit() === this.table.cards[i].suit() && move.card.value === (this.table.cards[i].value - 1)) {
-            // insert before
-            this.table.cards.splice((i - 1), 0, move.card);
-            this.turns++;
-            return true;
-          }
+        } else if (move.card.name[move.card.name.length - 1] === this.table.cards[i].name[this.table.cards[i].name.length - 1] && move.card.value === (this.table.cards[i].value - 1)) {
+          // insert before
+          console.log(`${move.card.name} is playable on ${this.table.cards[i].name}. Insert BEFORE`);
+          this.table.cards.splice(i, 0, move.card);
+          this.turns++;
+          console.log(`${move.card.name} accepted as a move`);
+          return true;
         }
       }
     }
@@ -109,6 +136,7 @@ class Sevens extends Game {
 
     console.log('\n\n\n\n' + this.gameState + '\n\n\n\n');
 
+    console.log(this.players.length);
     if (this.players.length === 2) {
 
       const p1 = this.players[0];
@@ -133,42 +161,72 @@ class Sevens extends Game {
         console.log();
         return true;
       } else {
+        console.log('GAME NOT DONE');
         console.log('\nPLAYER SCORES:');
         console.log(this.players[0].username + ': ' + this.players[0].score);
         console.log(this.players[1].username + ': ' + this.players[1].score);
         console.log();
 
         if (this.turns % 2 === 0) {
-
+          console.log('\nsetting next player turn');
           const position = this.players.map((player) => {
             return player.joinToken;
           }).indexOf(1);
           this.currentPlayers.push(this.players[position]);
+          console.log(this.currentPlayers);
         } else {
-
           // assign current players turn
+          console.log('\nsetting next player turn');
           const position = this.players.map((player) => {
             return player.joinToken;
           }).indexOf(2);
           this.currentPlayers.push(this.players[position]);
+          console.log(this.currentPlayers);
+        }
 
-          // assign playable cards
-          for (let playerCard of this.currentPlayers[0].hand.cards) {
-            for (let i = 0; i < this.table.cards.length; i++) {
-              if (playerCard.suit() === this.table.cards[i].suit() && playerCard.value === (this.table.cards[i].value + 1)) {
-                // playable
-                playerCard.playble = true;
-                return true;
-              } else if (playerCard.suit() === this.table.cards[i].suit() && playerCard.value === (this.table.cards[i].value - 1)) {
-                // playable
-                playerCard.playble = true;
-              } else {
-                playerCard.playble = false;
+
+        // assign playable cards
+        const alreadyPlayable = [];
+        for (let playerCard of this.currentPlayers[0].hand.cards) {
+          let alreadyPlayableFlag = false;
+          for (let i = 0; i < this.table.cards.length; i++) {
+            // console.log(`\n\nthe current table state when assigning playable: ${JSON.stringify(this.table.cards)}\n`);
+            // console.log(`table card: \n ${this.table.cards[i].value + 1}\n${this.table.cards[i].name[this.table.cards[i].name.length - 1]}`);
+            if (playerCard.suit() === this.table.cards[i].name[this.table.cards[i].name.length - 1] && playerCard.value === (this.table.cards[i].value + 1)) {
+              // playable
+              playerCard.playable = true;
+              alreadyPlayableFlag = true;
+            } else if (playerCard.suit() === this.table.cards[i].name[this.table.cards[i].name.length - 1] && playerCard.value === (this.table.cards[i].value - 1)) {
+              // playable
+              playerCard.playable = true;
+              alreadyPlayableFlag = true;
+            } else {
+              // console.log(playerCard.suit());
+              // console.log(playerCard.value);
+              // console.log(playerCard);
+
+              if (!alreadyPlayableFlag) {
+                playerCard.playable = false;
               }
             }
+
+          }
+          // for (let alreadyPlayableCard of alreadyPlayable) {
+          //   if (playerCard.name === alreadyPlayableCard.name) {
+          //     alreadyPlayableFlag = true;
+          //   }
+          // }
+          // if (!alreadyPlayableFlag) {
+          //   playerCard.playable = false;
+          // }
+          if (playerCard.value === 7) {
+            playerCard.playable = true;
           }
 
+          console.log(`${playerCard.name}: playable: ${playerCard.playable}`);
         }
+
+
         return false;
       }
     }

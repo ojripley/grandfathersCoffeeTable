@@ -225,20 +225,27 @@ io.on('connection', (client) => {
     if (activeGames[game].isValidMove(move)) {
       // add the submitted move to pending
 
+      // console.log(activeGames[game].deck.cards);
+
       const playerPositionInCurrentPlayers = activeGames[game].currentPlayers.map((player) => {
         return player.username;
       }).indexOf(move.player.username);
 
       const player = activeGames[game].players.filter(player => player.username === move.player.username);
 
-      for (let card of player[0].hand.cards) {
-        if (move.card.name === card.name) {
-          player[0].hand.cards.splice(player[0].hand.cards.indexOf(card), 1);
+      if (move.card) {
+        for (let card of player[0].hand.cards) {
+          if (move.card.name === card.name) {
+            player[0].hand.cards.splice(player[0].hand.cards.indexOf(card), 1);
+          }
         }
       }
 
+
       // remove player from currentPlayers for turn
       activeGames[game].currentPlayers.splice(playerPositionInCurrentPlayers, 1);
+
+      console.log(`currentPlayers shuold be empty after move: ${activeGames[game].currentPlayers.length}`);
 
       // add to the array of moves to be evaluated
       activeGames[game].pendingMoves.push(move);
@@ -255,12 +262,16 @@ io.on('connection', (client) => {
         gameId: game,
       });
 
+      console.log('pending moves should have one move', activeGames[game].pendingMoves);
+
       // if the required moves for the round have all been submitted
       if (activeGames[game].areAllMovesSubmitted()) {
 
         console.log('\nmoves have been submitted\n');
 
         setTimeout(() => {
+
+          console.log(game);
           // evaluate the move scores and push moves to history
           activeGames[game].score();
 

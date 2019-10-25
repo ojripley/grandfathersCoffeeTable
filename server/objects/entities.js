@@ -51,7 +51,7 @@ class Card {
   }
 
   suit() {
-    return name[this.name.length - 1 ];
+    return this.name[this.name.length - 1];
   }
 }
 
