@@ -1,11 +1,11 @@
 $(() => {
+  window.sevens = {};
 
-  window.war = {};
-  //Create a new war game (default state).
+  //Create a new sevens game (default state).
   //Change this to show a loading screen
-  window.war.newGame = function(id) {
+  window.sevens.newGame = function(id) {
     window.activeGames[id] = {};
-    window.activeGames[id].view = $(`<div id="game-container" class="war">
+    window.activeGames[id].view = $(`<div id="game-container" class="seve">
     <div id="table-area-war">
     <div class ="myProgressBar">
     <div class="progress">
@@ -34,7 +34,13 @@ $(() => {
   </div>`);
   };
 
-  window.war.updateView = function($game, data) {
+
+  window.sevens.joinUser = function($game, data) {
+    //Update the view progress bar here if more than two players are joining
+
+  }
+
+  window.sevens.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
 
     let scoreboard = `
@@ -48,6 +54,7 @@ $(() => {
     <tbody>`;
 
     data.players.forEach((player, i) => {
+      console.log(player);
       scoreboard += `<tr>
         <td scope="row">${i + 1}</td>
         <td>${player.username}</td>
@@ -86,61 +93,89 @@ $(() => {
         if (i == 0) {
           //This is the client, show their cards to them
           //Add playable state here
-          playersCards[i] += `<img src="./images/cards/PNG/${card.name}.png" class="playable playing-card img-fluid ui-widget-content" id="${card.name}"></img>`;
+          playersCards[i] += `<img src="./images/cards/PNG/${card.name}.png" class="${card.playable ? "playable" : "unplayable"} playing-card img-fluid ui-widget-content" id="${card.name}"></img>`;
         } else {
           playersCards[i] += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content"></img>`;
         }
       }
     }
-    console.log(playersCards);
 
-
-
-    let tableCards = ``;
+    let tableCards = [[], [], [], []];
     for (let card of data.table.cards) {
-      //Visibility state must be set based on war logic
+      //Check the suit
+      switch (getSuit(card.name)) {
+        case "H":
+          tableCards[0].push(`<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content"></img>`);
+          break;
+        case "S":
+          tableCards[1].push(`<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content"></img>`);
+          break;
 
+        case "D":
+          tableCards[2].push(`<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content"></img>`);
+          break;
 
-      tableCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content"></img>`;
-    }
-
-    let pendingCards = ``;
-    let hiddenCards = [];
-    for (let i in data.pendingMoves) {
-      //Pending moves are face down
-      let card = data.pendingMoves[i].card;
-      let theOneWhoPlays = data.pendingMoves[i].player.username; //Stores who played the card
-      if (data.pendingMoves.length < data.players.length) {
-        if (theOneWhoPlays === myUsername) {
-          pendingCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
-        } else {
-          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
-        }
-      } else {
-        if (theOneWhoPlays === myUsername) {
-          pendingCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
-        } else {
-          hiddenCards.push(`./images/cards/PNG/${card.name}.png`);
-          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="hidden playing-card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
-        }
+        case "C":
+          tableCards[3].push(`<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content"></img>`);
+          break;
+        default:
+          break;
+        // code block
       }
+
     }
 
+    let heartCards = ``;
+    if (tableCards[0]) {
+      heartCards = tableCards[0].join(``);
+    }
 
+    let spadeCards = ``;
+    if (tableCards[0]) {
+      spadeCards = tableCards[1].join(``);
+    }
 
+    let diamondCards = ``;
+    if (tableCards[0]) {
+      diamondCards = tableCards[2].join(``);
+    }
+
+    let clubCards = ``;
+    if (tableCards[0]) {
+      clubCards = tableCards[3].join(``);
+    }
 
     window.activeGames[data.gameId].view = $(`
     <div id="game-container">
     ${scoreboard}
-    <div id="table-area-war">
-    <h1 id="background-text"> W A R R </h1>
+    <div id="sevens-text-container">
+        <h1 id="background-text-sevens"> S E V E N S </h1>
+    </div>
+    <button type="button" class="btn btn-secondary" id="pass-button">Pass</button>
+
+    <div id="table-area-sevens">
     <p id="player2Text">
     <span id="p2Name"> ${players[1].username}</span>
     <span id="p2score">- ${players[1].score} pts -</span>
     <span id="p2numCards">(${players[1].hand.cards.length} cards)</span>
     </p>
-    ${tableCards}
-    ${pendingCards}
+
+    <div class="sevens-table-container" id="hearts">
+    ${heartCards}
+    </div>
+
+    <div class="sevens-table-container" id="spades">
+    ${spadeCards}
+    </div>
+
+    <div class="sevens-table-container" id="diamonds">
+    ${diamondCards}
+    </div>
+
+    <div class="sevens-table-container" id="clubs">
+    ${clubCards}
+    </div>
+
 
     <p id="player1Text">
     <span id="p1Name"> ${players[0].username}</span>
@@ -166,29 +201,6 @@ $(() => {
     </div>
   </div>
 `);
-    if (hiddenCards.length > 0) {
-      for (let i in hiddenCards) {
-        let el = window.activeGames[data.gameId].view.find(`.hidden`);
-        console.log("The jquery element is:");
-        console.log(el.attr("id"));
-
-        setTimeout(() => {
-          el.attr('src', hiddenCards[i]);
-
-        }, 1000);
-
-        //Fade effect to show the hidden card. Takes 1.5s.
-        //Fades to gray, then fades back.
-        /*
-        el.fadeTo(1000, 0.5, () => {
-          el.attr('src', hiddenCards[i]);
-        }).fadeTo(500, 1);
-        */
-      }
-    }
-
-
-
   };
 
 });

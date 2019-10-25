@@ -28,7 +28,7 @@
     color: white;
     height: 150px;
     width: 230px;
-    background-color:rgba(61, 30, 0, 0.335);
+    background-color: rgba(61, 30, 0, 0.335);
     box-shadow: inset 0px 0px 10px #000;
     border-radius: 0.5em;
     @media screen and (min-width: $break) {
@@ -161,6 +161,122 @@
       font-size: 3em;
     }
   }
+  #sevens-text-container {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    display: flex;
+    align-content: center;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    #background-text-sevens {
+      position: absolute;
+      z-index: 1;
+      font-size: 3em;
+      color: lightgray;
+      font-size: 3em;
+      width: 100%;
+      text-align: center;
+    }
+    @media screen and (min-width: $break) {
+      #background-text-sevens {
+        position: absolute;
+        color: lightgray;
+        font-size: 5em;
+      }
+    }
+  }
+
+  #pass-button {
+    grid-column: 3;
+    grid-row: 2;
+    height: 50px;
+    transform: translateY(150px);
+    background-color: #d38d5f;
+  }
+
+  #table-area-sevens {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    background-color: #5b885b;
+    box-shadow: inset 2px 2px 25px #000;
+    color: white;
+    border-radius: 1em;
+    position: relative;
+    width: 100%;
+    display: grid;
+
+    //Mobile view will only show player cards and the board
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    .sevens-table-container {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      &#hearts {
+        grid-row-start: 1;
+      }
+      &#spades {
+        grid-row-start: 2;
+      }
+      &#diamond {
+        grid-row-start: 3;
+      }
+      &#clubs {
+        grid-row-start: 4;
+      }
+    }
+
+    #player1Text {
+      width: 200px;
+      height: 20px;
+      grid-row-start: 4;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px;
+      font-size: 0.8em;
+    }
+    #player2Text {
+      grid-row-start: 1;
+      width: 200px;
+      height: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px;
+      font-size: 0.8em;
+    }
+
+    /*
+    #p1pendingCard {
+      position: absolute;
+      transform: translatey(140px);
+    }
+    #p2pendingCard {
+      position: absolute;
+      transform: translatey(-140px);
+    }
+    */
+
+    .myProgressBar {
+      width: 80%;
+    }
+    /*
+    #background-text {
+      position: absolute;
+      grid-row: 2;
+      color: lightgray;
+      font-size: 3em;
+      width: 100%;
+      text-align: center;
+    }*/
+  }
 
   #end-game-header {
     grid-row-start: 1;
@@ -189,13 +305,21 @@
     left: 20%;
     width: 80%;
 
-     #table-area-war {
+    #table-area-war {
       #background-text {
         position: absolute;
         color: lightgray;
         font-size: 5em;
       }
-     }
+    }
+
+    #table-area-sevens {
+      #background-text {
+        position: absolute;
+        color: lightgray;
+        font-size: 5em;
+      }
+    }
 
     #table-area-goof {
       #background-text {
@@ -203,30 +327,29 @@
         color: lightgray;
         font-size: 5em;
       }
-
-      #player1Text {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        margin-right: 10px;
-        font-size: 1em;
-      }
-      #player2Text {
-        position: absolute;
-        top: 0;
-        left: 0;
-        margin-left: 10px;
-        font-size: 1em;
-      }
     }
-
-    grid-template-columns: 1fr 4fr 1fr;
-    grid-template-rows: 1fr 4fr 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    #player1Text {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px;
+      font-size: 1em;
+    }
+    #player2Text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px;
+      font-size: 1em;
+    }
   }
+
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-rows: 1fr 4fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
 
 ::-webkit-scrollbar {
- display: none;
+  display: none;
 }

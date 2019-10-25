@@ -17,6 +17,11 @@ const userIsIn = function(playerArray, username) {
   return false;
 };
 
+//Given a string representing a card, returns the suit. E.g. 4C = C, 10H = H
+const getSuit = function(cardName) {
+  return cardName.charAt(cardName.length - 1).toUpperCase();
+}
+
 //Given an array of players, order them as player 1,2,3,4. Player 1 is always the current player. Other players are based on their tokens
 const orderPlayers = function(players, username) {
 

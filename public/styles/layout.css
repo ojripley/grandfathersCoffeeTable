@@ -203,7 +203,11 @@ nav {
   grid-template-rows: 1fr 19fr 10fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  overflow: hidden; }
+  overflow: hidden;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-rows: 1fr 4fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px; }
   #game-container #scoreboard {
     margin-right: 5%;
     margin-left: 5%;
@@ -317,6 +321,99 @@ nav {
       position: absolute;
       color: lightgray;
       font-size: 3em; }
+  #game-container #sevens-text-container {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    display: flex;
+    align-content: center;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center; }
+    #game-container #sevens-text-container #background-text-sevens {
+      position: absolute;
+      z-index: 1;
+      font-size: 3em;
+      color: lightgray;
+      font-size: 3em;
+      width: 100%;
+      text-align: center; }
+    @media screen and (min-width: 1024px) {
+      #game-container #sevens-text-container #background-text-sevens {
+        position: absolute;
+        color: lightgray;
+        font-size: 5em; } }
+  #game-container #pass-button {
+    grid-column: 3;
+    grid-row: 2;
+    height: 50px;
+    transform: translateY(150px);
+    background-color: #d38d5f; }
+  #game-container #table-area-sevens {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    background-color: #5b885b;
+    box-shadow: inset 2px 2px 25px #000;
+    color: white;
+    border-radius: 1em;
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    /*
+    #p1pendingCard {
+      position: absolute;
+      transform: translatey(140px);
+    }
+    #p2pendingCard {
+      position: absolute;
+      transform: translatey(-140px);
+    }
+    */
+    /*
+    #background-text {
+      position: absolute;
+      grid-row: 2;
+      color: lightgray;
+      font-size: 3em;
+      width: 100%;
+      text-align: center;
+    }*/ }
+    #game-container #table-area-sevens .sevens-table-container {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center; }
+      #game-container #table-area-sevens .sevens-table-container#hearts {
+        grid-row-start: 1; }
+      #game-container #table-area-sevens .sevens-table-container#spades {
+        grid-row-start: 2; }
+      #game-container #table-area-sevens .sevens-table-container#diamond {
+        grid-row-start: 3; }
+      #game-container #table-area-sevens .sevens-table-container#clubs {
+        grid-row-start: 4; }
+    #game-container #table-area-sevens #player1Text {
+      width: 200px;
+      height: 20px;
+      grid-row-start: 4;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px;
+      font-size: 0.8em; }
+    #game-container #table-area-sevens #player2Text {
+      grid-row-start: 1;
+      width: 200px;
+      height: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 10px;
+      font-size: 0.8em; }
+    #game-container #table-area-sevens .myProgressBar {
+      width: 80%; }
   #game-container #end-game-header {
     grid-row-start: 1;
     grid-column-start: 2;
@@ -340,12 +437,12 @@ nav {
     #game-container {
       position: absolute;
       left: 20%;
-      width: 80%;
-      grid-template-columns: 1fr 4fr 1fr;
-      grid-template-rows: 1fr 4fr 1fr;
-      grid-column-gap: 0px;
-      grid-row-gap: 0px; }
+      width: 80%; }
       #game-container #table-area-war #background-text {
+        position: absolute;
+        color: lightgray;
+        font-size: 5em; }
+      #game-container #table-area-sevens #background-text {
         position: absolute;
         color: lightgray;
         font-size: 5em; }
@@ -353,13 +450,13 @@ nav {
         position: absolute;
         color: lightgray;
         font-size: 5em; }
-      #game-container #table-area-goof #player1Text {
+      #game-container #player1Text {
         position: absolute;
         bottom: 0;
         right: 0;
         margin-right: 10px;
         font-size: 1em; }
-      #game-container #table-area-goof #player2Text {
+      #game-container #player2Text {
         position: absolute;
         top: 0;
         left: 0;
@@ -440,6 +537,9 @@ nav {
 
 .card-container {
   display: flex; }
+
+.unplayable {
+  opacity: 0.5; }
 
 .playable,
 .playing-card {

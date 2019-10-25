@@ -12,6 +12,7 @@ $(() => {
     <div class="dropdown-menu" aria-labelledby="leaderboardDropdown">
       <a class="dropdown-item" id="goofLead">Goofspiel</a>
       <a class="dropdown-item" id="warLead">War</a>
+      <a class="dropdown-item" id="seveLead">Sevens</a>
     </div>
   </div>
 
@@ -118,8 +119,8 @@ $(() => {
     console.log('request for goofspiel leaderboard');
   })
 
-  $('#warLead').on('click', () => {
-    console.log('request for war leaderboard');
+  $('#seveLead').on('click', () => {
+    console.log('request for sevens leaderboard');
   })
 
 });
