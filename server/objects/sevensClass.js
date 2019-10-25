@@ -16,6 +16,10 @@ class Sevens extends Game {
 
   deal() {
 
+    for (let card of this.deck.cards) {
+      card.playble = false;
+    }
+
     console.log('\n\ndealing.....');
 
     if (this.players.length === 2) {
@@ -142,10 +146,28 @@ class Sevens extends Game {
           this.currentPlayers.push(this.players[position]);
         } else {
 
+          // assign current players turn
           const position = this.players.map((player) => {
             return player.joinToken;
           }).indexOf(2);
           this.currentPlayers.push(this.players[position]);
+
+          // assign playable cards
+          for (let playerCard of this.currentPlayers[0].hand.cards) {
+            for (let i = 0; i < this.table.cards.length; i++) {
+              if (playerCard.suit() === this.table.cards[i].suit() && playerCard.value === (this.table.cards[i].value + 1)) {
+                // playable
+                playerCard.playble = true;
+                return true;
+              } else if (playerCard.suit() === this.table.cards[i].suit() && playerCard.value === (this.table.cards[i].value - 1)) {
+                // playable
+                playerCard.playble = true;
+              } else {
+                playerCard.playble = false;
+              }
+            }
+          }
+
         }
         return false;
       }
