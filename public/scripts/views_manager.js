@@ -9,7 +9,7 @@ $(() => {
 
     $leaderboard.detach();
     $profile.detach();
-    $('#landing-container').remove();
+    $('#landing-container').css({ display: 'none' });
     for (let game in window.activeGames) {
       window.activeGames[game].view.detach();
     }
@@ -79,7 +79,8 @@ $(() => {
           $("#remove-game").on('click', (event) => {
             $(`#${data.gameId}`).remove(); //Get rid of the game
             //Render a different screen
-            window.views_manager.show('leaderboard');
+            $('#landing-container').css({ display: 'grid' });
+            // window.views_manager.show('leaderboard');
           });
         }
 
@@ -121,7 +122,8 @@ $(() => {
 
             $(`#${data.gameId}`).remove(); //Get rid of the game
             //Render a different screen
-            window.views_manager.show('lead');
+            $('#landing-container').css({ display: 'grid' });
+            // window.views_manager.show('leaderboard');
           });
         }
 
