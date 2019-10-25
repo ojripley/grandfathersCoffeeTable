@@ -113,7 +113,6 @@ $(() => {
         }
       }
     }
-    console.log(playersCards);
 
 
 
@@ -136,10 +135,10 @@ $(() => {
           pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
         }
       } else {
-        hiddenCards.push(`./images/cards/PNG/${card.name}.png`);
         if (theOneWhoPlays === myUsername) {
           pendingCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
         } else {
+          hiddenCards.push(`./images/cards/PNG/${card.name}.png`);
           pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="hidden playing-card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
         }
       }
@@ -202,6 +201,7 @@ $(() => {
 `);
     if (hiddenCards.length > 0) {
       for (let i in hiddenCards) {
+        console.log(`searching for #p${(Number(i) + 1)}pendingCard`);
         let el = window.activeGames[data.gameId].view.find(`.hidden`);
         console.log("The jquery element is:");
         console.log(el.attr("id"));
