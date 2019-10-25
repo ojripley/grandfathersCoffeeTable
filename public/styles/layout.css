@@ -235,6 +235,13 @@ nav {
     #game-container #table-area-goof #p2pendingCard {
       position: absolute;
       transform: translatey(-140px); }
+    #game-container #table-area-goof #deck {
+      height: 120px;
+      width: auto;
+      left: 0;
+      position: absolute;
+      bottom: 0;
+      margin: 1em; }
     #game-container #table-area-goof #player1Text {
       position: absolute;
       bottom: 0;
@@ -264,6 +271,12 @@ nav {
     align-items: center;
     position: relative;
     justify-content: center; }
+    #game-container #table-area-war #p1pendingCard {
+      position: absolute;
+      transform: translatey(140px); }
+    #game-container #table-area-war #p2pendingCard {
+      position: absolute;
+      transform: translatey(-140px); }
     #game-container #table-area-war #player1Text {
       position: absolute;
       bottom: 0;
@@ -371,23 +384,25 @@ nav {
 .playerHand {
   display: flex;
   flex-flow: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: 80%;
   background-color: rgba(0, 0, 0, 0);
   /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */ }
 
+.card-container {
+  display: flex; }
+
 .playable,
 .playing-card {
-  max-height: 60px;
-  width: auto;
+  height: 100px;
   margin: 2px;
   z-index: 1;
   box-shadow: 2px 2px 1px #000; }
 
 .playable:hover {
-  max-height: 65px;
+  height: 120px;
   width: auto;
   margin: 2px;
   box-shadow: 2px 2px 4px #000;
@@ -396,13 +411,12 @@ nav {
 @media screen and (min-width: 1024px) {
   .playable,
   .playing-card {
-    max-height: 120px;
-    width: auto;
+    height: 100px;
     margin: 2px;
     z-index: 1;
     box-shadow: 2px 2px 1px #000; }
   .playable:hover {
-    max-height: 130px;
+    height: 120px;
     width: auto;
     margin: 2px;
     box-shadow: 2px 2px 4px #000;

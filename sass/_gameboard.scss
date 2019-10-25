@@ -70,6 +70,15 @@
       transform: translatey(-140px);
     }
 
+    #deck {
+      height: 120px;
+      width: auto;
+      left: 0;
+      position: absolute;
+      bottom: 0;
+      margin: 1em;
+    }
+
     #player1Text {
       position: absolute;
       bottom: 0;
@@ -107,6 +116,15 @@
     align-items: center;
     position: relative;
     justify-content: center;
+
+    #p1pendingCard {
+      position: absolute;
+      transform: translatey(140px);
+    }
+    #p2pendingCard {
+      position: absolute;
+      transform: translatey(-140px);
+    }
 
     #player1Text {
       position: absolute;

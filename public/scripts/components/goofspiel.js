@@ -145,6 +145,24 @@ $(() => {
       }
     }
 
+    let deckimage = "";
+    let decklen = data.deck.cards.length;
+    console.log(decklen);
+    if (decklen === 0) {
+      deckimage = ``;
+    }
+    if (decklen > 0) {
+      deckimage = `<img src="./images/cards/PNG/nearlyEmptyDeck.png" class="img-fluid ui-widget-content" id="deck"></img>`
+    }
+    if (decklen > 3) {
+      deckimage = `<img src="./images/cards/PNG/semiEmptyDeck.png" class="img-fluid ui-widget-content" id="deck"></img>`
+    }
+    if (decklen > 6) {
+      deckimage = `<img src="./images/cards/PNG/semiFullDeck.png" class="img-fluid ui-widget-content" id="deck"></img>`
+    }
+    if (decklen > 10) {
+      deckimage = `<img src="./images/cards/PNG/fullDeck.png" class="img-fluid ui-widget-content" id="deck"></img>`
+    }
     window.activeGames[data.gameId].view = $(`
     <div id="game-container">
     ${scoreboard}
@@ -157,6 +175,7 @@ $(() => {
     </p>
     ${tableCards}
     ${pendingCards}
+    ${deckimage}
     <p id="player1Text">
     <span id="p1Name"> ${players[0].username}</span>
     <span id="p1score"> - ${players[0].score} pts - </span>
@@ -166,7 +185,9 @@ $(() => {
     </div>
     <div id="p1Area">
       <div class="playerHand">
+      <div class="card-container">
       ${playersCards[0]}
+      </div>
       </div>
 
     </div>
