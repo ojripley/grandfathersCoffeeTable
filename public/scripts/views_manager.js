@@ -34,7 +34,11 @@ $(() => {
           $("#leaderboardDropdown").text("War");
           socket.emit('requestLeaderBoard', 'warr');
         });
-
+        $('#seveLead').on('click', (event) => {
+          event.preventDefault();
+          $("#leaderboardDropdown").text("Sevens");
+          socket.emit('requestLeaderBoard', 'sevens');
+        });
         break;
       case 'prof':
         window.curScreen = 'cur-history-button';
@@ -49,8 +53,6 @@ $(() => {
         window.curMatchStats = 0;
 
         $('.match_row').hover((event) => {
-          console.log("you clicked a row");
-          console.log(event.target);
           let matchId = $(event.target).parent().attr('id');
           if (matchId != window.curMatchStats) {
             socket.emit('requestMatchDetails', matchId);
@@ -63,8 +65,14 @@ $(() => {
         if (data.gameState === "playing") { //If we are in the playing game state
           goofspiel.updateView(window.activeGames[item].view, data);
           window.activeGames[item].view.appendTo($main);
+          $("#remove-game").on('click', (event) => {
+            $(`#${data.gameId}`).remove(); //Get rid of the game
+            //Render a different screen
+            $('#landing-container').css({ display: 'grid' });
+          });
         } else if (data.gameState === "pending" || data === "none") {
           //If we are waiting for another player or game does not exist
+
           window.activeGames[item].view.appendTo($main);
         } else {
           goofspiel.updateView(window.activeGames[item].view, data);
@@ -98,13 +106,16 @@ $(() => {
           war.updateView(window.activeGames[item].view, data);
           window.activeGames[item].view.appendTo($main);
           $("#remove-game").on('click', (event) => {
-
             $(`#${data.gameId}`).remove(); //Get rid of the game
             //Render a different screen
             window.views_manager.show('lead');
           });
         } else if (data.gameState === "pending" || data === "none") {
           //If we are waiting for another player or game does not exist
+          console.log("rendering this:");
+          console.log(item);
+          // goofspiel.updateView(window.activeGames[item].view, data);
+          console.log(window.activeGames[item].view);
           window.activeGames[item].view.appendTo($main);
         } else {
           war.updateView(window.activeGames[item].view, data);
@@ -139,6 +150,12 @@ $(() => {
         if (data.gameState === "playing") { //If we are in the playing game state
           sevens.updateView(window.activeGames[item].view, data);
           window.activeGames[item].view.appendTo($main);
+
+          $("#remove-game").on('click', (event) => {
+            $(`#${data.gameId}`).remove(); //Get rid of the game
+            //Render a different screen
+            $('#landing-container').css({ display: 'grid' });
+          });
         } else if (data.gameState === "pending" || data === "none") {
           //If we are waiting for another player or game does not exist
           window.activeGames[item].view.appendTo($main);
@@ -171,6 +188,16 @@ $(() => {
           }
         });
 
+        $('#pass-button').on('click', (event) => {
+          socket.emit('move', {
+            gameId: window.curScreen,
+            move: {
+              player: window.activeGames[item].player,
+              card: null
+            }
+          });
+
+        });
         window.curScreen = item;
         break;
     }

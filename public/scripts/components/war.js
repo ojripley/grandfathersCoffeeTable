@@ -1,13 +1,12 @@
 $(() => {
 
   window.war = {};
-
   //Create a new war game (default state).
   //Change this to show a loading screen
   window.war.newGame = function(id) {
     window.activeGames[id] = {};
-    window.activeGames[id].view = $(`<div id="game-container">
-    <div id="table-area-warr">
+    window.activeGames[id].view = $(`<div id="game-container" class="war">
+    <div id="table-area-war">
     <div class ="myProgressBar">
     <div class="progress">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="2" style="width: 50%"></div>
@@ -20,14 +19,14 @@ $(() => {
 
       </div>
       <p id="player1Text">
-      <span id="p1Name"></span>
+      <span id="p1Name"> </span>
       <span id="p1score"></span>
-      <span id="p1numCards"></span>
+      <span id="p1numCards"> </span>
       </p>
     </div>
     <div id="p2Area">
     <p id="player2Text">
-      <span id="p2Name"></span>
+      <span id="p2Name"> </span>
       <span id="p2score"></span>
       <span id="p2numCards"></span>
       </p>
@@ -35,25 +34,6 @@ $(() => {
   </div>`);
   };
 
-  // <div id="p3Area">
-  //   <p id="player3Text">
-  //     <span id="p3Name"> Player 3</span>
-  //     <span id="p3score">- 0 pts -</span>
-  //     <span id="p3numCards">(0 cards)</span>
-  //   </p>
-  // </div>
-  //   <div id="p4Area">
-  //     <p id="player4Text">
-  //       <span id="p4Name"> Player 4</span>
-  //       <span id="p4score">- 0 pts -</span>
-  //       <span id="p3numCards">(0 cards)</span>
-  //     </p>
-  //   </div>
-
-  window.war.joinUser = function($game, data) {
-    //Update the view progress bar here if more than two players are joining
-
-  }
   window.war.updateView = function($game, data) {
     $game.empty(); //Clear what we had before
 
@@ -68,7 +48,6 @@ $(() => {
     <tbody>`;
 
     data.players.forEach((player, i) => {
-      console.log(player);
       scoreboard += `<tr>
         <td scope="row">${i + 1}</td>
         <td>${player.username}</td>

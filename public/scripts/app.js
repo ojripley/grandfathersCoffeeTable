@@ -39,8 +39,22 @@ $(() => {
 
     //If the game hasn't started and we haven't seen this game before
     if (data.gameState === "pending" && !Object.keys(window.activeGames).includes(data.gameId)) {
-      console.log("Creating a new game!")
-      window.goofspiel.newGame(data.gameId);
+      //console.log("Creating a new game!")
+
+      if (data.gameId.indexOf("goof") !== -1) {
+        console.log("its goof");
+        window.goofspiel.newGame(data.gameId);
+      }
+      if (data.gameId.indexOf("seve") !== -1) {
+        console.log("its sevens");
+        window.sevens.newGame(data.gameId);
+      }
+      if (data.gameId.indexOf("war") !== -1) {
+        console.log("its war");
+        window.war.newGame(data.gameId);
+      }
+
+      //  window.goofspiel.newGame(data.gameId);
 
       let gameName;
       switch (data.gameId.substring(0, 4)) {
@@ -56,11 +70,9 @@ $(() => {
         default:
           gameName = '';
           break;
-
       }
       //Append the game to the nav bar
-      $("#game-list ul").append(`<li class="select-game" id="${data.gameId}">Game ${Object.keys(window.activeGames).length} - ${gameName} <span class="badge badge-pill badge-warning"></span>  </li>
-      `);
+      $("#game-list ul").append(`<li class="select-game" id="${data.gameId}">Game ${Object.keys(window.activeGames).length} - ${gameName} <span class="badge badge-pill badge-warning"></span>  </li>`);
 
 
       $(`#${data.gameId}`).on('click', (event) => {
@@ -76,11 +88,21 @@ $(() => {
         console.log('User is currently watching the game');
         views_manager.show(data.gameId, data);
       } else {
+        //  goofspiel.updateView(window.activeGames[data.gameId].view, data);
+        if (data.gameId.indexOf("goof") !== -1) {
+          console.log("rendering goof")
+          window.goofspiel.updateView(window.activeGames[data.gameId].view, data);
+          // window.goofspiel.newGame(data.gameId);
+        } else if (data.gameId.indexOf("seve") !== -1) {
+          console.log("rendering seve")
+          window.sevens.updateView(window.activeGames[data.gameId].view, data);
+          //window.sevens.newGame(data.gameId);
+        } else if (data.gameId.indexOf("war") !== -1) {
+          console.log("rendering war");
+          window.war.updateView(window.activeGames[data.gameId].view, data);
+        }
 
-        //Not on the gamescreen --> just update the view but don't show it.
-        goofspiel.updateView(window.activeGames[data.gameId].view, data);
-
-        //Show  notification if user is supposed to make a move
+        //Show  notification if user is supposed to make a move/
         $("#alert").promise().done(() => {
           //Is it the players turn?
           if (data.currentPlayers && userIsIn(data.currentPlayers, myUsername)) {
@@ -120,10 +142,8 @@ $(() => {
 
   });
 
-
-
-
   socket.emit('msg', "hi there");
+
   socket.on('endGame', (data) => {
     console.log('This is the end of game data (leaderboard)');
     console.log(data);

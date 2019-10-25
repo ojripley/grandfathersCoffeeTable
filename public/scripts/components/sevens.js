@@ -5,8 +5,8 @@ $(() => {
   //Change this to show a loading screen
   window.sevens.newGame = function(id) {
     window.activeGames[id] = {};
-    window.activeGames[id].view = $(`<div id="game-container">
-    <div id="table-area-sevens">
+    window.activeGames[id].view = $(`<div id="game-container" class="seve">
+    <div id="table-area-war">
     <div class ="myProgressBar">
     <div class="progress">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="2" style="width: 50%"></div>
@@ -19,14 +19,14 @@ $(() => {
 
       </div>
       <p id="player1Text">
-      <span id="p1Name"></span>
+      <span id="p1Name"> </span>
       <span id="p1score"></span>
-      <span id="p1numCards"></span>
+      <span id="p1numCards"> </span>
       </p>
     </div>
     <div id="p2Area">
     <p id="player2Text">
-      <span id="p2Name"></span>
+      <span id="p2Name"> </span>
       <span id="p2score"></span>
       <span id="p2numCards"></span>
       </p>
@@ -100,7 +100,7 @@ $(() => {
       }
     }
 
-    let tableCards = [];
+    let tableCards = [[], [], [], []];
     for (let card of data.table.cards) {
       //Check the suit
       switch (getSuit(card.name)) {
@@ -125,36 +125,35 @@ $(() => {
 
     }
 
-
-    /*Pending cards not required, wait for server to send move
-    let pendingCards = ``;
-    let hiddenCards = [];
-    for (let i in data.pendingMoves) {
-      //Pending moves are face down
-      let card = data.pendingMoves[i].card;
-      let theOneWhoPlays = data.pendingMoves[i].player.username; //Stores who played the card
-      if (data.pendingMoves.length < data.players.length) {
-        if (theOneWhoPlays === myUsername) {
-          pendingCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
-        } else {
-          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="playing-card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
-        }
-      } else {
-        if (theOneWhoPlays === myUsername) {
-          pendingCards += `<img src="./images/cards/PNG/${card.name}.png" class="playing-card img-fluid ui-widget-content" id="p1pendingCard"></img>`;
-        } else {
-          hiddenCards.push(`./images/cards/PNG/${card.name}.png`);
-          pendingCards += `<img src="./images/cards/PNG/blue_back.png" class="hidden playing-card img-fluid ui-widget-content" id="p${players.findIndex((player) => player.username === theOneWhoPlays) + 1}pendingCard"></img>`;
-        }
-      }
+    let heartCards = ``;
+    if (tableCards[0]) {
+      heartCards = tableCards[0].join(``);
     }
-    */
+
+    let spadeCards = ``;
+    if (tableCards[0]) {
+      spadeCards = tableCards[1].join(``);
+    }
+
+    let diamondCards = ``;
+    if (tableCards[0]) {
+      diamondCards = tableCards[2].join(``);
+    }
+
+    let clubCards = ``;
+    if (tableCards[0]) {
+      clubCards = tableCards[3].join(``);
+    }
 
     window.activeGames[data.gameId].view = $(`
     <div id="game-container">
     ${scoreboard}
+    <div id="sevens-text-container">
+        <h1 id="background-text-sevens"> S E V E N S </h1>
+    </div>
+    <button type="button" class="btn btn-secondary" id="pass-button">Pass</button>
+
     <div id="table-area-sevens">
-    <h1 id="background-text"> S E V E N S </h1>
     <p id="player2Text">
     <span id="p2Name"> ${players[1].username}</span>
     <span id="p2score">- ${players[1].score} pts -</span>
@@ -162,19 +161,19 @@ $(() => {
     </p>
 
     <div class="sevens-table-container" id="hearts">
-    ${tableCards[0].join('')}
+    ${heartCards}
     </div>
 
     <div class="sevens-table-container" id="spades">
-    ${tableCards[1].join('')}
+    ${spadeCards}
     </div>
 
     <div class="sevens-table-container" id="diamonds">
-    ${tableCards[2].join('')}
+    ${diamondCards}
     </div>
 
     <div class="sevens-table-container" id="clubs">
-    ${tableCards[3].join('')}
+    ${clubCards}
     </div>
 
 
