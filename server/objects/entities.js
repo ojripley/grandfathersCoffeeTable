@@ -49,6 +49,10 @@ class Card {
     this.img = `../../public/images/cards/PNG/${name}.png`;
     this.playable = true;
   }
+
+  suit() {
+    return name[this.name.length - 1 ];
+  }
 }
 
 class Move {

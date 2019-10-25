@@ -11,65 +11,31 @@ class Sevens extends Game {
     super(id, tempFullDeck);
     this.gameType = 'sevens';
     this.table.faceUp = true;
+    this.turns = 0;
   }
 
   deal() {
+
     console.log('\n\ndealing.....');
 
-    console.log(this.deck);
-    console.log();
-
-    for (let i = 0; i < 13; i++) {
-      this.deck.moveCard(this.deck.cards[0], this.players[0].hand.cards);
-      this.deck.moveCard(this.deck.cards[12 - i], this.players[1].hand.cards);
-      if (this.players.length === 3) {
-        this.deck.moveCard(this.deck.cards[24 - (i * 2)], this.players[2].hand.cards);
-      } else {
-        this.deck.moveCard(this.deck.cards[24 - (i * 2)], this.burntDeck.cards);
+    if (this.players.length === 2) {
+      while (this.deck.cards.length > 0) {
+        this.deck.moveCard(this.deck.cards.selectRandom(), this.players[0].hand.cards);
+        this.deck.moveCard(this.deck.cards.selectRandom(), this.players[1].hand.cards);
       }
     }
 
-    // first card is placed on the table
-    // this kicks off the the game
-    this.deck.moveCard(this.deck.selectRandom(), this.table.cards);
+    // first move goes to the player with the 7 of hearts
+    this.currentPlayers = this.players.slice(0, 1);
   }
 
   score() {
-    const prize = this.table.cards[0];
 
-    console.log(`the prize is ${prize.value}\n\n`);
+    // assign scores
+    this.players[0].score = 26 - this.players[0].hand.cards.length;
+    this.players[1].score = 26 - this.players[1].hand.cards.length;
 
-    let highestBidValue = 0;
-    let highestBiddingMoves = [];
-
-    for (let move of this.pendingMoves) {
-
-      console.log(`the current evaluated move is ${move.card.value}\n\n`);
-
-      if (move.card.value > highestBidValue) {
-        highestBiddingMoves = [];
-        highestBiddingMoves.push(move);
-        highestBidValue = highestBiddingMoves[0].card.value;
-      } else if (move.card.value === highestBidValue) {
-        highestBiddingMoves.push(move);
-      }
-    }
-
-    console.log(`the highest bid is ${highestBidValue}\n\n`);
-
-    if (highestBiddingMoves.length === 1) {
-
-      const playerToRecievePoints = this.players.filter(player => highestBiddingMoves[0].player.username === player.username);
-
-      playerToRecievePoints[0].score += (highestBidValue + prize.value);
-    }
-
-
-    console.log('\nPLAYER SCORES:');
-    console.log(this.players[0].username + ': ' + this.players[0].score);
-    console.log(this.players[1].username + ': ' + this.players[1].score);
-    console.log();
-
+    // sort players, highest score first
     for (let i = 0; i < this.players.length; i++) {
       for (let j = 1; j < this.players.length; j++) {
         if (this.players[j].score > this.players[i].score) {
@@ -80,31 +46,58 @@ class Sevens extends Game {
       }
     }
 
+    // assign positions
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].currentPosition = (i + 1);
     }
-
-    this.table.cards.pop();
-
   }
 
   isValidMove(move) {
+
     if (this.gameState === 'playing') {
       for (let pendingMove of this.pendingMoves) {
         if (move.player.username === pendingMove.player.username) {
+          // can't have more than one pending move per player
           return false;
         }
+
+        if (move.player.username !== this.currentPlayers[0].username) {
+          // not that players turn
+          return false;
+        }
+
+        if (move.card === null) {
+          // if empty move, automatically valid. Point count will remain unchanged
+          this.turns++;
+          return true;
+        }
+
+        for (let i = 0; i < this.table.cards.length; i++) {
+          if (move.card.suit() === this.table.cards[i].suit() && move.card.value === (this.table.cards[i].value + 1)) {
+            // insert after
+            this.table.cards.splice(i, 0, move.card);
+            this.turns++;
+            return true;
+          } else if (move.card.suit() === this.table.cards[i].suit() && move.card.value === (this.table.cards[i].value - 1)) {
+            // insert before
+            this.table.cards.splice((i - 1), 0, move.card);
+            this.turns++;
+            return true;
+          }
+        }
       }
-      return true;
     }
+
+
+    console.log('\n\n\n\n\nWARNING\n\n\n\n\nWARNING\n\n\n\n\nWARNING\n\n\n\n\nSHOULD NEVER REACH HERE\n\n\n\n\n');
+
     return false;
   }
 
   areAllMovesSubmitted() {
-    if (this.pendingMoves.length === this.players.length) {
+    if (this.pendingMoves.length === 1) {
       return true;
     }
-
     return false;
   }
 
@@ -112,16 +105,50 @@ class Sevens extends Game {
 
     console.log('\n\n\n\n' + this.gameState + '\n\n\n\n');
 
-    if (this.deck.cards.length === 0) {
-      this.gameState === 'finished';
-      console.log(`\n the winner is... ${this.players[0].username} \n\n`);
-      return true;
-    } else {
+    if (this.players.length === 2) {
 
-      // proceed with the game
-      this.deck.moveCard(this.deck.selectRandom(), this.table.cards);
+      const p1 = this.players[0];
+      const p2 = this.players[1];
 
-      return false;
+      if (p1.hand.cards.length === 0) {
+        this.players[0] = p1;
+        this.players[1] = p2;
+        this.gameState = 'finished';
+        console.log('\nPLAYER SCORES:');
+        console.log(this.players[0].username + ': ' + this.players[0].score);
+        console.log(this.players[1].username + ': ' + this.players[1].score);
+        console.log();
+        return true;
+      } else if (p2.hand.cards.length === 0) {
+        this.players[0] = p2;
+        this.players[1] = p1;
+        this.gameState = 'finished';
+        console.log('\nPLAYER SCORES:');
+        console.log(this.players[0].username + ': ' + this.players[0].score);
+        console.log(this.players[1].username + ': ' + this.players[1].score);
+        console.log();
+        return true;
+      } else {
+        console.log('\nPLAYER SCORES:');
+        console.log(this.players[0].username + ': ' + this.players[0].score);
+        console.log(this.players[1].username + ': ' + this.players[1].score);
+        console.log();
+
+        if (this.turns % 2 === 0) {
+
+          const position = this.players.map((player) => {
+            return player.joinToken;
+          }).indexOf(1);
+          this.currentPlayers.push(this.players[position]);
+        } else {
+
+          const position = this.players.map((player) => {
+            return player.joinToken;
+          }).indexOf(2);
+          this.currentPlayers.push(this.players[position]);
+        }
+        return false;
+      }
     }
   }
 }
