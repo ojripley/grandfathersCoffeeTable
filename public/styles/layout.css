@@ -78,7 +78,12 @@
     #menu-bars {
       display: none; } }
 
+nav::-webkit-scrollbar {
+  display: none; }
+
 nav {
+  overflow: -moz-scrollbars-none;
+  overflow-x: hidden;
   color: white;
   background-color: #47628c;
   display: flex;
@@ -106,7 +111,9 @@ nav {
     font-size: 0.75em;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    user-select: none; }
+    user-select: none;
+    margin-top: 4px;
+    margin-bottom: 4px; }
   nav li:hover {
     border-radius: 1em;
     cursor: pointer;
@@ -133,40 +140,46 @@ nav {
     font-size: 1em;
     display: flex; }
   nav #profile {
-    width: 100%;
-    display: flex; }
+    display: flex;
+    align-items: center;
+    background-color: #556f99;
+    border-radius: 0.5em;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-bottom: 3%; }
     nav #profile #username {
       font-size: 1.5em;
       color: #92bfe1;
-      margin-bottom: 0.3em;
       margin-right: 5%;
-      margin-left: 3%; }
+      margin-left: 5%; }
   nav #buttons {
     width: 80%;
     display: flex;
     flex-direction: column;
-    margin-right: 10%; }
+    margin-right: 10%;
+    justify-content: center; }
     nav #buttons #leaderboard {
-      width: 100%;
       font-size: 0.5em;
       background-color: #d38d5f;
-      margin: 2%;
-      margin-top: 0;
+      margin-bottom: 4%;
       text-align: center; }
     nav #buttons #user-history-button {
-      width: 100%;
+      margin-top: 10%;
       font-size: 0.5em;
       background-color: #d38d5f;
-      margin: 2%;
-      margin-top: 0; }
+      margin-bottom: 4%;
+      margin-top: 4%; }
     nav #buttons #logout-button {
       width: 100%;
       font-size: 0.5em;
-      margin: 2%;
       margin-top: 0;
-      margin-bottom: 12%; }
+      margin-bottom: 4%; }
   nav ul {
-    list-style-type: none; }
+    list-style-type: none;
+    background-color: #556f99;
+    border-radius: 0.5em;
+    margin-left: 3%;
+    margin-right: 3%; }
   nav .menu-list {
     display: flex;
     flex-flow: column nowrap;
@@ -193,11 +206,19 @@ nav {
   grid-row-gap: 0px;
   overflow: hidden; }
   #game-container #scoreboard {
+    margin-right: 5%;
+    margin-left: 5%;
     grid-row: 2;
     display: none;
     grid-column: 3;
     color: white;
-    height: 100px; }
+    height: 150px;
+    width: 230px;
+    background-color: rgba(61, 30, 0, 0.335);
+    box-shadow: inset 0px 0px 10px #000;
+    border-radius: 0.5em; }
+    #game-container #scoreboard th {
+      border-top: none; }
     @media screen and (min-width: 1024px) {
       #game-container #scoreboard {
         display: block; } }
