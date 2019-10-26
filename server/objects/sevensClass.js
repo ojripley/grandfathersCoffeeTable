@@ -15,8 +15,6 @@ class Sevens extends Game {
   }
 
   deal() {
-
-
     for (let card of this.deck.cards) {
 
       if (card.name === '7H') {
@@ -26,13 +24,8 @@ class Sevens extends Game {
       }
     }
 
-    // console.log(this.deck.cards);
-
-    console.log('\n\ndealing.....');
-
     this.deck.moveCard(this.deck.cards[19], this.players[0].hand.cards);
     this.deck.moveCard(this.deck.cards[6], this.players[1].hand.cards);
-
 
     if (this.players.length === 2) {
       while (this.deck.cards.length > 0) {
@@ -69,9 +62,6 @@ class Sevens extends Game {
   }
 
   isValidMove(move) {
-
-
-
     if (this.gameState === 'playing') {
       for (let pendingMove of this.pendingMoves) {
         if (move.player.username === pendingMove.player.username) {
@@ -100,6 +90,7 @@ class Sevens extends Game {
         return true;
       }
 
+      // checks validity of a move against a card already on the table, inserts if valid
       for (let i = 0; i < this.table.cards.length; i++) {
         if (move.card.name[move.card.name.length - 1] === this.table.cards[i].name[this.table.cards[i].name.length - 1] && move.card.value === (this.table.cards[i].value + 1)) {
           // insert after
@@ -118,7 +109,6 @@ class Sevens extends Game {
         }
       }
     }
-
 
     console.log('\n\n\n\n\nWARNING\n\n\n\n\nWARNING\n\n\n\n\nWARNING\n\n\n\n\nSHOULD NEVER REACH HERE\n\n\n\n\n');
 
@@ -146,27 +136,15 @@ class Sevens extends Game {
         this.players[0] = p1;
         this.players[1] = p2;
         this.gameState = 'finished';
-        console.log('\nPLAYER SCORES:');
-        console.log(this.players[0].username + ': ' + this.players[0].score);
-        console.log(this.players[1].username + ': ' + this.players[1].score);
-        console.log();
+
         return true;
       } else if (p2.hand.cards.length === 0) {
         this.players[0] = p2;
         this.players[1] = p1;
         this.gameState = 'finished';
-        console.log('\nPLAYER SCORES:');
-        console.log(this.players[0].username + ': ' + this.players[0].score);
-        console.log(this.players[1].username + ': ' + this.players[1].score);
-        console.log();
+
         return true;
       } else {
-        console.log('GAME NOT DONE');
-        console.log('\nPLAYER SCORES:');
-        console.log(this.players[0].username + ': ' + this.players[0].score);
-        console.log(this.players[1].username + ': ' + this.players[1].score);
-        console.log();
-
         if (this.turns % 2 === 0) {
           console.log('\nsetting next player turn');
           const position = this.players.map((player) => {
@@ -186,46 +164,33 @@ class Sevens extends Game {
 
 
         // assign playable cards
-        const alreadyPlayable = [];
         for (let playerCard of this.currentPlayers[0].hand.cards) {
           let alreadyPlayableFlag = false;
           for (let i = 0; i < this.table.cards.length; i++) {
-            // console.log(`\n\nthe current table state when assigning playable: ${JSON.stringify(this.table.cards)}\n`);
-            // console.log(`table card: \n ${this.table.cards[i].value + 1}\n${this.table.cards[i].name[this.table.cards[i].name.length - 1]}`);
+
+            // if card is of same suit and value is higher by one
             if (playerCard.suit() === this.table.cards[i].name[this.table.cards[i].name.length - 1] && playerCard.value === (this.table.cards[i].value + 1)) {
-              // playable
               playerCard.playable = true;
               alreadyPlayableFlag = true;
+
+              // if card is of same suit and value is lower by one
             } else if (playerCard.suit() === this.table.cards[i].name[this.table.cards[i].name.length - 1] && playerCard.value === (this.table.cards[i].value - 1)) {
-              // playable
               playerCard.playable = true;
               alreadyPlayableFlag = true;
             } else {
-              // console.log(playerCard.suit());
-              // console.log(playerCard.value);
-              // console.log(playerCard);
 
+              // avoid assigning cards already assigned a playble state
               if (!alreadyPlayableFlag) {
                 playerCard.playable = false;
               }
             }
-
           }
-          // for (let alreadyPlayableCard of alreadyPlayable) {
-          //   if (playerCard.name === alreadyPlayableCard.name) {
-          //     alreadyPlayableFlag = true;
-          //   }
-          // }
-          // if (!alreadyPlayableFlag) {
-          //   playerCard.playable = false;
-          // }
+
+          // sevens are always playble after the first move
           if (playerCard.value === 7) {
             playerCard.playable = true;
           }
-
-          console.log(`${playerCard.name}: playable: ${playerCard.playable}`);
         }
-
 
         return false;
       }
