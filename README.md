@@ -2,7 +2,7 @@
 Grandfather's Coffee Table is a single page multiplayer web application . Players can register to the database and play games with each other in realtime. The application currently supports three game modes: Goofspiel, Warr, and Sevens.
 
 ## Project Setup
-To host your own version of Grandfather's Coffee Table you should
+To host a local version of Grandfather's Coffee Table:
  1. Clone the repo to your own machine
  2. Run `npm install` within the repo directory
  3. Run `npm run local` to start the server
