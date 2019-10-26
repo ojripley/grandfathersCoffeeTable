@@ -1,5 +1,5 @@
 # Grandfather's Coffee Table
-Grandfather's Coffee Table is a single page multiplayer web application . Players can register to the database and play games with each other in realtime. The application currently supports three game modes: Goofspiel, Warr, and Sevens.  The application c
+Grandfather's Coffee Table is a single page multiplayer web application . Players can register to the database and play games with each other in realtime. The application currently supports three game modes: Goofspiel, Warr, and Sevens.
 
 ## Project Setup
 To host your own version of Grandfather's Coffee Table you should
@@ -50,6 +50,16 @@ Players can access their profile page where their complete match history can be 
 - Node 10.x or above
 - NPM 5.x or above
 - PG 6.x
+- bcrypt 3.x  or above
+- body-parser 1.x or above
+- chalk 2.x or above
+- cookie-session 1.x or above
+- dotenv 2.x or above
+- ejs 2.x or above
+- express 4.x or above
+- morgan 1.x or above
+- node-sass-middleware 0.11.x or above
+- socket.io 2.x or above
 
 ## Built with
 - NodeJS
@@ -63,6 +73,7 @@ Players can access their profile page where their complete match history can be 
 # Features to be added
 - Having players be able to reconnect
 - Improvements to the notification system
+- Additional alternate gamemodes
 
 # Contributors
-Created by @owenripley and @ThilakshanArulnesan.
+Created by @ojripley and @ThilakshanArulnesan.
