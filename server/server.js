@@ -137,6 +137,15 @@ io.on('connection', (client) => {
                     // send game details to room
                     broadcastGame(io, game);
                   }, 2000);
+
+
+
+
+                  setTimeout(() => {
+                    if (activeGames[game]) {
+                      delete activeGames[game];
+                    }
+                  }, 3600000);
                 }
                 break;
               }
@@ -155,6 +164,15 @@ io.on('connection', (client) => {
           broadcastGame(io, newGame.id);
 
           io.to(newGame.id).emit('join', { gameId: newGame.id, numberOfPlayers: newGame.players.length });
+
+
+          // if no opponent match is found after 3 minutes, delete the game from server memory
+          setTimeout(() => {
+            if (newGame.gameState === 'pending') {
+              io.to(newGame).emit('resultsView', { gameId: newGame, players: newGame.players });
+              delete activeGames[newGame.id];
+            }
+          }, 300000);
         }
       })
       .catch(error => {
