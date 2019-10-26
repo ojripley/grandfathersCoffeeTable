@@ -1,61 +1,61 @@
 $(() => {
+  //This is the username that will be passed between server and client.
+  //In future versions this should be a token instead that maps to a username on server-side
   window.myUsername = extractUserName(document.cookie);
+
   window.alertChain = $("#alert").toggle('slide');
   $("#alert").fadeTo(10, 1);
+  $("#username").text(window.myUsername);//Sets the username in the nav bar
 
-  $("#username").text(window.myUsername);
   //Nav bar logic:
   $('#menu-bars').on('click', () => {
-    //$('#navbar').toggle('slide');
+    //Hides nav bar. But this class only affects mobile view.
     $('#navbar').toggleClass('hidden', 500);
   });
-  // new Promise();
-  // window.socket = io.connect('172.46.3.253:8080');
 
+  // window.socket = io.connect('172.46.3.253:8080');
   window.socket = io.connect('localhost:8080');
   // window.socket = io.connect('172.46.3.232:8080');
+
+  /*
+  Buttons being set so that user can request information from the server
+  */
 
   $('#leaderboard').on('click', (event) => {
     socket.emit('requestLeaderBoard', 'goofspiel');
   });
 
   $(".select-game").on('click', (event) => {
-    views_manager.show('goof');
+    views_manager.show('goof'); //The goof screen is the default screen that contains the loading bar.
   });
+
   $("#user-history-button").on('click', (event) => {
     socket.emit('requestHistory', myUsername);
   });
 
   $(".request-game").on('click', (event) => {
     let gametype = event.target.id;
-    console.log(`requesting a new game of ${gametype}`);
     socket.emit('requestGame', { gametype, username: myUsername });
   });
 
-  // let player;
+  //This is the main communication with the server for games. The client will display the data coming from the server (or store it in memory if the user is not watching the screen)s.
   socket.on('gameView', (data) => {
+    /* This is a useful console log to see what is being passed back and forth between the server and client
     console.log("RENDER THIS:");
     console.log(data); //Data contains all the info needed to render a screen
+    */
 
     //If the game hasn't started and we haven't seen this game before
     if (data.gameState === "pending" && !Object.keys(window.activeGames).includes(data.gameId)) {
-      //console.log("Creating a new game!")
-
       if (data.gameId.indexOf("goof") !== -1) {
-        console.log("its goof");
         window.goofspiel.newGame(data.gameId);
       }
       if (data.gameId.indexOf("seve") !== -1) {
-        console.log("its sevens");
         window.sevens.newGame(data.gameId);
       }
       if (data.gameId.indexOf("war") !== -1) {
-        console.log("its war");
         window.war.newGame(data.gameId);
       }
-
-      //  window.goofspiel.newGame(data.gameId);
-
       let gameName;
       switch (data.gameId.substring(0, 4)) {
         case 'goof':
@@ -84,36 +84,31 @@ $(() => {
       views_manager.show(data.gameId); //display the game immediately
     } else {
       if (window.curScreen === data.gameId) {
-        //Currently on the game screen
-        console.log('User is currently watching the game');
+        //Currently on the game screen, have the view manager update the screen.
         views_manager.show(data.gameId, data);
       } else {
-        //  goofspiel.updateView(window.activeGames[data.gameId].view, data);
+        //If the user is not watching the game, update the information we have in the background.
         if (data.gameId.indexOf("goof") !== -1) {
-          console.log("rendering goof")
           window.goofspiel.updateView(window.activeGames[data.gameId].view, data);
-          // window.goofspiel.newGame(data.gameId);
         } else if (data.gameId.indexOf("seve") !== -1) {
-          console.log("rendering seve")
           window.sevens.updateView(window.activeGames[data.gameId].view, data);
-          //window.sevens.newGame(data.gameId);
         } else if (data.gameId.indexOf("war") !== -1) {
-          console.log("rendering war");
           window.war.updateView(window.activeGames[data.gameId].view, data);
         }
 
-        //Show  notification if user is supposed to make a move/
+        //Show  notification if user is supposed to make a move
         $("#alert").promise().done(() => {
-          //Is it the players turn?
+          //Is it the player's turn?
           if (data.currentPlayers && userIsIn(data.currentPlayers, myUsername)) {
             let $alert = $("#alert");
             let $gameButton = $(`#${data.gameId}`);
             let gameName = $gameButton.text();
             $alert.on('click', (event) => {
+              //Mimic clicking the game button (so the styling/logic is consistent)
               $gameButton.trigger('click');
             });
             $gameButton.find('.badge').text(' !');
-
+            //Display the alert
             $alert.find(".card-body").text(`It is your turn in ${gameName}. `);
             $alert.toggle('slide', 1000, () => {
               setTimeout(() => $alert.toggle('slide', 1000), 1000);
@@ -122,38 +117,20 @@ $(() => {
         });
       }
     }
-
   });
 
-  /*
-    socket.on('join', (data) => { //not used
-      console.log("PLAYER HAS JOINED");
-      //goofspiel.updateView(window.activeGames[data.gameId].view, data);
-
-      console.log(data);
-      //Update the progress bar
-    });
-    */
-
+  //Server sends leaderboard information
   socket.on('leaderBoard', (data) => {
-    //show highscores (move this to the response of leaderboard)
     $('#landing-container').css({ display: 'none' });
     views_manager.show('leaderboard', data);
-
   });
 
-  socket.emit('msg', "hi there");
+  socket.emit('msg', "hi there"); //Hello message to server ;)
 
-  socket.on('endGame', (data) => {
-    console.log('This is the end of game data (leaderboard)');
-    console.log(data);
-  });
 
 
   socket.on('history', (data) => {
-    console.log('Here is the history');
-    console.log(data);
-    $('#landing-container').css({ display: 'none' });
+    $('#landing-container').css({ display: 'none' }); //Hides landing page
     if (data[0]) {
       profile.updateMatchHistoryTable(data);
       socket.emit('requestMatchDetails', data[0].id);
@@ -161,32 +138,24 @@ $(() => {
       //This will only happen when user searches someone that doesnt' exist OR first time user
       let histMessage = $("#historyErrorMessage");
       if (histMessage) {
-        console.log("Hello");
         profile.updateMatchHistoryTable(data);
         $("#historyErrorMessage").text("User does not exist");
       } else {
-        console.log("trying to render");
         profile.updateMatchHistoryTable(data);
-
       }
     }
   });
 
-  //socket.emit('requestMatchDetails', 1);
-
   socket.on('matchDetails', (data) => {
-    console.log('Here are the match details');
-    console.log(data);
     profile.updateMatchSpecificTable(data);
-
     views_manager.show('profile');
   })
 
   socket.on('msg', (data) => {
-    console.log(data);
+    console.log(data); //Useful for sending a message between client and server
   });
   socket.on('connection', (data) => {
-    console.log(data);
+    console.log(data); //Welcome message from server
   })
 
 });
