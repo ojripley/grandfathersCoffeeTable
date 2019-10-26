@@ -14,7 +14,8 @@ $(() => {
   });
 
   // window.socket = io.connect('172.46.3.253:8080');
-  window.socket = io.connect('localhost:8080');
+  // window.socket = io.connect('localhost:8080');
+  window.socket = io();
   // window.socket = io.connect('172.46.3.232:8080');
 
   /*
