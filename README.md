@@ -3,10 +3,11 @@ Grandfather's Coffee Table is a single page multiplayer web application . Player
 
 ## Project Setup
 To host your own version of Grandfather's Coffee Table you should
- 1. Run `npm install`
- 2. Run `npm run local` to start the server
- 3. Go to `localhost:8080` on your browser
- 4. If running properly, the server will log to terminal that a player has connected
+ 1. Clone the repo to your own machine
+ 2. Run `npm install` within the repo directory
+ 3. Run `npm run local` to start the server
+ 4. Go to `localhost:8080` on your browser
+ 5. If running properly, the server will log to terminal that a player has connected
 
 ## Features
 
