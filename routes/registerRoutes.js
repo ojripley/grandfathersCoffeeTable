@@ -28,9 +28,10 @@ module.exports = (db) => {
           db.addUser(user)
             .then(() => {
 
-              // sets username cookie
+              // create encrypted session cookie
               req.session.username = req.body.username;
 
+              // create username token cookie, destroyed on logout
               res.cookie('username', req.body.username);
 
               res.redirect('/');

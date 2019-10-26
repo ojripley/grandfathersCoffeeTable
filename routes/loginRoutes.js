@@ -26,10 +26,10 @@ module.exports = (db) => {
 
         if (user[0] && bcrypt.compareSync(req.body.password, user[0].password)) {
 
-          // create session cookie
+          // create encrypted session cookie
           req.session.username = req.body.username;
 
-          // if we have time, make this an encrypted token later (STRETCH)
+          // create username token cookie, destroyed on logout
           res.cookie('username', req.body.username);
 
           res.redirect('/');
