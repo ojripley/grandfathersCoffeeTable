@@ -1,25 +1,20 @@
 // load .env data into process.env
 require('dotenv').config();
 
-// Web server config
+// server config
 const PORT = process.env.PORT || 8080;
-// const ENV        = process.env.ENV || "development";
 const express = require("express");
 const bodyParser = require("body-parser");
-// const sass       = require("node-sass-middleware");
 const app = express();
 const morgan = require('morgan');
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const cookieParser = require('cookie-session');
+
+// this is the object used to manage all running games on the server
 const { activeGames } = require('./objects/managers.js');
 
-// PG database client/connection setup
-// const { Pool } = require('pg');
-// const dbParams = require('../lib/db.js');
-// const db = new Pool(dbParams);
-// db.connect();
-
+// db related operations
 const db = require('../db/queries/queries');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -39,27 +34,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // }));
 app.use(express.static("public"));
 
-// Separated Routes for each Resource
-// Note: Feel free to replace the example routes below with your own
-const usersRoutes = require("../routes/users");
-const widgetsRoutes = require("../routes/widgets");
+// page routes
 const loginRoutes = require('../routes/loginRoutes');
 const registerRoutes = require('../routes/registerRoutes');
 const logoutRoutes = require('../routes/logoutRoutes');
 
-// Mount all resource routes
-// Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
+// mount above query routes to db
 app.use('/', loginRoutes(db));
 app.use('/', registerRoutes(db));
 app.use('/', logoutRoutes());
-// Note: mount other resources here, using the same pattern above
-
 
 // Home page
-// Warning: avoid creating more routes in this file!
-// Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
 
   if (req.session.username) {
@@ -75,39 +60,43 @@ server.listen(PORT, () => {
 
 
 
-
-
-
-
-
 /////////////////////////////////////////
 // !server side socket communications! //
 /////////////////////////////////////////
 
 
+const broadcastGame = function(io, game) {
+  io.to(game).emit('gameView', {
+    gameState: activeGames[game].gameState,
+    currentPlayers: activeGames[game].currentPlayers,
+    players: activeGames[game].players,
+    table: activeGames[game].table,
+    pendingMoves: activeGames[game].pendingMoves,
+    deck: activeGames[game].deck,
+    gameId: game,
+  });
+};
+
 
 io.on('connection', (client) => {
   console.log(`client connected: ${client}`);
 
-  // emits are server -> client
-  // ons are client -> server
-  client.emit('msg', 'Hello from server');
-  // client.on('msg', (data) => {
-  //   console.log(data);
-  // });
+  client.emit('msg', 'Server - Connected');
 
-  // when a client requests to play a game
+  // client requests to play a game event
   client.on('requestGame', (data) => {
 
     console.log('requestGame data:', data);
 
     db.fetchProfile(data.username)
       .then(res => {
+
         // flag will be true when the player has beem added to a game
         let isInGame = false;
-        // need to make a check for if game already exists
+
         // loop over all existing games
         for (let game in activeGames) {
+
           // if the current game matches the game type that the player wants
           if (game.substring(0, 4) === data.gametype.substring(0, 4)) {
 
@@ -120,61 +109,34 @@ io.on('connection', (client) => {
                   isAlreadyParticipent = true;
                 }
               }
+
               // if the player is not already part of that game
               if (!isAlreadyParticipent) {
+
                 // add the player
                 client.join(activeGames[game].id);
                 console.log(`JOINING a game with the id: ${activeGames[game].id}`);
                 activeGames[game].addPlayer(res[0].id, res[0].username, (activeGames[game].players.length + 1));
 
-                // send game details to client, and player join status to room
-                // client.emit('newGame', { gameId: game, players: activeGames[game].players });
-
-                io.to(game).emit('gameView', {
-                  gameState: activeGames[game].gameState,
-                  currentPlayers: activeGames[game].currentPlayers,
-                  players: activeGames[game].players,
-                  table: activeGames[game].table,
-                  pendingMoves: activeGames[game].pendingMoves,
-                  deck: activeGames[game].deck,
-                  gameId: game,
-                });
-
+                // send game details to room
+                broadcastGame(io, game);
                 io.to(game).emit('join', { gameId: game, numberOfPlayers: activeGames[game].players.length });
 
                 isInGame = true;
 
-                console.log(activeGames);
-                console.log(activeGames[game].deck.cards.length);
-
-                // we can make a socket event for this if a client wants to start a game manually
+                // in future version, would like to make a socket event for this if a client wants to start a game manually
                 activeGames[game].start();
 
                 // show the game to clients
                 if (activeGames[game].gameState === 'playing') {
-                  io.to(game).emit('gameView', {
-                    gameState: activeGames[game].gameState,
-                    currentPlayers: activeGames[game].currentPlayers,
-                    players: activeGames[game].players,
-                    table: activeGames[game].table,
-                    pendingMoves: activeGames[game].pendingMoves,
-                    deck: activeGames[game].deck,
-                    gameId: game,
-                  });
+                  broadcastGame(io, game);
 
                   // deal cards and show game again
                   setTimeout(() => {
                     activeGames[game].deal();
-                    console.log('\n\nsending dealt game to players....\n\n');
-                    io.to(game).emit('gameView', {
-                      gameState: activeGames[game].gameState,
-                      currentPlayers: activeGames[game].currentPlayers,
-                      players: activeGames[game].players,
-                      table: activeGames[game].table,
-                      pendingMoves: activeGames[game].pendingMoves,
-                      deck: activeGames[game].deck,
-                      gameId: game,
-                    });
+
+                    // send game details to room
+                    broadcastGame(io, game);
                   }, 2000);
                 }
                 break;
@@ -190,21 +152,8 @@ io.on('connection', (client) => {
           client.join(newGame.id);
           newGame.addPlayer(res[0].id, res[0].username, (newGame.players.length + 1));
 
-          // send game details to client, and player join status to room
-
-          // client.emit('newGame', { gameId: newGame.id, players: newGame.players });
-
-
-          io.to(newGame.id).emit('gameView', {
-            gameState: activeGames[newGame.id].gameState,
-            currentPlayers: activeGames[newGame.id].currentPlayers,
-            players: activeGames[newGame.id].players,
-            table: activeGames[newGame.id].table,
-            pendingMoves: activeGames[newGame.id].pendingMoves,
-            deck: activeGames[newGame.id].deck,
-            gameId: newGame.id,
-          });
-
+          // send game details to room
+          broadcastGame(io, newGame.id);
 
           io.to(newGame.id).emit('join', { gameId: newGame.id, numberOfPlayers: newGame.players.length });
         }
@@ -214,7 +163,6 @@ io.on('connection', (client) => {
       });
   });
 
-
   client.on('move', (data) => {
     console.log('recieving move:');
     console.log(data);
@@ -223,10 +171,8 @@ io.on('connection', (client) => {
     let move = data.move;
 
     if (activeGames[game].isValidMove(move)) {
+
       // add the submitted move to pending
-
-      // console.log(activeGames[game].deck.cards);
-
       const playerPositionInCurrentPlayers = activeGames[game].currentPlayers.map((player) => {
         return player.username;
       }).indexOf(move.player.username);
@@ -250,25 +196,13 @@ io.on('connection', (client) => {
       // add to the array of moves to be evaluated
       activeGames[game].pendingMoves.push(move);
 
-
       // broadcast the game to all players
-      io.to(game).emit('gameView', {
-        gameState: activeGames[game].gameState,
-        currentPlayers: activeGames[game].currentPlayers,
-        players: activeGames[game].players,
-        table: activeGames[game].table,
-        pendingMoves: activeGames[game].pendingMoves,
-        deck: activeGames[game].deck,
-        gameId: game,
-      });
+      broadcastGame(io, game);
 
       console.log('pending moves should have one move', activeGames[game].pendingMoves);
 
       // if the required moves for the round have all been submitted
       if (activeGames[game].areAllMovesSubmitted()) {
-
-        console.log('\nmoves have been submitted\n');
-
         setTimeout(() => {
 
           console.log(game);
@@ -283,31 +217,16 @@ io.on('connection', (client) => {
           activeGames[game].pushPendingToHistory();
 
           // broadcast the game to all players
-          io.to(game).emit('gameView', {
-            gameState: activeGames[game].gameState,
-            currentPlayers: activeGames[game].currentPlayers,
-            players: activeGames[game].players,
-            table: activeGames[game].table,
-            pendingMoves: activeGames[game].pendingMoves,
-            deck: activeGames[game].deck,
-            gameId: game,
-          });
+          broadcastGame(io, game);
 
           // evaluate if game and case has been reached
           if (activeGames[game].isGameDone()) {
 
             // broadcast the game to all players
-            io.to(game).emit('gameView', {
-              gameState: activeGames[game].gameState,
-              currentPlayers: activeGames[game].currentPlayers,
-              players: activeGames[game].players,
-              table: activeGames[game].table,
-              pendingMoves: activeGames[game].pendingMoves,
-              deck: activeGames[game].deck,
-              gameId: game,
-            });
+            broadcastGame(io, game);
 
             setTimeout(() => {
+
               // show results view to players
               io.to(game).emit('resultsView', { gameId: game, players: activeGames[game].players });
 
@@ -331,26 +250,19 @@ io.on('connection', (client) => {
                 .catch(error => {
                   console.error(error);
                 });
-            }, 2000);
+            }, 1000);
           } else {
             // broadcast the game to all players
-            io.to(game).emit('gameView', {
-              gameState: activeGames[game].gameState,
-              currentPlayers: activeGames[game].currentPlayers,
-              players: activeGames[game].players,
-              table: activeGames[game].table,
-              pendingMoves: activeGames[game].pendingMoves,
-              deck: activeGames[game].deck,
-              gameId: game,
-            });
+            broadcastGame(io, game);
           }
         }, 2000);
       }
     }
   });
 
+  // .on events for db query requests
 
-  // client requests history of a user (data = a username)
+  // user match history
   client.on('requestHistory', (data) => {
     console.log('requestHistory data:', data);
 
@@ -360,6 +272,7 @@ io.on('connection', (client) => {
       });
   });
 
+  // individual match details
   client.on('requestMatchDetails', (data) => {
     console.log('requestMatchDetails data:', data);
 
@@ -369,6 +282,7 @@ io.on('connection', (client) => {
       });
   });
 
+  // gametype leaderboard
   client.on('requestLeaderBoard', (data) => {
     console.log('requestLeaderBoard data:', data);
 
