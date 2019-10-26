@@ -4,6 +4,13 @@ const { Sevens } = require('./sevensClass');
 const fullDeck = require('./fullDeck');
 
 // constant objects (single instance entities only)
+
+
+/* NOTE:
+activePlayers is not currently used, however in future versions
+we would like to use this object to keep track of connected players in server.js
+this would allow us to map a player to an active game, and upon unexpected disconnect,
+insert players back into to their unfinished games when they reconnect */
 const activePlayers = {
   // add keys to this object as players login
 
@@ -15,6 +22,8 @@ const activePlayers = {
   }
 };
 
+// each key in this object (that is not a method) will be a game instance
+// key's are added as new games are generated
 const activeGames = {
 
   idCount: 0,
