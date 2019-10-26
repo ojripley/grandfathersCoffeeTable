@@ -86,32 +86,29 @@ class Sevens extends Game {
       if (move.card.value === 7 && move.card.playable) {
         this.table.cards.splice(0, 0, move.card);
         this.turns++;
-        console.log(`${move.card.name} accepted as a move`);
+
         return true;
       }
 
       // checks validity of a move against a card already on the table, inserts if valid
       for (let i = 0; i < this.table.cards.length; i++) {
         if (move.card.name[move.card.name.length - 1] === this.table.cards[i].name[this.table.cards[i].name.length - 1] && move.card.value === (this.table.cards[i].value + 1)) {
+
           // insert after
-          console.log(`${move.card.name} is playable on ${this.table.cards[i].name}. Insert AFTER`);
           this.table.cards.splice((i + 1), 0, move.card);
           this.turns++;
-          console.log(`${move.card.name} accepted as a move`);
+
           return true;
         } else if (move.card.name[move.card.name.length - 1] === this.table.cards[i].name[this.table.cards[i].name.length - 1] && move.card.value === (this.table.cards[i].value - 1)) {
+
           // insert before
-          console.log(`${move.card.name} is playable on ${this.table.cards[i].name}. Insert BEFORE`);
           this.table.cards.splice(i, 0, move.card);
           this.turns++;
-          console.log(`${move.card.name} accepted as a move`);
+
           return true;
         }
       }
     }
-
-    console.log('\n\n\n\n\nWARNING\n\n\n\n\nWARNING\n\n\n\n\nWARNING\n\n\n\n\nSHOULD NEVER REACH HERE\n\n\n\n\n');
-
     return false;
   }
 
@@ -124,9 +121,6 @@ class Sevens extends Game {
 
   isGameDone() {
 
-    console.log('\n\n\n\n' + this.gameState + '\n\n\n\n');
-
-    console.log(this.players.length);
     if (this.players.length === 2) {
 
       const p1 = this.players[0];
@@ -146,20 +140,16 @@ class Sevens extends Game {
         return true;
       } else {
         if (this.turns % 2 === 0) {
-          console.log('\nsetting next player turn');
           const position = this.players.map((player) => {
             return player.joinToken;
           }).indexOf(1);
           this.currentPlayers.push(this.players[position]);
-          console.log(this.currentPlayers);
         } else {
           // assign current players turn
-          console.log('\nsetting next player turn');
           const position = this.players.map((player) => {
             return player.joinToken;
           }).indexOf(2);
           this.currentPlayers.push(this.players[position]);
-          console.log(this.currentPlayers);
         }
 
 

@@ -14,7 +14,6 @@ class Goofspiel extends Game {
   }
 
   deal() {
-    console.log('\n\ndealing.....');
 
     for (let i = 0; i < 13; i++) {
       this.deck.moveCard(this.deck.cards[0], this.players[0].hand.cards);
@@ -37,14 +36,10 @@ class Goofspiel extends Game {
   score() {
     const prize = this.table.cards[0];
 
-    console.log(`the prize is ${prize.value}\n\n`);
-
     let highestBidValue = 0;
     let highestBiddingMoves = [];
 
     for (let move of this.pendingMoves) {
-
-      console.log(`the current evaluated move is ${move.card.value}\n\n`);
 
       if (move.card.value > highestBidValue) {
         highestBiddingMoves = [];
@@ -55,19 +50,11 @@ class Goofspiel extends Game {
       }
     }
 
-    console.log(`the highest bid is ${highestBidValue}\n\n`);
-
     if (highestBiddingMoves.length === 1) {
 
       const playerToRecievePoints = this.players.filter(player => highestBiddingMoves[0].player.username === player.username);
       playerToRecievePoints[0].score += prize.value;
     }
-
-
-    console.log('\nPLAYER SCORES:');
-    console.log(this.players[0].username + ': ' + this.players[0].score);
-    console.log(this.players[1].username + ': ' + this.players[1].score);
-    console.log();
 
     for (let i = 0; i < this.players.length; i++) {
       for (let j = 1; j < this.players.length; j++) {
@@ -108,11 +95,8 @@ class Goofspiel extends Game {
 
   isGameDone() {
 
-    console.log('\n\n\n\n' + this.gameState + '\n\n\n\n');
-
     if (this.deck.cards.length === 0) {
       this.gameState = 'finished';
-      console.log(`\n the winner is... ${this.players[0].username} \n\n`);
       return true;
     } else {
 

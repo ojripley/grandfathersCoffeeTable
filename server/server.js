@@ -79,7 +79,7 @@ const broadcastGame = function(io, game) {
 
 
 io.on('connection', (client) => {
-  console.log(`client connected: ${client}`);
+  console.log(`client connected`);
 
   client.emit('msg', 'Server - Connected');
 
@@ -104,7 +104,6 @@ io.on('connection', (client) => {
             if (activeGames[game].players.length < 2 && !isInGame) {
               let isAlreadyParticipent = false;
               for (let player of activeGames[game].players) {
-                console.log(`is ${data.username} ${player.username}`);
                 if (player.username === data.username) {
                   isAlreadyParticipent = true;
                 }
@@ -187,11 +186,8 @@ io.on('connection', (client) => {
         }
       }
 
-
       // remove player from currentPlayers for turn
       activeGames[game].currentPlayers.splice(playerPositionInCurrentPlayers, 1);
-
-      console.log(`currentPlayers shuold be empty after move: ${activeGames[game].currentPlayers.length}`);
 
       // add to the array of moves to be evaluated
       activeGames[game].pendingMoves.push(move);
@@ -199,20 +195,12 @@ io.on('connection', (client) => {
       // broadcast the game to all players
       broadcastGame(io, game);
 
-      console.log('pending moves should have one move', activeGames[game].pendingMoves);
-
       // if the required moves for the round have all been submitted
       if (activeGames[game].areAllMovesSubmitted()) {
         setTimeout(() => {
 
-          console.log(game);
           // evaluate the move scores and push moves to history
           activeGames[game].score();
-
-          console.log('\nPLAYER SCORES AFTER SCORE():');
-          console.log(activeGames[game].players[0].username + ': ' + activeGames[game].players[0].score);
-          console.log(activeGames[game].players[1].username + ': ' + activeGames[game].players[1].score);
-          console.log();
 
           activeGames[game].pushPendingToHistory();
 
@@ -233,12 +221,12 @@ io.on('connection', (client) => {
               // write results to database
               db.addMatch(activeGames[game].gameType)
                 .then(res => {
-                  console.log(res);
                   let matchId = res[0].id;
                   for (let player of activeGames[game].players) {
                     db.addResult(matchId, player)
                       .then(() => {
-                        console.log('added match and result rows of game ', game);
+                        console.log('DB insertion for game: ', game);
+
                         // remove game from server memory
                         delete activeGames[game];
                       })
