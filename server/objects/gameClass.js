@@ -7,7 +7,7 @@ module.exports = class Game {
     if (new.target === Game) {
       throw new TypeError('Cannot construct an instance of an Abstract Class!');
     }
-    // ----------------------------------------------------------------------------
+
     // attributes
     this.id = id;
     this.gameType = null;
@@ -21,7 +21,6 @@ module.exports = class Game {
     this.pendingMoves = [];
   }
 
-  // ----------------------------------------------------------------------------
   // methods
 
   // sets the game state to playable
@@ -47,10 +46,5 @@ module.exports = class Game {
     this.pendingMoves.forEach(move => {
       this.table.cards.push(move.card);
     });
-
-    // while (this.pendingMoves.length > 0) {
-    //   const tempCard = this.pendingMoves.pop().card;
-    //   this.table.cards.push(this.pendingMoves.pop());
-    // }
   }
 };
