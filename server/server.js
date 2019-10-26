@@ -144,8 +144,9 @@ io.on('connection', (client) => {
                   setTimeout(() => {
                     if (activeGames[game]) {
                       delete activeGames[game];
+                      console.log(activeGames);
                     }
-                  }, 3600000);
+                  }, 3600);
                 }
                 break;
               }
