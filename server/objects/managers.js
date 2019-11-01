@@ -14,11 +14,11 @@ insert players back into to their unfinished games when they reconnect */
 const activePlayers = {
   // add keys to this object as players login
 
-  addPlayer(player) {
-    this[player.id] = player;
+  addPlayer(client, username) {
+    this[username] = [client, username];
   },
-  removePlayer(player) {
-    delete this[player.id];
+  removePlayer(username) {
+    delete this[username];
   }
 };
 

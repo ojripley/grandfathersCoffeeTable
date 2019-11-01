@@ -12,7 +12,7 @@ const io = require('socket.io')(server);
 const cookieParser = require('cookie-session');
 
 // this is the object used to manage all running games on the server
-const { activeGames } = require('./objects/managers.js');
+const { activeGames, activePlayers } = require('./objects/managers.js');
 
 // db related operations
 const db = require('../db/queries/queries');
