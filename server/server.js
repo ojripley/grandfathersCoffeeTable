@@ -79,9 +79,43 @@ const broadcastGame = function(io, game) {
 
 
 io.on('connection', (client) => {
-  console.log(`client connected`);
-
   client.emit('msg', 'Server - Connected');
+  console.log(`client connected`);
+  client.on('msg', (data) => {
+    console.log(data);
+  });
+
+  client.on('username', (data) => {
+    const username = data;
+    console.log(username +  ' has logged in');
+
+    // player added to list of active players
+    activePlayers.addPlayer(client, username);
+
+    // check if that player is a participant in any active games
+    for (let game in activeGames) {
+      if (activeGames[game].gameType) {
+        console.log(activeGames[game]);
+        for (let player of activeGames[game].players) {
+          console.log(player);
+          console.log(`\n\nchecking game ${game} with player: ${player.username}`);
+          if (player.username === username) {
+            console.log(`${username} is part of game ${game}`);
+
+            // put them back in the room
+            client.join(game);
+
+            // broadcast the game so that the client gets it
+            broadcastGame(io, game);
+          }
+        }
+      }
+    }
+
+    client.on('disconnect', () => {
+      activePlayers.removePlayer(username);
+    });
+  });
 
   // client requests to play a game event
   client.on('requestGame', (data) => {
