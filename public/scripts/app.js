@@ -2,6 +2,7 @@ $(() => {
   //This is the username that will be passed between server and client.
   //In future versions this should be a token instead that maps to a username on server-side
   window.myUsername = extractUserName(document.cookie);
+  const myUsername = window.myUsername;
 
   window.alertChain = $("#alert").toggle('slide');
   $("#alert").fadeTo(10, 1);
@@ -16,6 +17,7 @@ $(() => {
   // window.socket = io.connect('172.46.3.253:8080');
   // window.socket = io.connect('localhost:8080');
   window.socket = io();
+  const socket = window.socket;
   // window.socket = io.connect('172.46.3.232:8080');
 
   /*
@@ -46,16 +48,27 @@ $(() => {
     console.log(data); //Data contains all the info needed to render a screen
     */
 
+
+    // data.gameState === "pending" &&
     //If the game hasn't started and we haven't seen this game before
-    if (data.gameState === "pending" && !Object.keys(window.activeGames).includes(data.gameId)) {
+    if (!Object.keys(window.activeGames).includes(data.gameId)) {
       if (data.gameId.indexOf("goof") !== -1) {
         window.goofspiel.newGame(data.gameId);
+        if (data.gameState === 'playing') {
+          window.goofspiel.updateView(window.activeGames[data.gameId].view, data);
+        }
       }
       if (data.gameId.indexOf("seve") !== -1) {
         window.sevens.newGame(data.gameId);
+        if (data.gameState === 'playing') {
+          window.sevens.updateView(window.activeGames[data.gameId].view, data);
+        }
       }
       if (data.gameId.indexOf("war") !== -1) {
         window.war.newGame(data.gameId);
+        if (data.gameState === 'playing') {
+          window.war.updateView(window.activeGames[data.gameId].view, data);
+        }
       }
       let gameName;
       switch (data.gameId.substring(0, 4)) {
@@ -155,9 +168,9 @@ $(() => {
   socket.on('msg', (data) => {
     console.log(data); //Useful for sending a message between client and server
   });
-  socket.on('connection', (data) => {
-    console.log(data); //Welcome message from server
-  })
+
+  socket.emit('msg', '\n\n\n\nive joined!');
+  socket.emit('username', myUsername);
 
 });
 
