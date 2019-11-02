@@ -34,7 +34,7 @@ $(() => {
   });
 
   $(".request-game").on('click', (event) => {
-    let gametype = event.target.id;
+    const gametype = event.target.id;
     socket.emit('requestGame', { gametype, username: myUsername });
   });
 
@@ -67,7 +67,7 @@ $(() => {
           window.war.updateView(window.activeGames[data.gameId].view, data);
         }
       }
-      let gameName;
+      const gameName;
       switch (data.gameId.substring(0, 4)) {
         case 'goof':
           gameName = 'Goofspiel';
@@ -111,15 +111,11 @@ $(() => {
 
         //Is it the player's turn?
         if (data.currentPlayers && userIsIn(data.currentPlayers, myUsername)) {
-          let $alert = $("#alert");
-          let $gameButton = $(`#${data.gameId}`);
-          let gameName = $gameButton.text();
-          /*  $alert.on('click', (event) => {
-              //Mimic clicking the game button (so the styling/logic is consistent)
-              $gameButton.trigger('click');
-            });*/
+          const $alert = $("#alert");
+          const $gameButton = $(`#${data.gameId}`);
+          const gameName = $gameButton.text();
+
           $gameButton.find('.badge').text(' !');
-          //Display the alert
 
           //Add the change of text of the alert to the animation queue so it happens in order
           $alert.queue(function blah() {
@@ -154,7 +150,7 @@ $(() => {
       socket.emit('requestMatchDetails', data[0].id);
     } else {
       //This will only happen when user searches someone that doesnt' exist OR first time user
-      let histMessage = $("#historyErrorMessage");
+      const histMessage = $("#historyErrorMessage");
       if (histMessage) {
         profile.updateMatchHistoryTable(data);
         $("#historyErrorMessage").text("User does not exist");
