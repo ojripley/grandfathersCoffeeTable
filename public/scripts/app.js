@@ -67,7 +67,7 @@ $(() => {
           window.war.updateView(window.activeGames[data.gameId].view, data);
         }
       }
-      const gameName;
+      let gameName;
       switch (data.gameId.substring(0, 4)) {
         case 'goof':
           gameName = 'Goofspiel';
@@ -111,26 +111,24 @@ $(() => {
 
         //Is it the player's turn?
         if (data.currentPlayers && userIsIn(data.currentPlayers, myUsername)) {
-          const $alert = $("#alert");
-          const $gameButton = $(`#${data.gameId}`);
-          const gameName = $gameButton.text();
-
-          $gameButton.find('.badge').text(' !');
-
-          //Add the change of text of the alert to the animation queue so it happens in order
-          $alert.queue(function blah() {
-            $(this).on('click', (event) => {
-              //Mimic clicking the game button (so the styling/logic is consistent)
-              $gameButton.trigger('click');
+          let $alert = $("#alert");
+          let $gameButton = $(`#${data.gameId}`);
+          let gameName = $gameButton.text();
+          if ($gameButton.find('.badge').text() !== ' !') { //Check if we have already notified the user
+            $gameButton.find('.badge').text(' !');
+            //Add the change of text of the alert to the animation queue so it happens in order
+            $alert.queue(function changeMessage() { //Needs to be a function to have 'this' reference properly
+              $(this).on('click', (event) => {
+                //Mimic clicking the game button (so the styling/logic is consistent)
+                $gameButton.trigger('click');
+              });
+              $(this).find(".card-body").text(`It is your turn in ${gameName}. `);
+              $(this).dequeue();
             });
-            $(this).find(".card-body").text(`It is your turn in ${gameName}. `);
-            $(this).dequeue();
-          });
-          //Show and hide the toast notification
-          $alert.toggle('slide', 2000); //Slide in
-          $alert.toggle('slide', 2000); //Slide out
-
-
+            //Show and hide the toast notification
+            $alert.toggle('slide', 2000); //Slide in
+            $alert.toggle('slide', 2000); //Slide out
+          }
 
         }
       }
