@@ -14,11 +14,8 @@ $(() => {
     $('#navbar').toggleClass('hidden', 500);
   });
 
-  // window.socket = io.connect('172.46.3.253:8080');
-  // window.socket = io.connect('localhost:8080');
   window.socket = io();
   const socket = window.socket;
-  // window.socket = io.connect('172.46.3.232:8080');
 
   /*
   Buttons being set so that user can request information from the server
@@ -37,7 +34,7 @@ $(() => {
   });
 
   $(".request-game").on('click', (event) => {
-    let gametype = event.target.id;
+    const gametype = event.target.id;
     socket.emit('requestGame', { gametype, username: myUsername });
   });
 
@@ -111,24 +108,29 @@ $(() => {
         }
 
         //Show  notification if user is supposed to make a move
-        $("#alert").promise().done(() => {
-          //Is it the player's turn?
-          if (data.currentPlayers && userIsIn(data.currentPlayers, myUsername)) {
-            let $alert = $("#alert");
-            let $gameButton = $(`#${data.gameId}`);
-            let gameName = $gameButton.text();
-            $alert.on('click', (event) => {
-              //Mimic clicking the game button (so the styling/logic is consistent)
-              $gameButton.trigger('click');
-            });
+
+        //Is it the player's turn?
+        if (data.currentPlayers && userIsIn(data.currentPlayers, myUsername)) {
+          let $alert = $("#alert");
+          let $gameButton = $(`#${data.gameId}`);
+          let gameName = $gameButton.text();
+          if ($gameButton.find('.badge').text() !== ' !') { //Check if we have already notified the user
             $gameButton.find('.badge').text(' !');
-            //Display the alert
-            $alert.find(".card-body").text(`It is your turn in ${gameName}. `);
-            $alert.toggle('slide', 1000, () => {
-              setTimeout(() => $alert.toggle('slide', 1000), 1000);
-            })
+            //Add the change of text of the alert to the animation queue so it happens in order
+            $alert.queue(function changeMessage() { //Needs to be a function to have 'this' reference properly
+              $(this).on('click', (event) => {
+                //Mimic clicking the game button (so the styling/logic is consistent)
+                $gameButton.trigger('click');
+              });
+              $(this).find(".card-body").text(`It is your turn in ${gameName}. `);
+              $(this).dequeue();
+            });
+            //Show and hide the toast notification
+            $alert.toggle('slide', 2000); //Slide in
+            $alert.toggle('slide', 2000); //Slide out
           }
-        });
+
+        }
       }
     }
   });
@@ -139,10 +141,6 @@ $(() => {
     views_manager.show('leaderboard', data);
   });
 
-  socket.emit('msg', "hi there"); //Hello message to server ;)
-
-
-
   socket.on('history', (data) => {
     $('#landing-container').css({ display: 'none' }); //Hides landing page
     if (data[0]) {
@@ -150,7 +148,7 @@ $(() => {
       socket.emit('requestMatchDetails', data[0].id);
     } else {
       //This will only happen when user searches someone that doesnt' exist OR first time user
-      let histMessage = $("#historyErrorMessage");
+      const histMessage = $("#historyErrorMessage");
       if (histMessage) {
         profile.updateMatchHistoryTable(data);
         $("#historyErrorMessage").text("User does not exist");
