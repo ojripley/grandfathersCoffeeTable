@@ -24,6 +24,4 @@ if (process.env.DATABASE_URL) {
 
 const pool = new Pool(dbParams);
 
-// module.exports = dbParams;
-
 module.exports = pool;
